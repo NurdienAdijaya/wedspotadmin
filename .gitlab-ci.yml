@@ -39,7 +39,7 @@ build:
     paths:
       - node_modules/
   only:
-    - nurdien
+    - development
 
 # testing:
 #   stage: testing
@@ -69,4 +69,4 @@ deploy:
 
   # untuk menunjuk spesifikasi branch mana yang akan di deploy di server
   only:
-    - nurdien
+    - development
