@@ -39,7 +39,7 @@ build:
     paths:
       - node_modules/
   only:
-    - development
+    - nurdien
 
 # testing:
 #   stage: testing
