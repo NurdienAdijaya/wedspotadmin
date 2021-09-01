@@ -23,7 +23,7 @@ const services = [
 ];
 
 const MyStore = () => {
-  const [service, setservice] = useState("EUR");
+  const [service, setservice] = useState("package");
   const handleChange = (event) => {
     setservice(event.target.value);
   };
@@ -98,43 +98,32 @@ const MyStore = () => {
           }}
         >
           <TextField
-            id="outlined-basic"
             className="textfield"
             label="Store Name*"
             variant="outlined"
           />
+          <TextField className="textfield" label="Email*" variant="outlined" />
           <TextField
-            id="outlined-basic"
-            className="textfield"
-            label="Email*"
-            variant="outlined"
-          />
-          <TextField
-            id="outlined-basic"
             className="textfield"
             label="Contact Number*"
             variant="outlined"
           />
           <TextField
-            id="outlined-basic"
             className="textfield"
             label="Website (optional)"
             variant="outlined"
           />
           <TextField
-            id="outlined-basic"
             className="textfield"
             label="Facebook Account (optional)"
             variant="outlined"
           />
           <TextField
-            id="outlined-basic"
             className="textfield"
             label="Instagram Account (optional)"
             variant="outlined"
           />
           <TextField
-            id="outlined-basic"
             className="textfield"
             label="Twitter Account (optional)"
             variant="outlined"
