@@ -144,7 +144,7 @@ const MyStore = () => {
             label="Service Type*"
             value={service}
             onChange={handleChange}
-            helperText="Please select your currency"
+            helperText="Please select your service type"
             variant="outlined"
           >
             {services.map((option) => (
