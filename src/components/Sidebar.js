@@ -171,7 +171,7 @@ export default function Sidebar() {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            style={{ color: "#0F120D" }}
+            // style={{ color: "#0F120D" }}
             className={clsx(classesNav.menuButton, open && classesNav.hide)}
           >
             <MenuIcon />
@@ -179,12 +179,15 @@ export default function Sidebar() {
           <Typography
             variant="h6"
             className={classesNav.title}
-            style={{ color: "#0F120D" }}
+            // style={{ color: "#0F120D" }}
           >
             My Store
           </Typography>
           <div className={classesNav.sectionDesktop}>
-            <IconButton aria-label="show 17 new notifications" color="#0F120D">
+            <IconButton
+              aria-label="show 17 new notifications"
+              // color="#0F120D"
+            >
               <Badge badgeContent={17} color="secondary">
                 <NotificationsIcon />
               </Badge>
@@ -197,7 +200,7 @@ export default function Sidebar() {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleMenu}
-                color="#0F120D"
+                // color="#0F120D"
               >
                 <h4 style={{ paddingTop: "1rem", paddingRight: "0.5rem" }}>
                   Remy sharp
@@ -244,7 +247,6 @@ export default function Sidebar() {
         classes={{
           paper: classes.drawerPaper,
         }}
-        bacg
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
