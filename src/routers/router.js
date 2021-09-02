@@ -1,4 +1,5 @@
 import { Route, Switch } from "react-router-dom";
+import Notifications from "../components/Notifications";
 import Sidebar from "../components/Sidebar";
 import Home from "../pages/Home";
 
@@ -10,8 +11,8 @@ const Routers = () => {
         <Route exact path="/">
           {token ? <Sidebar /> : <Home />}
         </Route>
-        <Route exact path="/test">
-          <Sidebar />
+        <Route exact path="/*">
+          <Notifications />
         </Route>
       </Switch>
     </>
