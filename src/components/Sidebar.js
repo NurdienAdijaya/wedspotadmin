@@ -30,6 +30,7 @@ import {
   Switch,
 } from "@material-ui/core";
 import MyStore from "./mystore/MyStore";
+import MyStoreDoneSubmit from "./mystore/MyStoreDoneSubmit";
 
 const useStylesNav = makeStyles((theme) => ({
   root: {
@@ -128,7 +129,7 @@ export default function Sidebar() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [page, setPage] = useState("store");
+  const [page, setPage] = useState("My Store");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -171,7 +172,7 @@ export default function Sidebar() {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            // style={{ color: "#0F120D" }}
+            style={{ color: "#0F120D" }}
             className={clsx(classesNav.menuButton, open && classesNav.hide)}
           >
             <MenuIcon />
@@ -179,9 +180,9 @@ export default function Sidebar() {
           <Typography
             variant="h6"
             className={classesNav.title}
-            // style={{ color: "#0F120D" }}
+            style={{ color: "#0F120D" }}
           >
-            My Store
+            {page}
           </Typography>
           <div className={classesNav.sectionDesktop}>
             <IconButton
@@ -311,19 +312,19 @@ export default function Sidebar() {
           </IconButton>
         </div>
         <List style={{ color: "#B5AF8F" }}>
-          <ListItem button onClick={() => setPage("store")}>
+          <ListItem button onClick={() => setPage("My Store")}>
             <ListItemIcon style={{ color: "#B5AF8F" }}>
               <StorefrontOutlinedIcon />
             </ListItemIcon>
             <ListItemText primary="My Store" />
           </ListItem>
-          <ListItem button onClick={() => setPage("quotations")}>
+          <ListItem button onClick={() => setPage("Quotations")}>
             <ListItemIcon style={{ color: "#B5AF8F" }}>
               <DescriptionOutlinedIcon />
             </ListItemIcon>
             <ListItemText primary="Quotations" />
           </ListItem>
-          <ListItem button onClick={() => setPage("packages")}>
+          <ListItem button onClick={() => setPage("Packages")}>
             <ListItemIcon style={{ color: "#B5AF8F" }}>
               <LocalMallOutlinedIcon />
             </ListItemIcon>
@@ -337,14 +338,15 @@ export default function Sidebar() {
         })}
       >
         <div className={classes.drawerHeader} />
-        {page === "store" ? (
+        {page === "My Store" ? (
           <div>
-            <MyStore />
+            {/* <MyStore/> */}
+            <MyStoreDoneSubmit />
           </div>
-        ) : page === "quotations" ? (
-          "quotations"
+        ) : page === "Quotations" ? (
+          "Quotations"
         ) : (
-          "packages"
+          "Packages"
         )}
       </main>
     </div>
