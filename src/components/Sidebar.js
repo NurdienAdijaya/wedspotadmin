@@ -30,6 +30,7 @@ import {
   Switch,
 } from "@material-ui/core";
 import MyStore from "./mystore/MyStore";
+import MyStoreDoneSubmit from "./mystore/MyStoreDoneSubmit";
 
 import Quotations from "./quotations/quotations";
 import Routers from "./quotations/routes";
@@ -131,7 +132,7 @@ export default function Sidebar() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [page, setPage] = useState("store");
+  const [page, setPage] = useState("My Store");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -184,10 +185,13 @@ export default function Sidebar() {
             className={classesNav.title}
             style={{ color: "#0F120D" }}
           >
-            My Store
+            {page}
           </Typography>
           <div className={classesNav.sectionDesktop}>
-            <IconButton aria-label="show 17 new notifications" color="#0F120D">
+            <IconButton
+              aria-label="show 17 new notifications"
+              // color="#0F120D"
+            >
               <Badge badgeContent={17} color="secondary">
                 <NotificationsIcon />
               </Badge>
@@ -200,7 +204,7 @@ export default function Sidebar() {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleMenu}
-                color="#0F120D"
+                // color="#0F120D"
               >
                 <h4 style={{ paddingTop: "1rem", paddingRight: "0.5rem" }}>
                   Remy sharp
@@ -247,7 +251,6 @@ export default function Sidebar() {
         classes={{
           paper: classes.drawerPaper,
         }}
-        bacg
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
@@ -312,19 +315,19 @@ export default function Sidebar() {
           </IconButton>
         </div>
         <List style={{ color: "#B5AF8F" }}>
-          <ListItem button onClick={() => setPage("store")}>
+          <ListItem button onClick={() => setPage("My Store")}>
             <ListItemIcon style={{ color: "#B5AF8F" }}>
               <StorefrontOutlinedIcon />
             </ListItemIcon>
             <ListItemText primary="My Store" />
           </ListItem>
-          <ListItem button onClick={() => setPage("quotations")}>
+          <ListItem button onClick={() => setPage("Quotations")}>
             <ListItemIcon style={{ color: "#B5AF8F" }}>
               <DescriptionOutlinedIcon />
             </ListItemIcon>
             <ListItemText primary="Quotations" />
           </ListItem>
-          <ListItem button onClick={() => setPage("packages")}>
+          <ListItem button onClick={() => setPage("Packages")}>
             <ListItemIcon style={{ color: "#B5AF8F" }}>
               <LocalMallOutlinedIcon />
             </ListItemIcon>
@@ -338,14 +341,15 @@ export default function Sidebar() {
         })}
       >
         <div className={classes.drawerHeader} />
-        {page === "store" ? (
+        {page === "My Store" ? (
           <div>
-            <MyStore />
+            {/* <MyStore/> */}
+            <MyStoreDoneSubmit />
           </div>
         ) : page === "quotations" ? (
           <Routers/>
         ) : (
-          "packages"
+          "Packages"
         )}
       </main>
     </div>

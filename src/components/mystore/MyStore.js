@@ -5,6 +5,7 @@ import Link from "@material-ui/core/Link";
 import TitleStore1 from "../title/TitleStore1";
 import { MenuItem, TextField } from "@material-ui/core";
 import "./MyStore.css";
+import ButtonPrimary from "../buttons/ButtonPrimary";
 
 function handleClick(event) {
   event.preventDefault();
@@ -21,9 +22,19 @@ const services = [
     label: "Package",
   },
 ];
+const location = [
+  {
+    value: "bandung",
+    label: "Bandung",
+  },
+  {
+    value: "jakarta",
+    label: "Jakarta",
+  },
+];
 
 const MyStore = () => {
-  const [service, setservice] = useState("EUR");
+  const [service, setservice] = useState("package");
   const handleChange = (event) => {
     setservice(event.target.value);
   };
@@ -38,26 +49,27 @@ const MyStore = () => {
         <Link color="inherit" href="/store" onClick={handleClick}>
           My Store
         </Link>
-        <Link color="inherit" href="/store/edit/" onClick={handleClick}>
-          Edit
-        </Link>
-        <Typography color="textPrimary">Breadcrumb</Typography>
+        <Typography color="textPrimary">add</Typography>
       </Breadcrumbs>
       <div
         style={{
           background: "white",
           border: "solid 1px #E1E1E1",
-          // padding: "1.7rem",
+          paddingTop: "1.7rem",
         }}
       >
         <div
           style={{
             display: "flex",
             flexWrap: "wrap",
-            margin: "1.7rem",
+            justifyContent: "space-evenly",
           }}
         >
-          <div>
+          <div
+            style={{
+              margin: "1.7rem 0",
+            }}
+          >
             <TitleStore1
               title="Store Header"
               detail="The image must have the ratio of 1:3"
@@ -70,7 +82,11 @@ const MyStore = () => {
               <h1>kotak foto</h1>
             </div>
           </div>
-          <div>
+          <div
+            style={{
+              margin: "1.7rem 0",
+            }}
+          >
             <TitleStore1
               title="Store Avatar"
               detail="The image must have the ratio of 1:1"
@@ -86,84 +102,179 @@ const MyStore = () => {
         </div>
         <div
           style={{
-            margin: "1.7rem",
-          }}
-        >
-          <h3>Contact Details</h3>
-        </div>
-        <div
-          style={{
             borderBottom: "solid 1px #E1E1E1",
             paddingBottom: "3rem",
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-evenly",
+            alignItems: "flex-end",
           }}
         >
-          <TextField
-            id="outlined-basic"
-            className="textfield"
-            label="Store Name*"
-            variant="outlined"
-          />
-          <TextField
-            id="outlined-basic"
-            className="textfield"
-            label="Email*"
-            variant="outlined"
-          />
-          <TextField
-            id="outlined-basic"
-            className="textfield"
-            label="Contact Number*"
-            variant="outlined"
-          />
-          <TextField
-            id="outlined-basic"
-            className="textfield"
-            label="Website (optional)"
-            variant="outlined"
-          />
-          <TextField
-            id="outlined-basic"
-            className="textfield"
-            label="Facebook Account (optional)"
-            variant="outlined"
-          />
-          <TextField
-            id="outlined-basic"
-            className="textfield"
-            label="Instagram Account (optional)"
-            variant="outlined"
-          />
-          <TextField
-            id="outlined-basic"
-            className="textfield"
-            label="Twitter Account (optional)"
-            variant="outlined"
-          />
+          <div className="textfieldmargin">
+            <div
+              style={{
+                margin: "1.7rem 0",
+              }}
+            >
+              <h3>Contact Details</h3>
+            </div>
+            <TextField
+              className="textfield"
+              label="Store Name*"
+              variant="outlined"
+            />
+          </div>
+          <div className="textfieldmargin">
+            <TextField
+              className="textfield"
+              label="Email*"
+              variant="outlined"
+            />
+          </div>
+          <div className="textfieldmargin">
+            <TextField
+              className="textfield "
+              label="Contact Number*"
+              variant="outlined"
+            />
+          </div>
+          <div className="textfieldmargin">
+            <TextField
+              className="textfield"
+              label="Website (optional)"
+              variant="outlined"
+            />
+          </div>
+          <div className="textfieldmargin">
+            <TextField
+              className="textfield"
+              label="Facebook Account (optional)"
+              variant="outlined"
+            />
+          </div>
+          <div className="textfieldmargin">
+            <TextField
+              className="textfield"
+              label="Instagram Account (optional)"
+              variant="outlined"
+            />
+          </div>
+          <div className="textfieldmargin">
+            <TextField
+              className="textfield"
+              label="Twitter Account (optional)"
+              variant="outlined"
+            />
+          </div>
+          <div className="textfieldmargin">
+            <div
+              style={{
+                width: "500px",
+                height: "0.1rem",
+              }}
+            ></div>
+          </div>
         </div>
         <div
           style={{
-            margin: "1.7rem",
+            paddingBottom: "3rem",
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-evenly",
+            alignItems: "flex-end",
           }}
         >
-          <h3>Service Details</h3>
+          <div className="textfieldmargin">
+            <div
+              style={{
+                margin: "1.7rem 0",
+              }}
+            >
+              <h3>Service Details</h3>
+            </div>
+            <div>
+              <TextField
+                id="outlined-select-currency"
+                className="textfield"
+                select
+                label="Service Type*"
+                value={service}
+                onChange={handleChange}
+                helperText="Please select your service type"
+                variant="outlined"
+              >
+                {services.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </div>
+          </div>
+          <div className="textfieldmargin">
+            <TextField
+              id="outlined-select-currency"
+              className="textfield"
+              select
+              label="Location*"
+              value={location}
+              onChange={handleChange}
+              helperText="Please select your service location"
+              variant="outlined"
+            >
+              {location.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
+          <div>
+            <TextField
+              id="outlined-helperText"
+              className="textfield"
+              label="Capacity*"
+              variant="outlined"
+              helperText="number per pax"
+              defaultValue="Default Value"
+            />
+          </div>
+          <div>
+            <TextField
+              className="textfield"
+              label="Price Range*"
+              variant="outlined"
+              helperText="number in Rupiah"
+            />
+          </div>
         </div>
-        <div>
-          <TextField
-            id="outlined-select-currency"
-            className="textfield"
-            select
-            label="Service Type*"
-            value={service}
-            onChange={handleChange}
-            helperText="Please select your currency"
-            variant="outlined"
+        <div
+          style={{
+            paddingBottom: "3rem",
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-evenly",
+            alignItems: "flex-end",
+          }}
+        >
+          <div
+            style={{
+              width: "500px",
+              height: "0.1rem",
+            }}
+          ></div>
+          <div
+            style={{
+              width: "500px",
+              textAlign: "end",
+            }}
           >
-            {services.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
+            <ButtonPrimary
+              content="Submit"
+              width="18.714rem"
+              height="3.93rem"
+            />
+          </div>
         </div>
       </div>
     </div>
