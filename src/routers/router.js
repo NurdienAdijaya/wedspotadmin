@@ -4,12 +4,13 @@ import Sidebar from "../components/Sidebar";
 import Home from "../pages/Home";
 
 const Routers = () => {
-  const token = localStorage.getItem("Token");
+  const token = true;
   return (
     <>
       <Switch>
-        <Route exact path="/">
-          {token ? <Sidebar /> : <Home />}
+        <Route path="/">{token ? <Sidebar /> : <Home />}</Route>
+        <Route path="/test">
+          <Sidebar />
         </Route>
         <Route exact path="/*">
           <Notifications />
