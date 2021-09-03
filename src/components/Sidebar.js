@@ -32,6 +32,9 @@ import {
 import MyStore from "./mystore/MyStore";
 import MyStoreDoneSubmit from "./mystore/MyStoreDoneSubmit";
 
+import Quotations from "./quotations/quotations";
+import Routers from "./quotations/routes";
+
 const useStylesNav = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -343,8 +346,8 @@ export default function Sidebar() {
             {/* <MyStore/> */}
             <MyStoreDoneSubmit />
           </div>
-        ) : page === "Quotations" ? (
-          "Quotations"
+        ) : page === "quotations" ? (
+          <Routers/>
         ) : (
           "Packages"
         )}

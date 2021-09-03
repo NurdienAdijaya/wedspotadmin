@@ -10,7 +10,7 @@ const QuotationNew = ({ width, content = "content", onClick }) => {
       }}
       onClick={(event) => onClick(event)}
     >
-      {content}
+      New
     </button>
   );
 };
