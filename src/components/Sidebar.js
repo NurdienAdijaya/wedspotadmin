@@ -31,6 +31,9 @@ import {
 } from "@material-ui/core";
 import MyStore from "./mystore/MyStore";
 
+import Quotations from "./quotations/quotations";
+import Routers from "./quotations/routes";
+
 const useStylesNav = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -340,7 +343,7 @@ export default function Sidebar() {
             <MyStore />
           </div>
         ) : page === "quotations" ? (
-          "quotations"
+          <Routers/>
         ) : (
           "packages"
         )}

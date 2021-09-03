@@ -10,7 +10,7 @@ const QuotationSent = ({ width, content = "content", onClick }) => {
       }}
       onClick={(event) => onClick(event)}
     >
-      {content}
+      Quotation Sent
     </button>
   );
 };
