@@ -1,4 +1,5 @@
 import { Route, Switch } from "react-router-dom";
+import Notifications from "../components/Notifications";
 import Sidebar from "../components/Sidebar";
 import Home from "../pages/Home";
 

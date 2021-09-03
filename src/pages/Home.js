@@ -11,7 +11,7 @@ const Home = () => {
           height="100%"
           width="100%"
           justifyContent="center"
-          alt=""
+          alt="Logo"
         />
       </Grid>
       <Grid item xs={6}>

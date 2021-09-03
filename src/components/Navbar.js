@@ -4,14 +4,16 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import Switch from "@material-ui/core/Switch";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormGroup from "@material-ui/core/FormGroup";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import { Avatar, Badge } from "@material-ui/core";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import PersonIcon from "@material-ui/icons/Person";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,15 +27,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MenuAppBar() {
+export default function Navbar() {
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -42,21 +40,13 @@ export default function MenuAppBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.replace("/");
+  };
 
   return (
     <div className={classes.root}>
-      <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={auth ? "Logout" : "Login"}
-        />
-      </FormGroup>
       <AppBar position="static" style={{ background: "#F3F3F3" }}>
         <Toolbar>
           <IconButton
@@ -66,15 +56,14 @@ export default function MenuAppBar() {
             aria-label="menu"
             style={{ color: "#0F120D" }}
           >
-            <MenuIcon />
+            <ArrowBackIosIcon />
+            Back
           </IconButton>
           <Typography
             variant="h6"
             className={classes.title}
             style={{ color: "#0F120D" }}
-          >
-            Photos
-          </Typography>
+          ></Typography>
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 17 new notifications" color="#0F120D">
               <Badge badgeContent={17} color="secondary">
@@ -111,8 +100,18 @@ export default function MenuAppBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem>
+                  <ListItemIcon>
+                    <PersonIcon />
+                  </ListItemIcon>
+                  <ListItemText>Profile</ListItemText>
+                </MenuItem>
+                <MenuItem onClick={handleLogout}>
+                  <ListItemIcon>
+                    <ExitToAppIcon />
+                  </ListItemIcon>
+                  <ListItemText>Sign Out</ListItemText>
+                </MenuItem>
               </Menu>
             </div>
           )}
