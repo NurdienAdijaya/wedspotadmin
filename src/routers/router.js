@@ -13,6 +13,9 @@ const Routers = () => {
         </Route>
         <Route path="/test">
           <Sidebar />
+        </Route>  
+        <Route path="/*">
+          <Notifications />
         </Route>
       </Switch>
     </>
