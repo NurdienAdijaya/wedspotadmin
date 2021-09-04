@@ -31,6 +31,7 @@ import {
 } from "@material-ui/core";
 import MyStore from "./mystore/MyStore";
 import MyStoreDoneSubmit from "./mystore/MyStoreDoneSubmit";
+import NewPackages from "./packages/NewPackages";
 
 import Quotations from "./quotations/quotations";
 import Routers from "./quotations/routes";
@@ -135,8 +136,7 @@ export default function Sidebar() {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState("My Store");
 
-
-  console.log(page)
+  console.log(page);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -346,13 +346,14 @@ export default function Sidebar() {
         <div className={classes.drawerHeader} />
         {page === "My Store" ? (
           <div>
-            {/* <MyStore/> */}
+            {/* <MyStore /> */}
             <MyStoreDoneSubmit />
           </div>
         ) : page === "Quotations" ? (
-          <Routers/>
+          "Quotations"
         ) : (
-          <PackageList/>
+          // "Packages"
+          <PackageList />
         )}
       </main>
     </div>
