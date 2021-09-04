@@ -53,8 +53,8 @@ const useStyles = makeStyles((theme) => ({
 export default function PackageDetail() {
   const [file, setFile] = useState("");
   const classes = useStyles();
-  console.log(file);
 
+  
   return (
     <div>
       <Breadcrumbs

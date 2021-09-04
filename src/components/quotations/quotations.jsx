@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Typography,
   Breadcrumbs,
-  InputBase,
   makeStyles,
   TextField,
   InputAdornment,
@@ -14,7 +13,6 @@ import { Search } from "@material-ui/icons";
 import TitleStore1 from "../title/TitleStore1";
 import QuotationSent from "../buttons/QuotationSent";
 import QuotationNew from "../buttons/QuotationNew";
-import QuotationDetail from "./quotationDetail";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
