@@ -1,19 +1,20 @@
 import { Route, Switch } from "react-router-dom";
 import Notifications from "../components/Notifications";
+import NewPackages from "../components/packages/NewPackages";
 import Sidebar from "../components/Sidebar";
 import Home from "../pages/Home";
 
 const Routers = () => {
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem("token");
   return (
     <>
       <Switch>
-        <Route path="/">
+        <Route exact path="/">
           {token ? <Sidebar /> : <Home />}
         </Route>
         <Route path="/test">
           <Sidebar />
-        </Route>  
+        </Route>
         <Route path="/*">
           <Notifications />
         </Route>
