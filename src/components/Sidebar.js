@@ -34,6 +34,7 @@ import MyStoreDoneSubmit from "./mystore/MyStoreDoneSubmit";
 
 import Quotations from "./quotations/quotations";
 import Routers from "./quotations/routes";
+import PackageList from "./package/packageList";
 
 const useStylesNav = makeStyles((theme) => ({
   root: {
@@ -134,6 +135,8 @@ export default function Sidebar() {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState("My Store");
 
+
+  console.log(page)
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -346,10 +349,10 @@ export default function Sidebar() {
             {/* <MyStore/> */}
             <MyStoreDoneSubmit />
           </div>
-        ) : page === "quotations" ? (
+        ) : page === "Quotations" ? (
           <Routers/>
         ) : (
-          "Packages"
+          <PackageList/>
         )}
       </main>
     </div>
