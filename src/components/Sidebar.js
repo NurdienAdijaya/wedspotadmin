@@ -33,6 +33,10 @@ import MyStore from "./mystore/MyStore";
 import MyStoreDoneSubmit from "./mystore/MyStoreDoneSubmit";
 import NewPackages from "./packages/NewPackages";
 
+import Quotations from "./quotations/quotations";
+import Routers from "./quotations/routes";
+import PackageList from "./package/packageList";
+
 const useStylesNav = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -132,6 +136,7 @@ export default function Sidebar() {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState("My Store");
 
+  console.log(page);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -348,7 +353,7 @@ export default function Sidebar() {
           "Quotations"
         ) : (
           // "Packages"
-          <NewPackages />
+          <PackageList />
         )}
       </main>
     </div>

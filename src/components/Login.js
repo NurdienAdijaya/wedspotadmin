@@ -8,7 +8,9 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { vendorLogin, vendorRegister } from "../store/action/auth";
 
 function Copyright() {
   return (
@@ -59,54 +61,29 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  const dispatch = useDispatch()
   const [sign, setSign] = useState(false);
+  const { isError, message, isLoading } = useSelector((state) => state.vendorData);
 
   const [login, setlogin] = useState({
-    email: "",
-    password: "",
+    vendor_email: "",
+    vendor_password: "",
   });
 
   const [signup, setSignup] = useState({
-    fullname: "",
-    email: "",
-    password: "",
+    vendor_name: "",
+    vendor_email: "",
+    vendor_password: "",
   });
-
-  const refreshPage = () => {
-    window.location.reload();
-  };
 
   const Login = (e) => {
     e.preventDefault();
-    if ((login.email === "") | (login.password === "")) {
-      alert("please fill all form");
-      return;
-    } else {
-      axios.post("", login).then((res) => {
-        localStorage.setItem("Token", res.data.token);
-        localStorage.setItem("USERID", res.data._id);
-        refreshPage();
-      });
-    }
+    dispatch(vendorLogin(login))
   };
 
   const add = (e) => {
     e.preventDefault();
-    if (
-      signup.fullname === "" ||
-      signup.email === "" ||
-      signup.password === ""
-    ) {
-      alert("please fill all form");
-    } else {
-      axios
-        .post("", signup)
-        .then((res) => {
-          alert("register successfully, please Login");
-          refreshPage();
-        })
-        .catch((error) => console.log("error signup", error.message));
-    }
+    dispatch(vendorRegister(signup))
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -177,12 +154,12 @@ export default function SignUp() {
                     variant="outlined"
                     required
                     fullWidth
-                    id="fullName"
+                    id="Name"
                     label="Full Name"
-                    name="fullName"
-                    autoComplete="fname"
+                    name="Name"
+                    autoComplete="fullname"
                     onChange={(e) =>
-                      setSignup({ ...signup, fullname: e.target.value })
+                      setSignup({ ...signup, vendor_name: e.target.value })
                     }
                   />
                 </Grid>
@@ -196,7 +173,7 @@ export default function SignUp() {
                     name="email"
                     autoComplete="email"
                     onChange={(e) =>
-                      setSignup({ ...signup, email: e.target.value })
+                      setSignup({ ...signup, vendor_email: e.target.value })
                     }
                   />
                 </Grid>
@@ -211,7 +188,7 @@ export default function SignUp() {
                     id="password"
                     autoComplete="current-password"
                     onChange={(e) =>
-                      setSignup({ ...signup, password: e.target.value })
+                      setSignup({ ...signup, vendor_password: e.target.value })
                     }
                   />
                 </Grid>
@@ -256,7 +233,7 @@ export default function SignUp() {
                     name="email"
                     autoComplete="email"
                     onChange={(e) =>
-                      setlogin({ ...login, email: e.target.value })
+                      setlogin({ ...login, vendor_email: e.target.value })
                     }
                   />
                 </Grid>
@@ -271,7 +248,7 @@ export default function SignUp() {
                     id="password"
                     autoComplete="current-password"
                     onChange={(e) =>
-                      setlogin({ ...login, password: e.target.value })
+                      setlogin({ ...login, vendor_password: e.target.value })
                     }
                   />
                 </Grid>
