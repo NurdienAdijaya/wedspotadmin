@@ -6,6 +6,8 @@ import TitleStore1 from "../title/TitleStore1";
 import { MenuItem, TextField } from "@material-ui/core";
 import "./MyStore.css";
 import ButtonPrimary from "../buttons/ButtonPrimary";
+import NoPhoto from "../../assets/NoPhotoAlbum.png";
+import ButtonPhoto from "../buttons/ButtonPhoto";
 
 function handleClick(event) {
   event.preventDefault();
@@ -76,10 +78,22 @@ const MyStore = () => {
             />
             <div
               style={{
-                border: "solid 1px black",
+                background: "#F3F3F3",
+                height: "22.857rem",
               }}
             >
-              <h1>kotak foto</h1>
+              <div
+                style={{
+                  height: "inherit",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                }}
+              >
+                <img src={NoPhoto} height="70rem" />
+                <ButtonPhoto />
+              </div>
             </div>
           </div>
           <div
@@ -93,10 +107,22 @@ const MyStore = () => {
             />
             <div
               style={{
-                border: "solid 1px black",
+                background: "#F3F3F3",
+                height: "22.857rem",
               }}
             >
-              <h1>kotak foto</h1>
+              <div
+                style={{
+                  height: "inherit",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                }}
+              >
+                <img src={NoPhoto} height="70rem" />
+                <ButtonPhoto />
+              </div>
             </div>
           </div>
         </div>
