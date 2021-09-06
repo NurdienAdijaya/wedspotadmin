@@ -30,11 +30,6 @@ import {
   Switch,
 } from "@material-ui/core";
 import MyStore from "./mystore/MyStore";
-import MyStoreDoneSubmit from "./mystore/MyStoreDoneSubmit";
-import NewPackages from "./packages/NewPackages";
-
-import Quotations from "./quotations/quotations";
-import Routers from "./quotations/routes";
 import PackageList from "./package/packageList";
 
 const useStylesNav = makeStyles((theme) => ({
@@ -346,8 +341,8 @@ export default function Sidebar() {
         <div className={classes.drawerHeader} />
         {page === "My Store" ? (
           <div>
-            {/* <MyStore /> */}
-            <MyStoreDoneSubmit />
+            <MyStore />
+            {/* <MyStoreDoneSubmit /> */}
           </div>
         ) : page === "Quotations" ? (
           "Quotations"

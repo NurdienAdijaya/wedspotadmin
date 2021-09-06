@@ -8,8 +8,7 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
+import { useDispatch } from "react-redux";
 import { vendorLogin, vendorRegister } from "../store/action/auth";
 
 function Copyright() {
@@ -61,10 +60,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [sign, setSign] = useState(false);
-  const { isError, message, isLoading } = useSelector((state) => state.vendorData);
-
   const [login, setlogin] = useState({
     vendor_email: "",
     vendor_password: "",
@@ -78,12 +75,12 @@ export default function SignUp() {
 
   const Login = (e) => {
     e.preventDefault();
-    dispatch(vendorLogin(login))
+    dispatch(vendorLogin(login));
   };
 
   const add = (e) => {
     e.preventDefault();
-    dispatch(vendorRegister(signup))
+    dispatch(vendorRegister(signup));
   };
   return (
     <Container component="main" maxWidth="xs">

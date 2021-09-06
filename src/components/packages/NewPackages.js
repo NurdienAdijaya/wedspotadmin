@@ -2,11 +2,6 @@ import React, { useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
-import ButtonSecondary from "../buttons/ButtonSecondary";
-import FacebookIcon from "@material-ui/icons/Facebook";
-import InstagramIcon from "@material-ui/icons/Instagram";
-import TwitterIcon from "@material-ui/icons/Twitter";
-import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import NoPhoto from "../../assets/NoPhotoAlbum.png";
 import { MenuItem, TextField } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -36,7 +31,7 @@ const NewPackages = () => {
     checkedF: true,
     checkedG: true,
   });
-
+  console.log("service", service);
   const handleChangeCheckbox = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
@@ -113,7 +108,7 @@ const NewPackages = () => {
                 alignItems: "center",
               }}
             >
-              <img src={NoPhoto} height="70rem" />
+              <img src={NoPhoto} height="70rem" alt="" />
             </div>
           </div>
         </div>
@@ -209,7 +204,7 @@ const NewPackages = () => {
                 control={
                   <Checkbox
                     checked={state.checkedB}
-                    onChange={handleChange}
+                    onChange={handleChangeCheckbox}
                     name="checkedB"
                     color="primary"
                   />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Container,
   Grid,
@@ -8,8 +8,6 @@ import {
   Breadcrumbs,
 } from "@material-ui/core";
 import TitleStore1 from "../title/TitleStore1";
-import QuotationSent from "../buttons/QuotationSent";
-import QuotationNew from "../buttons/QuotationNew";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -51,10 +49,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PackageDetail() {
-  const [file, setFile] = useState("");
   const classes = useStyles();
 
-  
   return (
     <div>
       <Breadcrumbs
@@ -91,7 +87,7 @@ export default function PackageDetail() {
                 style={{
                   height: "45px",
                   marginLeft: "1rem",
-                  width:"140px"
+                  width: "140px",
                 }}
               >
                 Edit

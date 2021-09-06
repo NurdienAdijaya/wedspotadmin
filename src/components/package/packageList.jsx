@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   Breadcrumbs,
   Typography,
@@ -8,9 +8,8 @@ import {
   InputAdornment,
   makeStyles,
   Button,
-  TablePagination
+  TablePagination,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
 import { MoreVert, Search } from "@material-ui/icons";
 import PackageDetail from "./packageDetail";
 
@@ -158,27 +157,25 @@ export default function PackageList() {
               </Grid>
               <Grid item xs={1}>
                 <div>
-                  <MoreVert/>
+                  <MoreVert />
                 </div>
               </Grid>
               <Grid item xs={12}>
                 <hr></hr>
               </Grid>
             </Grid>
-
           </Container>
           <TablePagination
-          component="div"
-          count={100}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+            component="div"
+            count={100}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </div>
-        
       </div>
-      <PackageDetail/>
+      <PackageDetail />
     </div>
   );
 }

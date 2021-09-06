@@ -91,7 +91,7 @@ const MyStore = () => {
                   flexDirection: "column",
                 }}
               >
-                <img src={NoPhoto} height="70rem" />
+                <img src={NoPhoto} height="70rem" alt="" />
                 <ButtonPhoto />
               </div>
             </div>
@@ -120,7 +120,7 @@ const MyStore = () => {
                   flexDirection: "column",
                 }}
               >
-                <img src={NoPhoto} height="70rem" />
+                <img src={NoPhoto} height="70rem" alt="" />
                 <ButtonPhoto />
               </div>
             </div>
