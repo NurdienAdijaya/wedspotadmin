@@ -36,6 +36,8 @@ import NewPackages from "./packages/NewPackages";
 import Quotations from "./quotations/quotations";
 import Routers from "./quotations/routes";
 import PackageList from "./package/packageList";
+import FirstModal from "./firstModal";
+import QuotationsRouters from "./quotations/routes";
 
 const useStylesNav = makeStyles((theme) => ({
   root: {
@@ -118,6 +120,7 @@ export default function Sidebar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openNav = Boolean(anchorEl);
+  const [firstModal, setFirstModal] = useState(true);
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -136,7 +139,6 @@ export default function Sidebar() {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState("My Store");
 
-  console.log(page);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -152,6 +154,7 @@ export default function Sidebar() {
 
   return (
     <div className={classes.root}>
+      <FirstModal show={firstModal} close={() => setFirstModal(false)} />
       <FormGroup>
         <FormControlLabel
           control={
@@ -350,7 +353,7 @@ export default function Sidebar() {
             <MyStoreDoneSubmit />
           </div>
         ) : page === "Quotations" ? (
-          "Quotations"
+          <QuotationsRouters />
         ) : (
           // "Packages"
           <PackageList />

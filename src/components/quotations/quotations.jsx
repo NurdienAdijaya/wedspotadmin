@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   Breadcrumbs,
@@ -14,6 +14,10 @@ import TitleStore1 from "../title/TitleStore1";
 import QuotationSent from "../buttons/QuotationSent";
 import QuotationNew from "../buttons/QuotationNew";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Sort, Filter } from "../dropdown/dropdown";
+import NoresultPhone from "../noResult/NoresultPhone";
+import { getQuotations } from "../../store/action/quotation";
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -35,12 +39,25 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "14px",
     fontWeight: "bold",
   },
+  noResult: {
+    padding: "5rem",
+  },
 }));
 
 export default function Quotations() {
   const classes = useStyles();
-  const [page, setPage] = useState(2);
+  const { data, isLoading, isSuccess, isError } = useSelector(
+    (state) => state.quotationsList
+  );
+  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [sort, setSort] = useState("");
+  const [filter, setFilter] = useState("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getQuotations(page, rowsPerPage, sort, filter));
+  }, [page, rowsPerPage, sort, filter]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -84,13 +101,8 @@ export default function Quotations() {
               alignItems: "center",
             }}
           >
-            <div>
-              <p className={classes.items}>Sort</p>
-            </div>
-            <div>
-              <p className={classes.items}>Filter</p>
-            </div>
-
+            <Sort change={setSort} />
+            <Filter change={setFilter} />
             <div className={classes.search}>
               <TextField
                 placeholder="search"
@@ -110,66 +122,79 @@ export default function Quotations() {
             </div>
           </div>
         </div>
-        <Container>
-          {/* title */}
-          <Grid container spacing={1}>
-            <Grid item xs={4}>
-              <div className={classes.title}>
-                <p>Created Date</p>
-              </div>
-            </Grid>
-            <Grid item xs={4}>
-              <div className={classes.title}>
-                <p>Name</p>
-              </div>
-            </Grid>
-            <Grid item xs={4}>
-              <div className={classes.title}>
-                <p>Status Request</p>
-              </div>
-            </Grid>
-            <Grid item xs={12}>
-              <hr></hr>
-            </Grid>
-          </Grid>
+        {isError ? (
+          <>
+            <div className={classes.noResult}>
+              <NoresultPhone
+                title={"No Quotations"}
+                description={
+                  "You will get the latest quotation requests by prospects here"
+                }
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <Container>
+              <Grid container spacing={1}>
+                <Grid item xs={4}>
+                  <div className={classes.title}>
+                    <p>Created Date</p>
+                  </div>
+                </Grid>
+                <Grid item xs={4}>
+                  <div className={classes.title}>
+                    <p>Name</p>
+                  </div>
+                </Grid>
+                <Grid item xs={4}>
+                  <div className={classes.title}>
+                    <p>Status Request</p>
+                  </div>
+                </Grid>
+                <Grid item xs={12}>
+                  <hr></hr>
+                </Grid>
+              </Grid>
 
-          {/* content */}
-          <Link
-            to="/quotes"
-            style={{
-              color: "black",
-            }}
-          >
-            <Grid container spacing={1}>
-              <Grid item xs={4}>
-                <div>
-                  <p>Thu, 14 Jan 2021</p>
-                </div>
-              </Grid>
-              <Grid item xs={4}>
-                <div className={classes.name}>
-                  <p>Name</p>
-                  <p>Name</p>
-                </div>
-              </Grid>
-              <Grid item xs={4}>
-                <QuotationNew />
-                <QuotationSent />
-              </Grid>
-              <Grid item xs={12}>
-                <hr></hr>
-              </Grid>
-            </Grid>
-          </Link>
-        </Container>
-        <TablePagination
-          component="div"
-          count={100}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+              <Link
+                to="/quotes"
+                style={{
+                  color: "black",
+                }}
+              >
+                <Grid container spacing={1}>
+                  <Grid item xs={4}>
+                    <div>
+                      <p>Thu, 14 Jan 2021</p>
+                    </div>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <div className={classes.name}>
+                      <p>Name</p>
+                      <p>Name</p>
+                    </div>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <QuotationNew />
+                    <QuotationSent />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <hr></hr>
+                  </Grid>
+                </Grid>
+              </Link>
+            </Container>
+            <TablePagination
+              component="div"
+              count={100}
+              page={page}
+              onPageChange={handleChangePage}
+              rowsPerPage={rowsPerPage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </>
+        )}
       </div>
     </div>
   );
