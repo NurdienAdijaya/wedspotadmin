@@ -354,14 +354,15 @@ export default function Sidebar() {
         <div className={classes.drawerHeader} />
         {page === "My Store" ? (
           <div>
-            {/* <MyStore /> */}
-            <MyStoreDoneSubmit />
+            <MyStore />
+            {/* <MyStoreDoneSubmit /> */}
           </div>
         ) : page === "Quotations" ? (
           <QuotationsRouters />
         ) : (
           // "Packages"
-          <PackageList />
+          // <PackageList />
+          <NewPackages />
         )}
       </main>
     </div>

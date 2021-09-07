@@ -9,7 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { vendorLogin, vendorRegister } from "../store/action/auth";
 
 function Copyright() {
@@ -61,8 +60,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [sign, setSign] = useState(false);
+  const { isError, message, isLoading } = useSelector(
+    (state) => state.vendorData
+  );
 
   const [login, setlogin] = useState({
     vendor_email: "",
@@ -77,12 +79,28 @@ export default function SignUp() {
 
   const Login = (e) => {
     e.preventDefault();
-    dispatch(vendorLogin(login))
+    if ((login.vendor_email === "") | (login.vendor_password === "")) {
+      alert("kolom kosong, tolong diisi terlebih dahulu");
+      return;
+    } else {
+      dispatch(vendorLogin(login));
+      window.location.reload();
+    }
   };
 
   const add = (e) => {
     e.preventDefault();
-    dispatch(vendorRegister(signup))
+    if (
+      (signup.vendor_name === "") |
+      (signup.vendor_email === "") |
+      (signup.vendor_password === "")
+    ) {
+      alert("kolom kosong, tolong diisi terlebih dahulu");
+      return;
+    } else {
+      dispatch(vendorRegister(signup));
+      window.location.reload();
+    }
   };
   return (
     <Container component="main" maxWidth="xs">

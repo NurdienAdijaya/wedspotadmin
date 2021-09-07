@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { ThemeProvider } from "@material-ui/core";
 import { createTheme } from "@material-ui/core/styles";
 import { BrowserRouter } from "react-router-dom";
@@ -19,10 +19,10 @@ const theme = createTheme({
 });
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getVendor())
-  }, [dispatch])
+    dispatch(getVendor());
+  }, [dispatch]);
   return (
     <ThemeProvider theme={theme} className="App">
       <BrowserRouter>
