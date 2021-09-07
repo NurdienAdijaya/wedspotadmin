@@ -31,8 +31,8 @@ import {
 } from "@material-ui/core";
 import MyStore from "./mystore/MyStore";
 import MyStoreDoneSubmit from "./mystore/MyStoreDoneSubmit";
-import NewPackages from "./packages/NewPackages";
-
+import NewPackages from "./package/NewPackages";
+import { useSelector, useDispatch } from "react-redux";
 import Quotations from "./quotations/quotations";
 import Routers from "./quotations/routes";
 import PackageList from "./package/packageList";
@@ -120,7 +120,12 @@ export default function Sidebar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openNav = Boolean(anchorEl);
-  const [firstModal, setFirstModal] = useState(true);
+  const { data } = useSelector(
+    (state) => state.vendorData
+  );
+  console.log(data)
+  const [firstModal, setFirstModal] = useState(false);
+  console.log(firstModal)
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -213,9 +218,9 @@ export default function Sidebar() {
                 // color="#0F120D"
               >
                 <h4 style={{ paddingTop: "1rem", paddingRight: "0.5rem" }}>
-                  Remy sharp
+                  {data.vendor_name}
                 </h4>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                <Avatar alt="Remy Sharp" src={data.vendor_avatar} />
               </IconButton>
               <Menu
                 id="menu-appbar"

@@ -1,6 +1,6 @@
 import { all } from "@redux-saga/core/effects";
 import { watchLogin, watchRegister, watchGetVendor } from "./auth";
-import { watchAllQuotations, watchQuotationsById } from "./quotations";
+import { watchAllQuotations, watchQuotationsById, watchPostQuotation } from "./quotations";
 import { watchAllPackage, watchPackageById } from "./package";
 
 export default function* rootSaga() {
@@ -13,5 +13,6 @@ export default function* rootSaga() {
     watchQuotationsById(),
     watchAllPackage(),
     watchPackageById(),
+    watchPostQuotation(),
   ]);
 }

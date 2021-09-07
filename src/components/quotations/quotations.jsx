@@ -54,10 +54,11 @@ export default function Quotations() {
   const [sort, setSort] = useState("");
   const [filter, setFilter] = useState("");
   const dispatch = useDispatch();
+  console.log(data)
 
   useEffect(() => {
-    dispatch(getQuotations(page, rowsPerPage, sort, filter));
-  }, [page, rowsPerPage, sort, filter]);
+    dispatch(getQuotations(page + 1, rowsPerPage, sort, filter));
+  }, [dispatch, page, rowsPerPage, sort, filter]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -156,38 +157,48 @@ export default function Quotations() {
                   <hr></hr>
                 </Grid>
               </Grid>
-
-              <Link
-                to="/quotes"
-                style={{
-                  color: "black",
-                }}
-              >
-                <Grid container spacing={1}>
-                  <Grid item xs={4}>
-                    <div>
-                      <p>Thu, 14 Jan 2021</p>
-                    </div>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <div className={classes.name}>
-                      <p>Name</p>
-                      <p>Name</p>
-                    </div>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <QuotationNew />
-                    <QuotationSent />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <hr></hr>
-                  </Grid>
-                </Grid>
-              </Link>
+              {data?.data?.map((data, idx) => (
+                <>
+                  <Link
+                    to={`/quotation/${data.request_id}`}
+                    style={{
+                      color: "black",
+                    }}
+                  >
+                    <Grid container spacing={1}>
+                      <Grid item xs={4}>
+                        <div>
+                          <p>{data.created_at}</p>
+                        </div>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <div className={classes.name}>
+                          <p>{data.request_groom_name}</p>
+                          <p>{data.request_bride_name}</p>
+                        </div>
+                      </Grid>
+                      <Grid item xs={4}>
+                        {data.request_status ? (
+                          <>
+                            <QuotationSent />
+                          </>
+                        ) : (
+                          <>
+                            <QuotationNew />
+                          </>
+                        )}
+                      </Grid>
+                      <Grid item xs={12}>
+                        <hr></hr>
+                      </Grid>
+                    </Grid>
+                  </Link>
+                </>
+              ))}
             </Container>
             <TablePagination
               component="div"
-              count={100}
+              count={data?.count}
               page={page}
               onPageChange={handleChangePage}
               rowsPerPage={rowsPerPage}

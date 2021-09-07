@@ -9,10 +9,8 @@ const QuotationsRouters = () => {
         <Route exact path="/">
           <Quotations/>
         </Route>
-        <Route path="/quotes">
+        <Route path="/quotation/:id">
           <QuotationDetail/>
-        </Route>
-        <Route path="/quotes">
         </Route>
       </Switch>
     </>

@@ -18,9 +18,10 @@ export const getQuotationById = (id) =>{
   }
 }
 
-export const createQuotations = (props) => {
+export const createQuotations = (id, file) => {
   return {
     type: types.POST_QUOTATIONS_BEGIN,
-    props,
+    id,
+    file
   };
 };

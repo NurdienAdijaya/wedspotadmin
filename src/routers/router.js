@@ -1,6 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 import Notifications from "../components/Notifications";
-import NewPackages from "../components/packages/NewPackages";
+import NewPackages from "../components/package/NewPackages";
 import Sidebar from "../components/Sidebar";
 import Home from "../pages/Home";
 

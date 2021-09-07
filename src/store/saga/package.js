@@ -15,7 +15,7 @@ function* packageList(action) {
     console.log(res);
     yield put({
       type: types.GET_ALL_PACKAGE_SUCCESS,
-      payload: res.data.data,
+      payload: res.data,
     });
   } catch (error) {
     console.log("ini error", error);
