@@ -12,7 +12,6 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { MoreVert, Search } from "@material-ui/icons";
-import PackageDetail from "./packageDetail";
 import { useDispatch, useSelector } from "react-redux";
 import { Sort, Filter } from "../dropdown/dropdown";
 import { getPackage } from "../../store/action/package";
@@ -51,9 +50,7 @@ export default function PackageList() {
   const [sort, setSort] = useState("");
   const [filter, setFilter] = useState("");
   const dispatch = useDispatch();
-  const { data, isLoading, isSuccess, isError } = useSelector(
-    (state) => state.packageList
-  );
+  const { data } = useSelector((state) => state.packageList);
 
   useEffect(() => {
     dispatch(getPackage(page + 1, rowsPerPage));
@@ -98,6 +95,9 @@ export default function PackageList() {
               <div>
                 <h3>All Package</h3>
               </div>
+              <Link
+                to="/new/package"
+              >
               <Button
                 type="submit"
                 variant="contained"
@@ -109,6 +109,7 @@ export default function PackageList() {
               >
                 + New Package
               </Button>
+              </Link>
             </div>
             <div
               style={{
@@ -155,26 +156,33 @@ export default function PackageList() {
 
             {/* Content */}
             {data?.data?.map((data, idx) => (
-              <Grid container spacing={1} key={idx}>
-                <Grid item xs={3}>
-                  <div>
-                    <p>{data.updated_at}</p>
-                  </div>
+              <Link
+                to={`/package/${data.package_id}`}
+                style={{
+                  color: "black",
+                }}
+              >
+                <Grid container spacing={1} key={idx}>
+                  <Grid item xs={3}>
+                    <div>
+                      <p>{data.updated_at}</p>
+                    </div>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <div className={classes.name}>
+                      <p>{data.package_name}</p>
+                    </div>
+                  </Grid>
+                  <Grid item xs={1}>
+                    <div>
+                      <MoreVert />
+                    </div>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <hr></hr>
+                  </Grid>
                 </Grid>
-                <Grid item xs={8}>
-                  <div className={classes.name}>
-                    <p>{data.package_name}</p>
-                  </div>
-                </Grid>
-                <Grid item xs={1}>
-                  <div>
-                    <MoreVert />
-                  </div>
-                </Grid>
-                <Grid item xs={12}>
-                  <hr></hr>
-                </Grid>
-              </Grid>
+              </Link>
             ))}
           </Container>
           <TablePagination
@@ -187,7 +195,6 @@ export default function PackageList() {
           />
         </div>
       </div>
-      <PackageDetail />
     </div>
   );
 }

@@ -22,4 +22,10 @@ export const createPackage = (props) => {
   };
 };
 
+export const editPackage = (props) => {
+  return {
+    type: types.EDIT_PACKAGE_BEGIN,
+    props
+  }
+}
 

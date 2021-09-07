@@ -38,6 +38,8 @@ import Routers from "./quotations/routes";
 import PackageList from "./package/packageList";
 import FirstModal from "./firstModal";
 import QuotationsRouters from "./quotations/routes";
+import PackageRoutes from "./package/packageRoutes";
+import { Link } from "react-router-dom";
 
 const useStylesNav = makeStyles((theme) => ({
   root: {
@@ -120,12 +122,10 @@ export default function Sidebar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openNav = Boolean(anchorEl);
-  const { data } = useSelector(
-    (state) => state.vendorData
-  );
-  console.log(data)
+  const { data } = useSelector((state) => state.vendorData);
+  console.log(data);
   const [firstModal, setFirstModal] = useState(false);
-  console.log(firstModal)
+  console.log(firstModal);
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -326,24 +326,45 @@ export default function Sidebar() {
           </IconButton>
         </div>
         <List style={{ color: "#B5AF8F" }}>
-          <ListItem button onClick={() => setPage("My Store")}>
-            <ListItemIcon style={{ color: "#B5AF8F" }}>
-              <StorefrontOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary="My Store" />
-          </ListItem>
-          <ListItem button onClick={() => setPage("Quotations")}>
-            <ListItemIcon style={{ color: "#B5AF8F" }}>
-              <DescriptionOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Quotations" />
-          </ListItem>
-          <ListItem button onClick={() => setPage("Packages")}>
-            <ListItemIcon style={{ color: "#B5AF8F" }}>
-              <LocalMallOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Packages" />
-          </ListItem>
+          <Link
+            to="/"
+            style={{
+              color: "#B5AF8F",
+            }}
+          >
+            <ListItem button onClick={() => setPage("My Store")}>
+              <ListItemIcon style={{ color: "#B5AF8F" }}>
+                <StorefrontOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary="My Store" />
+            </ListItem>
+          </Link>
+          <Link
+            to="/"
+            style={{
+              color: "#B5AF8F",
+            }}
+          >
+            <ListItem button onClick={() => setPage("Quotations")}>
+              <ListItemIcon style={{ color: "#B5AF8F" }}>
+                <DescriptionOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Quotations" />
+            </ListItem>
+          </Link>
+          <Link
+            to="/"
+            style={{
+              color: "#B5AF8F",
+            }}
+          >
+            <ListItem button onClick={() => setPage("Packages")}>
+              <ListItemIcon style={{ color: "#B5AF8F" }}>
+                <LocalMallOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Packages" />
+            </ListItem>
+          </Link>
         </List>
       </Drawer>
       <main
@@ -362,7 +383,7 @@ export default function Sidebar() {
         ) : (
           // "Packages"
           // <PackageList />
-          <NewPackages />
+          <PackageRoutes />
         )}
       </main>
     </div>

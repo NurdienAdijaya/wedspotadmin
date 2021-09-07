@@ -3,20 +3,20 @@ import PackageDetail from "./packageDetail";
 import PackageList from "./packageList";
 import NewPackages from "./NewPackages";
 
-const QuotationsRouters = () => {
+const PackageRoutes = () => {
   return (
     <>
-      <Switch>
+     <Switch>
         <Route exact path="/">
           <PackageList />
         </Route>
         <Route path="/package/:id">
           <PackageDetail />
         </Route>
-        <Route path="/package/new">
+        <Route path="/new/package">
           <NewPackages />
-        </Route>
-        <Route path="/package/edit/:id">
+        </Route> 
+        <Route path="/edit/:id">
           <NewPackages />
         </Route>
       </Switch>
@@ -24,4 +24,4 @@ const QuotationsRouters = () => {
   );
 };
 
-export default QuotationsRouters;
+export default PackageRoutes;

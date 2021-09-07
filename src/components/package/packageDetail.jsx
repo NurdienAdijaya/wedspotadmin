@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import {
   Container,
   Grid,
@@ -8,9 +8,9 @@ import {
   Breadcrumbs,
 } from "@material-ui/core";
 import TitleStore1 from "../title/TitleStore1";
-import QuotationSent from "../buttons/QuotationSent";
-import QuotationNew from "../buttons/QuotationNew";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getPackageById } from "../../store/action/package";
 
 const useStyles = makeStyles((theme) => ({
   tittle: {
@@ -51,10 +51,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PackageDetail() {
-  const [file, setFile] = useState("");
   const classes = useStyles();
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { data } = useSelector((state) => state.packageById);
 
-  
+  console.log(data);
+
+  useEffect(() => {
+    dispatch(getPackageById(id));
+  }, [dispatch, id]);
+
   return (
     <div>
       <Breadcrumbs
@@ -71,7 +78,7 @@ export default function PackageDetail() {
         >
           Package
         </Link>
-        <Typography color="textPrimary">All</Typography>
+        <Typography color="textPrimary">{data.package_name}</Typography>
       </Breadcrumbs>
       <div
         style={{
@@ -91,7 +98,7 @@ export default function PackageDetail() {
                 style={{
                   height: "45px",
                   marginLeft: "1rem",
-                  width:"140px"
+                  width: "140px",
                 }}
               >
                 Edit
@@ -100,7 +107,7 @@ export default function PackageDetail() {
           </div>
           <hr></hr>
           <div className={classes.content}>
-            <Grid container spacing={2}>
+            <Grid container spacing={5}>
               <Grid item xs={6}>
                 <div>
                   <h3>Package Details</h3>
@@ -114,7 +121,7 @@ export default function PackageDetail() {
             </Grid>
           </div>
           <div className={classes.item}>
-            <Grid container spacing={2}>
+            <Grid container spacing={5}>
               <Grid item xs={6}>
                 <div className={classes.text}>
                   <Grid container spacing={2}>
@@ -122,28 +129,28 @@ export default function PackageDetail() {
                       <p>Location</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>(Location)</p>
+                      <p>{data.package_location}</p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Capacity</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>(Capacity)</p>
+                      <p>
+                        {data.package_min_capacity} -{" "}
+                        {data.package_max_capacity}
+                      </p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Price Start From</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>(Price)</p>
+                      <p>Rp.{data.package_price}</p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Description</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>(Description)</p>
-                      <p>(Description)</p>
-                      <p>(Description)</p>
-                      <p>(Description)</p>
+                      <p>{data.package_details}</p>
                     </Grid>
                   </Grid>
                 </div>
@@ -152,10 +159,11 @@ export default function PackageDetail() {
                 <div className={classes.text}>
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
-                      <p>(Service)</p>
-                      <p>(Service)</p>
-                      <p>(Service)</p>
-                      <p>(Service)</p>
+                      <ul>
+                        {data.package_services?.map((data, idx) => (
+                          <li key={idx}>{data}</li>
+                        ))}
+                      </ul>
                     </Grid>
                   </Grid>
                 </div>
@@ -166,30 +174,11 @@ export default function PackageDetail() {
           <div className={classes.send}>
             <h3>Package Album</h3>
             <Grid container spacing={5}>
-              <Grid item xs={3}>
-                <h1>(foto)</h1>
-              </Grid>
-              <Grid item xs={3}>
-                <h1>(foto)</h1>
-              </Grid>
-              <Grid item xs={3}>
-                <h1>(foto)</h1>
-              </Grid>
-              <Grid item xs={3}>
-                <h1>(foto)</h1>
-              </Grid>
-              <Grid item xs={3}>
-                <h1>(foto)</h1>
-              </Grid>
-              <Grid item xs={3}>
-                <h1>(foto)</h1>
-              </Grid>
-              <Grid item xs={3}>
-                <h1>(foto)</h1>
-              </Grid>
-              <Grid item xs={3}>
-                <h1>(foto)</h1>
-              </Grid>
+              {data.package_album?.map((data, idx) => (
+                <Grid item xs={3} key={idx}>
+                  <img src={data} alt="album"style={{width:"100%"}}/>
+                </Grid>
+              ))}
             </Grid>
           </div>
         </Container>
