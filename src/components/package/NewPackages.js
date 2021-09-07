@@ -200,9 +200,7 @@ const NewPackages = () => {
                         position: "absolute",
                         color: "#f66257",
                       }}
-                    >
-                      x
-                    </CancelIcon>
+                    />
                     <div
                       style={{
                         height: "inherit",
