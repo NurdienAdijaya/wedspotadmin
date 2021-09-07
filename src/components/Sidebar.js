@@ -31,7 +31,7 @@ import {
 } from "@material-ui/core";
 import MyStore from "./mystore/MyStore";
 import MyStoreDoneSubmit from "./mystore/MyStoreDoneSubmit";
-import NewPackages from "./packages/NewPackages";
+import NewPackages from "./package/NewPackages";
 
 import Quotations from "./quotations/quotations";
 import Routers from "./quotations/routes";
@@ -353,7 +353,8 @@ export default function Sidebar() {
           "Quotations"
         ) : (
           // "Packages"
-          <PackageList />
+          // <PackageList />
+          <NewPackages />
         )}
       </main>
     </div>
