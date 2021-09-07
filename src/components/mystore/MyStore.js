@@ -8,7 +8,6 @@ import "./MyStore.css";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import NoPhoto from "../../assets/NoPhotoAlbum.png";
 import ButtonPhoto from "../buttons/ButtonPhoto";
-import { RedeemRounded } from "@material-ui/icons";
 
 function handleClick(event) {
   event.preventDefault();
