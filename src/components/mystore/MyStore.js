@@ -285,7 +285,7 @@ const MyStore = () => {
           <div className="textfieldmargin">
             <div
               style={{
-                width: "500px",
+                width: "547px",
                 height: "0.1rem",
               }}
             ></div>
