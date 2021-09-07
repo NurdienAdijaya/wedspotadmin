@@ -8,6 +8,7 @@ import "./MyStore.css";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import NoPhoto from "../../assets/NoPhotoAlbum.png";
 import ButtonPhoto from "../buttons/ButtonPhoto";
+import { RedeemRounded } from "@material-ui/icons";
 
 function handleClick(event) {
   event.preventDefault();
@@ -37,9 +38,45 @@ const location = [
 
 const MyStore = () => {
   const [service, setservice] = useState("package");
+  const [vendor_header, setVendorHeader] = useState();
+  const [previewHeader, setPreviewHeader] = useState();
+  const [vendor_avatar, setVendorAvatar] = useState();
+  const [previewAvatar, setPreviewAvatar] = useState();
+
   const handleChange = (event) => {
     setservice(event.target.value);
   };
+
+  const handleHeaderImage = (e) => {
+    setVendorHeader(e.target.files[0]);
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setPreviewHeader(reader.result);
+      }
+    };
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onerror = () => {
+      console.log("header error");
+    };
+  };
+
+  const handleAvatarImage = (e) => {
+    setVendorAvatar(e.target.files[0]);
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setPreviewAvatar(reader.result);
+      }
+    };
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onerror = () => {
+      console.log("avatar error");
+    };
+  };
+
+  console.log("vendor_header", vendor_header);
+  console.log("previewHeader", previewHeader);
   return (
     <div>
       <Breadcrumbs
@@ -91,8 +128,35 @@ const MyStore = () => {
                   flexDirection: "column",
                 }}
               >
-                <img src={NoPhoto} height="70rem" />
-                <ButtonPhoto />
+                {previewHeader ? null : (
+                  <img src={NoPhoto} height="70rem" alt="" />
+                )}
+                <input
+                  type="file"
+                  name="header-upload"
+                  id="header-input"
+                  accept="image/*"
+                  style={{
+                    display: "none",
+                  }}
+                  onChange={handleHeaderImage}
+                />
+                <label
+                  htmlFor="header-input"
+                  className="header-upload"
+                  style={{ zIndex: "1" }}
+                >
+                  <ButtonPhoto />
+                </label>
+                <img
+                  src={previewHeader}
+                  alt=""
+                  style={{
+                    maxWidth: "500px",
+                    maxHeight: "320px",
+                    position: "absolute",
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -120,8 +184,35 @@ const MyStore = () => {
                   flexDirection: "column",
                 }}
               >
-                <img src={NoPhoto} height="70rem" />
-                <ButtonPhoto />
+                {previewAvatar ? null : (
+                  <img src={NoPhoto} height="70rem" alt="" />
+                )}
+                <input
+                  type="file"
+                  name="avatar-upload"
+                  id="avatar-input"
+                  accept="image/*"
+                  style={{
+                    display: "none",
+                  }}
+                  onChange={handleAvatarImage}
+                />
+                <label
+                  htmlFor="avatar-input"
+                  className="avatar-upload"
+                  style={{ zIndex: "1" }}
+                >
+                  <ButtonPhoto />
+                </label>
+                <img
+                  src={previewAvatar}
+                  alt=""
+                  style={{
+                    maxWidth: "500px",
+                    maxHeight: "320px",
+                    position: "absolute",
+                  }}
+                />
               </div>
             </div>
           </div>

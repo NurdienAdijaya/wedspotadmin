@@ -3,9 +3,9 @@ import "./Button.css";
 
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 
-const ButtonPhoto = ({ width, content, onClick, height }) => {
+const ButtonPhoto = ({ width, content, height }) => {
   return (
-    <button
+    <div
       className="secondary"
       style={{
         height: `${height}`,
@@ -14,11 +14,10 @@ const ButtonPhoto = ({ width, content, onClick, height }) => {
         alignItems: "center",
         background: "#ffffff",
       }}
-      onClick={(event) => onClick(event)}
     >
       <AddAPhotoIcon style={{ marginRight: "1rem" }} />
       Add{content} Photo
-    </button>
+    </div>
   );
 };
 
