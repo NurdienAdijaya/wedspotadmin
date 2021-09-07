@@ -23,6 +23,7 @@ function App() {
   useEffect(() => {
     dispatch(getVendor());
   }, [dispatch]);
+  
   return (
     <ThemeProvider theme={theme} className="App">
       <BrowserRouter>

@@ -27,12 +27,14 @@ const location = [
 const NewPackages = () => {
   const [service, setservice] = useState("package");
   const [package_album, setPackageAlbum] = useState([]);
+  const [album, setAlbum] = useState([]);
   const [state, setState] = React.useState({
     checkedA: true,
     checkedB: true,
     checkedF: true,
     checkedG: true,
   });
+  console.log(album)
 
   const handleChangeCheckbox = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
@@ -46,8 +48,10 @@ const NewPackages = () => {
     console.log("files", e.target.files);
     let file = e.target.files[0];
     let reader = new FileReader();
-    if (file) {
-      reader.readAsDataURL(e.target.files[0]);
+    let allAlbum = e.target.files
+    setAlbum(file)
+    if (allAlbum) {
+      reader.readAsDataURL(file);
       reader.onload = () => {
         setPackageAlbum([...package_album, reader.result]);
       };
@@ -125,6 +129,7 @@ const NewPackages = () => {
               name="album-upload"
               id="album-input"
               accept="image/*"
+              multiple
               style={{
                 display: "none",
               }}

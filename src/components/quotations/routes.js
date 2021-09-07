@@ -2,14 +2,14 @@ import { Route, Switch } from "react-router-dom";
 import QuotationDetail from "./quotationDetail";
 import Quotations from "./quotations";
 
-const Routers = () => {
+const QuotationsRouters = () => {
   return (
     <>
       <Switch>
         <Route exact path="/">
           <Quotations/>
         </Route>
-        <Route path="/quotes">
+        <Route path="/quotation/:id">
           <QuotationDetail/>
         </Route>
       </Switch>
@@ -17,4 +17,4 @@ const Routers = () => {
   );
 };
 
-export default Routers;
+export default QuotationsRouters;
