@@ -3,7 +3,7 @@ import "./Button.css";
 
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 
-const ButtonPhoto = ({ width, content, height }) => {
+const ButtonPhoto = ({ width, content = "Add Photo", height }) => {
   return (
     <div
       className="secondary"
@@ -16,7 +16,7 @@ const ButtonPhoto = ({ width, content, height }) => {
       }}
     >
       <AddAPhotoIcon style={{ marginRight: "1rem" }} />
-      Add{content} Photo
+      {content}
     </div>
   );
 };

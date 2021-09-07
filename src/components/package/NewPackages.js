@@ -2,17 +2,13 @@ import React, { useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
-import ButtonSecondary from "../buttons/ButtonSecondary";
-import FacebookIcon from "@material-ui/icons/Facebook";
-import InstagramIcon from "@material-ui/icons/Instagram";
-import TwitterIcon from "@material-ui/icons/Twitter";
-import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import NoPhoto from "../../assets/NoPhotoAlbum.png";
 import { MenuItem, TextField } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import ButtonPhoto from "../buttons/ButtonPhoto";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 function handleClick(event) {
   event.preventDefault();
@@ -30,6 +26,7 @@ const location = [
 ];
 const NewPackages = () => {
   const [service, setservice] = useState("package");
+  const [package_album, setPackageAlbum] = useState([]);
   const [state, setState] = React.useState({
     checkedA: true,
     checkedB: true,
@@ -43,6 +40,39 @@ const NewPackages = () => {
 
   const handleChange = (event) => {
     setservice(event.target.value);
+  };
+  const handleAlbum = (e) => {
+    // function to convert image file into base64
+    console.log("files", e.target.files);
+    let file = e.target.files[0];
+    let reader = new FileReader();
+    if (file) {
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = () => {
+        setPackageAlbum([...package_album, reader.result]);
+      };
+    }
+    reader.onerror = () => {
+      console.log("error");
+    };
+  };
+  console.log("package_album", package_album);
+  // clear state
+  // const clearImage = () => {
+  //   if (package_album.length) {
+  //     setPackageAlbum([]);
+  //   } else {
+  //     alert("gamber kosong!");
+  //   }
+  // };
+  const clearOne = (index) => {
+    if (package_album.length) {
+      setPackageAlbum(
+        package_album.filter((fil) => fil !== package_album[index])
+      );
+    } else {
+      alert("gamber kosong!");
+    }
   };
   return (
     <div>
@@ -90,7 +120,31 @@ const NewPackages = () => {
             </div>
           </div>
           <div>
-            <ButtonPhoto width="160px" height="55px" />
+            <input
+              type="file"
+              name="album-upload"
+              id="album-input"
+              accept="image/*"
+              style={{
+                display: "none",
+              }}
+              onChange={handleAlbum}
+            />
+            <label
+              htmlFor="album-input"
+              className="album-upload"
+              style={{ zIndex: "1" }}
+            >
+              {package_album.length === 0 ? (
+                <ButtonPhoto width="160px" height="55px" />
+              ) : (
+                <ButtonPhoto
+                  width="160px"
+                  height="55px"
+                  content="Add More Pictures"
+                />
+              )}
+            </label>
           </div>
         </div>
         <div
@@ -103,18 +157,70 @@ const NewPackages = () => {
             style={{
               background: "#F3F3F3",
               height: "22.375rem",
+              padding: "1rem",
+              display: "flex",
+              justifyContent: "center",
             }}
           >
-            <div
-              style={{
-                height: "inherit",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <img src={NoPhoto} height="70rem" />
-            </div>
+            {package_album.length === 0 ? (
+              <div
+                style={{
+                  height: "inherit",
+
+                  width: "inherit",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <img src={NoPhoto} height="70rem" alt="" />
+              </div>
+            ) : (
+              package_album.map((data, index) => {
+                return (
+                  <div
+                    key={index}
+                    style={{
+                      height: "114px",
+                      width: "114px",
+                      border: "1px solid #e1e1e1",
+                      background: "white",
+                      margin: "1.2rem 1rem",
+                    }}
+                  >
+                    <CancelIcon
+                      onClick={() => clearOne(index)}
+                      style={{
+                        zIndex: "1",
+                        position: "absolute",
+                        color: "#f66257",
+                      }}
+                    >
+                      x
+                    </CancelIcon>
+                    <div
+                      style={{
+                        height: "inherit",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <img
+                        src={data}
+                        alt="mapped img"
+                        style={{
+                          maxHeight: "110px",
+                          maxWidth: "110px",
+                          position: "absolute",
+                        }}
+                      />
+                    </div>
+                  </div>
+                );
+              })
+            )}
           </div>
         </div>
         <div className="divmargin">
@@ -164,7 +270,7 @@ const NewPackages = () => {
                   label="Capacity*"
                   variant="outlined"
                   helperText="number per pax"
-                  defaultValue="Default Value"
+                  // defaultValue="Default Value"
                 />
               </div>
               <div className="textfieldmargin">
