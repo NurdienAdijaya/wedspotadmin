@@ -19,3 +19,10 @@ export const getVendor = () => {
     type: types.GET_VENDOR_BEGIN,
   };
 };
+
+export const editVendor = (props) => {
+  return {
+    type: types.EDIT_VENDOR_BEGIN,
+    props
+  };
+};

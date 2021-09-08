@@ -87,7 +87,7 @@ function* editPackage(action) {
   dataToSend.append("package_album", props.package_album);
   try {
     const res = yield axios.put(
-      `${BASE_URL}/packages`,
+      `${BASE_URL}/packages/${props.id}`,
       dataToSend,
       { headers: { Authorization: `Bearer ${token}` } }
     );

@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import "./App.css";
 import Routers from "./routers/router";
 import { getVendor } from "./store/action/auth";
+import { getLocation, getVenue, getOrganizer } from "./store/action/config";
 
 const theme = createTheme({
   palette: {
@@ -21,7 +22,10 @@ const theme = createTheme({
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getVendor());
+    dispatch(getVendor())
+    dispatch(getVenue())
+    dispatch(getLocation())
+    dispatch(getOrganizer())
   }, [dispatch]);
   
   return (

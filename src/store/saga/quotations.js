@@ -6,7 +6,7 @@ import { put, takeEvery } from "redux-saga/effects";
 const token = localStorage.getItem("token");
 
 function* quotationsList(action) {
-  const { page, limit, sort_by, order_by, filter } = action;
+  const { page, limit, sort_by, order_by} = action;
   try {
     const res = yield axios.get(
       `${BASE_URL}/requests/vendor?page=${page}&limit=${limit}&sort_by=${sort_by}&order_by=${order_by}`,

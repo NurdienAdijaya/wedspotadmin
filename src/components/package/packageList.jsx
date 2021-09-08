@@ -15,6 +15,7 @@ import { MoreVert, Search } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Sort, Filter } from "../dropdown/dropdown";
 import { getPackage } from "../../store/action/package";
+import moment from 'moment'
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -165,7 +166,7 @@ export default function PackageList() {
                 <Grid container spacing={1} key={idx}>
                   <Grid item xs={3}>
                     <div>
-                      <p>{data.updated_at}</p>
+                      <p>{moment(data.created_at).format("ddd, DD MMM YYYY")}</p>
                     </div>
                   </Grid>
                   <Grid item xs={8}>

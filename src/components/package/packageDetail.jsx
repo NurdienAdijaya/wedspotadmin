@@ -91,18 +91,20 @@ export default function PackageDetail() {
           <div className={classes.tittle}>
             <TitleStore1 title="Package Details" detail="" />
             <div>
-              <Button
-                type="submit"
-                variant="contained"
-                color="white"
-                style={{
-                  height: "45px",
-                  marginLeft: "1rem",
-                  width: "140px",
-                }}
-              >
-                Edit
-              </Button>
+              <Link to={`/edit/${data.package_id}`}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="white"
+                  style={{
+                    height: "45px",
+                    marginLeft: "1rem",
+                    width: "140px",
+                  }}
+                >
+                  Edit
+                </Button>
+              </Link>
             </div>
           </div>
           <hr></hr>
@@ -176,7 +178,7 @@ export default function PackageDetail() {
             <Grid container spacing={5}>
               {data.package_album?.map((data, idx) => (
                 <Grid item xs={3} key={idx}>
-                  <img src={data} alt="album"style={{width:"100%"}}/>
+                  <img src={data} alt="album" style={{ width: "100%" }} />
                 </Grid>
               ))}
             </Grid>

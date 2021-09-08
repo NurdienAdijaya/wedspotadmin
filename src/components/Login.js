@@ -62,9 +62,9 @@ export default function SignUp() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [sign, setSign] = useState(false);
-  const { isError, message, isLoading } = useSelector(
-    (state) => state.vendorData
-  );
+  // const { isError, message, isLoading } = useSelector(
+  //   (state) => state.vendorData
+  // );
 
   const [login, setlogin] = useState({
     vendor_email: "",
