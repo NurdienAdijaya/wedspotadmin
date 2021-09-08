@@ -220,7 +220,7 @@ export default function Sidebar() {
                 <h4 style={{ paddingTop: "1rem", paddingRight: "0.5rem" }}>
                   {data.vendor_name}
                 </h4>
-                <Avatar alt="Remy Sharp" src={data.vendor_avatar} />
+                <Avatar alt={data.vendor_name} src={data.vendor_avatar} />
               </IconButton>
               <Menu
                 id="menu-appbar"

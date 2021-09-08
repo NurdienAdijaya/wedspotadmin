@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
@@ -9,6 +9,13 @@ import Checkbox from "@material-ui/core/Checkbox";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import ButtonPhoto from "../buttons/ButtonPhoto";
 import CancelIcon from "@material-ui/icons/Cancel";
+import { useParams } from "react-router-dom";
+import {
+  createPackage,
+  editPackage,
+  getPackageById,
+} from "../../store/action/package";
+import { useDispatch, useSelector } from "react-redux";
 
 function handleClick(event) {
   event.preventDefault();
@@ -26,15 +33,53 @@ const location = [
 ];
 const NewPackages = () => {
   const [service, setservice] = useState("package");
-  const [package_album, setPackageAlbum] = useState([]);
-  const [album, setAlbum] = useState([]);
+  const { data } = useSelector((state) => state.packageById);
+  const [package_album, setPackageAlbum] = useState(data.package_album || []);
+  const [package_name, setPackageName] = useState(data.package_name || "");
+  const [package_location, setPackageLocation] = useState(data.package_location || "");
+  const [package_price, setPackagePrice] = useState(data.package_price || "");
+  const [package_capacity, setPackageCapacity] = useState(`${data.package_min_capacity} - ${data.package_max_capacity}` || "");
+  const [package_details, setPackageDetails] = useState(data.package_details || "");
+  const [package_services, setPackageServices] = useState("");
+  const [album, setAlbum] = useState(data.package_album || []);
+  const dataToSend = {
+    package_album: album,
+    package_name,
+    package_location,
+    package_price,
+    package_details,
+    package_services,
+  };
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  console.log(id);
+
   const [state, setState] = React.useState({
-    checkedA: true,
-    checkedB: true,
+    checkedA: false,
+    checkedB: false,
     checkedF: true,
     checkedG: true,
   });
-  console.log(album)
+  
+
+  useEffect(() => {
+    dispatch(getPackageById(id));
+    if (id) {
+      console.log("edit");
+    } else {
+      console.log("create");
+    }
+  }, [dispatch, id]);
+
+  const handleSubmit = () => {
+    if (id) {
+      dispatch(editPackage(dataToSend));
+    } else {
+      dispatch(createPackage(dataToSend));
+    }
+  };
+
+  console.log(data);
 
   const handleChangeCheckbox = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
@@ -48,19 +93,19 @@ const NewPackages = () => {
     console.log("files", e.target.files);
     let file = e.target.files[0];
     let reader = new FileReader();
-    let allAlbum = e.target.files
-    setAlbum(file)
+    let allAlbum = e.target.files;
+    // setAlbum(album.push(file))
     if (allAlbum) {
       reader.readAsDataURL(file);
       reader.onload = () => {
         setPackageAlbum([...package_album, reader.result]);
+        setAlbum([...album, file]);
       };
     }
     reader.onerror = () => {
       console.log("error");
     };
   };
-  console.log("package_album", package_album);
   // clear state
   // const clearImage = () => {
   //   if (package_album.length) {
@@ -74,6 +119,7 @@ const NewPackages = () => {
       setPackageAlbum(
         package_album.filter((fil) => fil !== package_album[index])
       );
+      setAlbum(album.filter((fil) => fil !== album[index]));
     } else {
       alert("gamber kosong!");
     }
@@ -89,7 +135,9 @@ const NewPackages = () => {
         <Link color="inherit" href="/store" onClick={handleClick}>
           Packages
         </Link>
-        <Typography color="textPrimary">New Package</Typography>
+        <Typography color="textPrimary">
+          {id ? (<>Edit</>) : (<>Create Package</>)}
+        </Typography>
       </Breadcrumbs>
       <div
         style={{
@@ -129,7 +177,6 @@ const NewPackages = () => {
               name="album-upload"
               id="album-input"
               accept="image/*"
-              multiple
               style={{
                 display: "none",
               }}
@@ -246,6 +293,8 @@ const NewPackages = () => {
                   className="textfield"
                   label="Email*"
                   variant="outlined"
+                  value={package_name}
+                  onChange={(e) => setPackageName(e.target.value)}
                 />
               </div>
               <div className="textfieldmargin">
@@ -274,6 +323,8 @@ const NewPackages = () => {
                   variant="outlined"
                   helperText="number per pax"
                   // defaultValue="Default Value"
+                  value={package_capacity}
+                  onChange={(e) => setPackageCapacity(e.target.value)}
                 />
               </div>
               <div className="textfieldmargin">
@@ -282,6 +333,8 @@ const NewPackages = () => {
                   label="Price Range*"
                   variant="outlined"
                   helperText="number in Rupiah"
+                  value={package_price}
+                  onChange={(e) => setPackagePrice(e.target.value)}
                 />
               </div>
             </div>
@@ -294,6 +347,8 @@ const NewPackages = () => {
                   multiline
                   rows={18}
                   variant="outlined"
+                  value={package_details}
+                  onChange={(e) => setPackageDetails(e.target.value)}
                 />
               </div>
             </div>

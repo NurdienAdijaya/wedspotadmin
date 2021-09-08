@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Sort, Filter } from "../dropdown/dropdown";
 import NoresultPhone from "../noResult/NoresultPhone";
 import { getQuotations } from "../../store/action/quotation";
+import moment from 'moment'
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -168,7 +169,7 @@ export default function Quotations() {
                     <Grid container spacing={1}>
                       <Grid item xs={4}>
                         <div>
-                          <p>{data.created_at}</p>
+                          <p>{moment(data.created_at).format("ddd, DD MMM YYYY")}</p>
                         </div>
                       </Grid>
                       <Grid item xs={4}>

@@ -30,6 +30,25 @@ const initialState = {
           isLoading:false,
           message:payload
         };
+      case types.POST_QUOTATIONS_BEGIN:
+        return {
+          ...state,
+          isLoading: true,
+        };
+      case types.POST_QUOTATIONS_SUCCESS:
+        return {
+          ...state,
+          isSuccess: true,
+          isLoading:false,
+          data: payload,
+        };
+      case types.POST_QUOTATIONS_FAIL:
+        return {
+          ...state,
+          isError: true,
+          isLoading:false,
+          message:payload
+        };
       default:
         return state;
     }

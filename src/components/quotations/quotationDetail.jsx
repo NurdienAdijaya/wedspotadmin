@@ -18,6 +18,7 @@ import {
   getQuotationById,
   createQuotations,
 } from "../../store/action/quotation";
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   tittle: {
@@ -66,7 +67,7 @@ export default function QuotationDetail() {
 
   useEffect(() => {
     dispatch(getQuotationById(id));
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -165,7 +166,9 @@ export default function QuotationDetail() {
                       <p>Wedding Date</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>{data.request_wedding_date}</p>
+                      <p>
+                        {moment(data.request_wedding_date).format("DD/MM/YYYY")}
+                      </p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Budget</p>
@@ -184,63 +187,71 @@ export default function QuotationDetail() {
               </Grid>
             </Grid>
           </div>
-          <hr></hr>
-          <div className={classes.send}>
-            <TitleStore1
-              title="Upload Quotation"
-              detail="Acceptable file type is only PDF. Max file size 10 MB."
-            />
-            {file && (
-              <div className={classes.file}>
-                <img src={Vector} alt="pdf" />
-                <Typography style={{ marginLeft: "10px" }}>
-                  {file?.name || "select an File"}
-                </Typography>
-              </div>
-            )}
-            <form onSubmit={handleSubmit}>
-              <div className={classes.buttons}>
-                <div>
-                  <input
-                    name="userfile"
-                    type="file"
-                    accept="application/pdf"
-                    id="contained-button-file"
-                    onChange={(e) => setFile(e.target.files[0])}
-                    max-size="10000000"
-                    style={{
-                      display: "none",
-                    }}
-                  />
-                  <label htmlFor="contained-button-file">
+          
+          {data.request_status ? (
+            <>
+            </>
+          ) : (
+            <>
+            <hr></hr>
+              <div className={classes.send}>
+                <TitleStore1
+                  title="Upload Quotation"
+                  detail="Acceptable file type is only PDF. Max file size 10 MB."
+                />
+                {file && (
+                  <div className={classes.file}>
+                    <img src={Vector} alt="pdf" />
+                    <Typography style={{ marginLeft: "10px" }}>
+                      {file?.name || "select an File"}
+                    </Typography>
+                  </div>
+                )}
+                <form onSubmit={handleSubmit}>
+                  <div className={classes.buttons}>
+                    <div>
+                      <input
+                        name="userfile"
+                        type="file"
+                        accept="application/pdf"
+                        id="contained-button-file"
+                        onChange={(e) => setFile(e.target.files[0])}
+                        max-size="10000000"
+                        style={{
+                          display: "none",
+                        }}
+                      />
+                      <label htmlFor="contained-button-file">
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          color="white"
+                          component="span"
+                          className={classes.btn}
+                          style={{
+                            height: "45px",
+                          }}
+                        >
+                          {file ? "Change File" : "Upload File"}
+                        </Button>
+                      </label>
+                    </div>
                     <Button
                       type="submit"
                       variant="contained"
-                      color="white"
-                      component="span"
-                      className={classes.btn}
+                      color="primary"
+                      disabled={!file}
                       style={{
                         height: "45px",
                       }}
                     >
-                      {file ? "Change File" : "Upload File"}
+                      Send Quotation
                     </Button>
-                  </label>
-                </div>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  disabled={!file}
-                  style={{
-                    height: "45px",
-                  }}
-                >
-                  Send Quotation
-                </Button>
+                  </div>
+                </form>
               </div>
-            </form>
-          </div>
+            </>
+          )}
         </Container>
       </div>
     </div>
