@@ -48,6 +48,7 @@ function* packageById(action) {
 
 function* createPackage(action) {
   const { props } = action;
+  console.log(props)
   let dataToSend = new FormData();
   dataToSend.append("package_name", props.package_name);
   dataToSend.append("package_location", props.package_location);
@@ -68,9 +69,10 @@ function* createPackage(action) {
     });
   } catch (error) {
     console.log(error.response)
+    console.log(props)
     yield put({
       type: types.CREATE_PACKAGE_FAIL,
-      payload: error.response.data.errors,
+      payload: error.response,
     });
   }
 }
@@ -87,7 +89,7 @@ function* editPackage(action) {
   dataToSend.append("package_album", props.package_album);
   try {
     const res = yield axios.put(
-      `${BASE_URL}/packages/${props.id}`,
+      `${BASE_URL}/packages/${props.package_id}`,
       dataToSend,
       { headers: { Authorization: `Bearer ${token}` } }
     );

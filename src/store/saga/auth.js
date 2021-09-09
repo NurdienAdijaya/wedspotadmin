@@ -62,7 +62,7 @@ function* editVendor(action) {
   let dataToSend = new FormData();
   dataToSend.append("vendor_name", props.vendor_name);
   dataToSend.append("vendor_avatar", props.vendor_avatar);
-  dataToSend.append("vendor_header", props.vendor_location);
+  dataToSend.append("vendor_header", props.vendor_header);
   dataToSend.append("vendor_email_info", props.vendor_email);
   dataToSend.append("vendor_phone", props.vendor_phone);
   dataToSend.append("vendor_website", props.vendor_website);
