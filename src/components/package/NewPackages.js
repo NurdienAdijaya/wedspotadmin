@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
 import NoPhoto from "../../assets/NoPhotoAlbum.png";
-import { MenuItem, TextField } from "@material-ui/core";
+import { MenuItem, TextField, Button } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import ButtonPrimary from "../buttons/ButtonPrimary";
@@ -33,56 +33,62 @@ const location = [
 ];
 const NewPackages = () => {
   const [service, setservice] = useState("package");
-  const { data } = useSelector((state) => state.packageById);
-  const [package_album, setPackageAlbum] = useState(data.package_album || []);
-  const [package_name, setPackageName] = useState(data.package_name || "");
-  const [package_location, setPackageLocation] = useState(data.package_location || "");
-  const [package_price, setPackagePrice] = useState(data.package_price || "");
-  const [package_capacity, setPackageCapacity] = useState(`${data.package_min_capacity} - ${data.package_max_capacity}` || "");
-  const [package_details, setPackageDetails] = useState(data.package_details || "");
-  const [package_services, setPackageServices] = useState("");
-  const [album, setAlbum] = useState(data.package_album || []);
+  const { dataPackage } = useSelector((state) => state.packageById);
+  const { data } = useSelector((state) => state.vendorData);
+  const { citys, venue, organizer } = useSelector((state) => state.config);
+  const [package_album, setPackageAlbum] = useState(
+    dataPackage.package_album || []
+  );
+  const [package_name, setPackageName] = useState(
+    dataPackage.package_name || ""
+  );
+  const [package_location, setPackageLocation] = useState(
+    dataPackage.package_location || ""
+  );
+  const [package_price, setPackagePrice] = useState(
+    dataPackage.package_price || ""
+  );
+  const [package_capacity, setPackageCapacity] = useState(
+    `${dataPackage.package_min_capacity} - ${dataPackage.package_max_capacity}` ||
+      ""
+  );
+  const [package_details, setPackageDetails] = useState(
+    dataPackage.package_details || ""
+  );
+  const [state, setState] = useState([]);
+  const [album, setAlbum] = useState(dataPackage.package_album || []);
+  const { id } = useParams();
   const dataToSend = {
     package_album: album,
     package_name,
     package_location,
     package_price,
+    package_capacity,
     package_details,
-    package_services,
+    package_services: state,
+    package_id: id,
   };
-  const { id } = useParams();
   const dispatch = useDispatch();
-  console.log(id);
 
-  const [state, setState] = React.useState({
-    checkedA: false,
-    checkedB: false,
-    checkedF: true,
-    checkedG: true,
-  });
-  
+
 
   useEffect(() => {
     dispatch(getPackageById(id));
-    if (id) {
-      console.log("edit");
-    } else {
-      console.log("create");
-    }
   }, [dispatch, id]);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (id) {
       dispatch(editPackage(dataToSend));
     } else {
       dispatch(createPackage(dataToSend));
     }
   };
-
-  console.log(data);
-
   const handleChangeCheckbox = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+    if (event.target.checked) {
+      setState([...state, event.target.value]);
+    }
+    console.log(event);
   };
 
   const handleChange = (event) => {
@@ -136,7 +142,7 @@ const NewPackages = () => {
           Packages
         </Link>
         <Typography color="textPrimary">
-          {id ? (<>Edit</>) : (<>Create Package</>)}
+          {id ? <>Edit</> : <>Create Package</>}
         </Typography>
       </Breadcrumbs>
       <div
@@ -146,274 +152,301 @@ const NewPackages = () => {
           // padding: "0 1.715rem",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "1.715rem 1.715rem 0 1.715rem",
-          }}
-        >
-          <div>
-            <div
-              style={{
-                margin: "1.315rem 0",
-              }}
-            >
-              <h1
-                style={{
-                  fontFamily: "Cormorant",
-                  fontWeight: "700",
-                }}
-              >
-                Package Albums
-              </h1>
-              <p>The image must have the ratio of 1:2 or 1:1</p>
-            </div>
-          </div>
-          <div>
-            <input
-              type="file"
-              name="album-upload"
-              id="album-input"
-              accept="image/*"
-              style={{
-                display: "none",
-              }}
-              onChange={handleAlbum}
-            />
-            <label
-              htmlFor="album-input"
-              className="album-upload"
-              style={{ zIndex: "1" }}
-            >
-              {package_album.length === 0 ? (
-                <ButtonPhoto width="160px" height="55px" />
-              ) : (
-                <ButtonPhoto
-                  width="160px"
-                  height="55px"
-                  content="Add More Pictures"
-                />
-              )}
-            </label>
-          </div>
-        </div>
-        <div
-          style={{
-            width: "100%",
-            padding: "1.715rem 3rem",
-          }}
-        >
+        <form onSubmit={handleSubmit}>
           <div
             style={{
-              background: "#F3F3F3",
-              height: "22.375rem",
-              padding: "1rem",
               display: "flex",
-              justifyContent: "center",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "1.715rem 1.715rem 0 1.715rem",
             }}
           >
-            {package_album.length === 0 ? (
+            <div>
               <div
                 style={{
-                  height: "inherit",
-
-                  width: "inherit",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  margin: "1.315rem 0",
                 }}
               >
-                <img src={NoPhoto} height="70rem" alt="" />
+                <h1
+                  style={{
+                    fontFamily: "Cormorant",
+                    fontWeight: "700",
+                  }}
+                >
+                  Package Albums
+                </h1>
+                <p>The image must have the ratio of 1:2 or 1:1</p>
               </div>
-            ) : (
-              package_album.map((data, index) => {
-                return (
-                  <div
-                    key={index}
-                    style={{
-                      height: "114px",
-                      width: "114px",
-                      border: "1px solid #e1e1e1",
-                      background: "white",
-                      margin: "1.2rem 1rem",
-                    }}
-                  >
-                    <CancelIcon
-                      onClick={() => clearOne(index)}
-                      style={{
-                        zIndex: "1",
-                        position: "absolute",
-                        color: "#f66257",
-                      }}
-                    />
+            </div>
+            <div>
+              <input
+                type="file"
+                name="album-upload"
+                id="album-input"
+                accept="image/*"
+                style={{
+                  display: "none",
+                }}
+                onChange={handleAlbum}
+              />
+              <label
+                htmlFor="album-input"
+                className="album-upload"
+                style={{ zIndex: "1" }}
+              >
+                {package_album.length === 0 ? (
+                  <ButtonPhoto width="160px" height="55px" />
+                ) : (
+                  <ButtonPhoto
+                    width="160px"
+                    height="55px"
+                    content="Add More Pictures"
+                  />
+                )}
+              </label>
+            </div>
+          </div>
+          <div
+            style={{
+              width: "100%",
+              padding: "1.715rem 3rem",
+            }}
+          >
+            <div
+              style={{
+                background: "#F3F3F3",
+                height: "22.375rem",
+                padding: "1rem",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              {package_album.length === 0 ? (
+                <div
+                  style={{
+                    height: "inherit",
+
+                    width: "inherit",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img src={NoPhoto} height="70rem" alt="" />
+                </div>
+              ) : (
+                package_album.map((data, index) => {
+                  return (
                     <div
+                      key={index}
                       style={{
-                        height: "inherit",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        flexDirection: "column",
+                        height: "114px",
+                        width: "114px",
+                        border: "1px solid #e1e1e1",
+                        background: "white",
+                        margin: "1.2rem 1rem",
                       }}
                     >
-                      <img
-                        src={data}
-                        alt="mapped img"
+                      <CancelIcon
+                        onClick={() => clearOne(index)}
                         style={{
-                          maxHeight: "110px",
-                          maxWidth: "110px",
+                          zIndex: "1",
                           position: "absolute",
+                          color: "#f66257",
                         }}
                       />
+                      <div
+                        style={{
+                          height: "inherit",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <img
+                          src={data}
+                          alt="mapped img"
+                          style={{
+                            maxHeight: "110px",
+                            maxWidth: "110px",
+                            position: "absolute",
+                          }}
+                        />
+                      </div>
                     </div>
-                  </div>
-                );
-              })
-            )}
+                  );
+                })
+              )}
+            </div>
           </div>
-        </div>
-        <div className="divmargin">
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "space-evenly",
-            }}
-          >
-            <div className="textfieldmarginbottom">
-              <h3 className="titlefield">Package Details</h3>
-            </div>
-            <div>
-              <div className="textfieldempty"></div>
-            </div>
-            <div>
+          <div className="divmargin">
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "space-evenly",
+              }}
+            >
               <div className="textfieldmarginbottom">
-                <TextField
-                  className="textfield"
-                  label="Email*"
-                  variant="outlined"
-                  value={package_name}
-                  onChange={(e) => setPackageName(e.target.value)}
-                />
+                <h3 className="titlefield">Package Details</h3>
               </div>
-              <div className="textfieldmargin">
-                <TextField
-                  id="outlined-select-currency"
-                  className="textfield"
-                  select
-                  label="Location*"
-                  value={location}
-                  onChange={handleChange}
-                  helperText="Please select your service location"
-                  variant="outlined"
-                >
-                  {location.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
+              <div>
+                <div className="textfieldempty"></div>
               </div>
-              <div className="textfieldmargin">
-                <TextField
-                  id="outlined-helperText"
-                  className="textfield"
-                  label="Capacity*"
-                  variant="outlined"
-                  helperText="number per pax"
-                  // defaultValue="Default Value"
-                  value={package_capacity}
-                  onChange={(e) => setPackageCapacity(e.target.value)}
-                />
+              <div>
+                <div className="textfieldmarginbottom">
+                  <TextField
+                    className="textfield"
+                    label="Email*"
+                    variant="outlined"
+                    value={package_name}
+                    onChange={(e) => setPackageName(e.target.value)}
+                  />
+                </div>
+                <div className="textfieldmargin">
+                  <TextField
+                    id="outlined-select-currency"
+                    className="textfield"
+                    select
+                    label="Location*"
+                    value={citys.locations}
+                    onChange={handleChange}
+                    helperText="Please select your service location"
+                    variant="outlined"
+                  >
+                    {citys.locations?.map((option, idx) => (
+                      <MenuItem key={idx} value={option}>
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </div>
+                <div className="textfieldmargin">
+                  <TextField
+                    id="outlined-helperText"
+                    className="textfield"
+                    label="Capacity*"
+                    variant="outlined"
+                    helperText="number per pax"
+                    // defaultValue="Default Value"
+                    value={package_capacity}
+                    onChange={(e) => setPackageCapacity(e.target.value)}
+                  />
+                </div>
+                <div className="textfieldmargin">
+                  <TextField
+                    className="textfield"
+                    label="Price Range*"
+                    variant="outlined"
+                    helperText="number in Rupiah"
+                    value={package_price}
+                    onChange={(e) => setPackagePrice(e.target.value)}
+                  />
+                </div>
               </div>
-              <div className="textfieldmargin">
-                <TextField
-                  className="textfield"
-                  label="Price Range*"
-                  variant="outlined"
-                  helperText="number in Rupiah"
-                  value={package_price}
-                  onChange={(e) => setPackagePrice(e.target.value)}
-                />
-              </div>
-            </div>
-            <div>
-              <div className="textfieldmargin">
-                <TextField
-                  id="outlined-multiline-static"
-                  className="textfield"
-                  label="Package Detail*"
-                  multiline
-                  rows={18}
-                  variant="outlined"
-                  value={package_details}
-                  onChange={(e) => setPackageDetails(e.target.value)}
-                />
+              <div>
+                <div className="textfieldmargin">
+                  <TextField
+                    id="outlined-multiline-static"
+                    className="textfield"
+                    label="Package Detail*"
+                    multiline
+                    rows={18}
+                    variant="outlined"
+                    value={package_details}
+                    onChange={(e) => setPackageDetails(e.target.value)}
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="divmargin2">
+          <div className="divmargin2">
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "space-evenly",
+              }}
+            >
+              <div className="textfieldmarginbottom">
+                <h3 className="titlefield">Package Details</h3>
+              </div>
+              <div>
+                <div className="textfieldempty"></div>
+              </div>
+              <div className="titlefield">
+                {data.vendor_type === "organizer" ? (
+                  <>
+                    {venue.venueServices.map((data, idx) => (
+                      <FormControlLabel
+                        key={idx}
+                        control={
+                          <Checkbox
+                            onChange={handleChangeCheckbox}
+                            Checkbox
+                            color="primary"
+                            value={data}
+                          />
+                        }
+                        label={data}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {organizer.organizerServices.map((data, idx) => (
+                      <FormControlLabel
+                        key={idx}
+                        control={
+                          <Checkbox
+                            onChange={handleChangeCheckbox}
+                            Checkbox
+                            color="primary"
+                            value={data}
+                          />
+                        }
+                        label={data}
+                      />
+                    ))}
+                  </>
+                )}
+              </div>
+              <div>
+                <div className="textfieldempty"></div>
+              </div>
+            </div>
+          </div>
           <div
             style={{
+              paddingBottom: "3rem",
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "space-evenly",
+              alignItems: "flex-end",
             }}
           >
-            <div className="textfieldmarginbottom">
-              <h3 className="titlefield">Package Details</h3>
-            </div>
-            <div>
-              <div className="textfieldempty"></div>
-            </div>
-            <div className="titlefield">
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={state.checkedB}
-                    onChange={handleChange}
-                    name="checkedB"
-                    color="primary"
-                  />
-                }
-                label="Electricity"
+            <div
+              style={{
+                width: "500px",
+                height: "0.1rem",
+              }}
+            ></div>
+            <div
+              style={{
+                width: "500px",
+                textAlign: "end",
+              }}
+            >
+              <ButtonPrimary
+                content="Create Package"
+                width="18.714rem"
+                height="3.93rem"
+                type="submit"
               />
             </div>
-            <div>
-              <div className="textfieldempty"></div>
-            </div>
           </div>
-        </div>
-        <div
-          style={{
-            paddingBottom: "3rem",
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "space-evenly",
-            alignItems: "flex-end",
-          }}
-        >
-          <div
-            style={{
-              width: "500px",
-              height: "0.1rem",
-            }}
-          ></div>
-          <div
-            style={{
-              width: "500px",
-              textAlign: "end",
-            }}
-          >
-            <ButtonPrimary
-              content="Create Package"
-              width="18.714rem"
-              height="3.93rem"
-            />
-          </div>
-        </div>
+        </form>
       </div>
     </div>
   );

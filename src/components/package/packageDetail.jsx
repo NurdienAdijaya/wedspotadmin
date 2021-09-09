@@ -54,9 +54,7 @@ export default function PackageDetail() {
   const classes = useStyles();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.packageById);
-
-  console.log(data);
+  const { dataPackage } = useSelector((state) => state.packageById);
 
   useEffect(() => {
     dispatch(getPackageById(id));
@@ -78,7 +76,7 @@ export default function PackageDetail() {
         >
           Package
         </Link>
-        <Typography color="textPrimary">{data.package_name}</Typography>
+        <Typography color="textPrimary">{dataPackage?.package_name}</Typography>
       </Breadcrumbs>
       <div
         style={{
@@ -91,7 +89,7 @@ export default function PackageDetail() {
           <div className={classes.tittle}>
             <TitleStore1 title="Package Details" detail="" />
             <div>
-              <Link to={`/edit/${data.package_id}`}>
+              <Link to={`/edit/${dataPackage.package_id}`}>
                 <Button
                   type="submit"
                   variant="contained"
@@ -131,28 +129,28 @@ export default function PackageDetail() {
                       <p>Location</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>{data.package_location}</p>
+                      <p>{dataPackage.package_location}</p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Capacity</p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>
-                        {data.package_min_capacity} -{" "}
-                        {data.package_max_capacity}
+                        {dataPackage.package_min_capacity} -{" "}
+                        {dataPackage.package_max_capacity}
                       </p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Price Start From</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>Rp.{data.package_price}</p>
+                      <p>Rp.{dataPackage.package_price}</p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Description</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>{data.package_details}</p>
+                      <p>{dataPackage.package_details}</p>
                     </Grid>
                   </Grid>
                 </div>
@@ -162,7 +160,7 @@ export default function PackageDetail() {
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
                       <ul>
-                        {data.package_services?.map((data, idx) => (
+                        {dataPackage.package_services?.map((data, idx) => (
                           <li key={idx}>{data}</li>
                         ))}
                       </ul>
@@ -176,7 +174,7 @@ export default function PackageDetail() {
           <div className={classes.send}>
             <h3>Package Album</h3>
             <Grid container spacing={5}>
-              {data.package_album?.map((data, idx) => (
+              {dataPackage.package_album?.map((data, idx) => (
                 <Grid item xs={3} key={idx}>
                   <img src={data} alt="album" style={{ width: "100%" }} />
                 </Grid>

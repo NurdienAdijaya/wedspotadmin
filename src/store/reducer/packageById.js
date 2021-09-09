@@ -4,7 +4,7 @@ const initialState = {
     isLoading: false,
     isSuccess: false,
     isError: false,
-    data: [],
+    dataPackage: [],
     message:[],
   };
   
@@ -21,7 +21,7 @@ const initialState = {
           ...state,
           isSuccess: true,
           isLoading:false,
-          data: payload,
+          dataPackage: payload,
         };
       case types.GET_PACKAGE_ID_FAIL:
         return {
