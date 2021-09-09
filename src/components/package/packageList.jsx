@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Sort, Filter } from "../dropdown/dropdown";
 import { getPackage } from "../../store/action/package";
 import moment from "moment";
+import NoresultPhone from "../noResult/NoresultPhone";
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -52,7 +53,7 @@ export default function PackageList() {
   const [sort, setSort] = useState("");
   const [filter, setFilter] = useState("");
   const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.packageList);
+  const { data, isError } = useSelector((state) => state.packageList);
 
   useEffect(() => {
     dispatch(getPackage(page + 1, rowsPerPage));
@@ -139,62 +140,106 @@ export default function PackageList() {
               </div>
             </div>
           </div>
-          <Container>
-            <Grid container spacing={1}>
-              <Grid item xs={3}>
-                <div className={classes.title}>
-                  <p>Created Date</p>
-                </div>
-              </Grid>
-              <Grid item xs={9}>
-                <div className={classes.title}>
-                  <p>Package Name</p>
-                </div>
-              </Grid>
-            </Grid>
-            <hr></hr>
 
-            {/* Content */}
-            {data?.data?.map((data, idx) => (
-              <Link
-                to={`/package/${data.package_id}`}
-                style={{
-                  color: "black",
-                }}
-              >
-                <Grid container spacing={1} key={idx}>
+          {isError ? (
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "center",
+                margin: "3rem 0",
+              }}
+            >
+              <div className={classes.noResult}>
+                <NoresultPhone
+                  title={"No Package"}
+                  description={"Try to add new package, maybe?"}
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "center",
+                    margin: "2rem 0",
+                  }}
+                >
+                  <Link to="/new/package">
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      style={{
+                        height: "35px",
+                        marginLeft: "1rem",
+                        width: "20rem",
+                      }}
+                    >
+                      + New Package
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <>
+              <Container>
+                <Grid container spacing={1}>
                   <Grid item xs={3}>
-                    <div>
-                      <p>
-                        {moment(data.created_at).format("ddd, DD MMM YYYY")}
-                      </p>
+                    <div className={classes.title}>
+                      <p>Created Date</p>
                     </div>
                   </Grid>
-                  <Grid item xs={8}>
-                    <div className={classes.name}>
-                      <p>{data.package_name}</p>
+                  <Grid item xs={9}>
+                    <div className={classes.title}>
+                      <p>Package Name</p>
                     </div>
-                  </Grid>
-                  <Grid item xs={1}>
-                    <div>
-                      <MoreVert />
-                    </div>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <hr></hr>
                   </Grid>
                 </Grid>
-              </Link>
-            ))}
-          </Container>
-          <TablePagination
-            component="div"
-            count={data.count}
-            page={page}
-            onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
+                <hr></hr>
+
+                {/* Content */}
+                {data?.data?.map((data, idx) => (
+                  <Link
+                    to={`/package/${data.package_id}`}
+                    style={{
+                      color: "black",
+                    }}
+                  >
+                    <Grid container spacing={1} key={idx}>
+                      <Grid item xs={3}>
+                        <div>
+                          <p>
+                            {moment(data.created_at).format("ddd, DD MMM YYYY")}
+                          </p>
+                        </div>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <div className={classes.name}>
+                          <p>{data.package_name}</p>
+                        </div>
+                      </Grid>
+                      <Grid item xs={1}>
+                        <div>
+                          <MoreVert />
+                        </div>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <hr></hr>
+                      </Grid>
+                    </Grid>
+                  </Link>
+                ))}
+              </Container>
+              <TablePagination
+                component="div"
+                count={data.count}
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={rowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </>
+          )}
         </div>
       </div>
     </div>

@@ -18,7 +18,7 @@ function* packageList(action) {
       payload: res.data,
     });
   } catch (error) {
-    console.log(token)
+    console.log(token);
     yield put({
       type: types.GET_ALL_PACKAGE_FAIL,
       payload: error.response.data.errors,
@@ -29,9 +29,7 @@ function* packageList(action) {
 function* packageById(action) {
   const { id } = action;
   try {
-    const res = yield axios.get(
-      `${BASE_URL}/packages/${id}`
-    );
+    const res = yield axios.get(`${BASE_URL}/packages/${id}`);
     console.log(res);
     yield put({
       type: types.GET_PACKAGE_ID_SUCCESS,
@@ -47,32 +45,30 @@ function* packageById(action) {
 
 function* createPackage(action) {
   const { props } = action;
-  console.log(props)
+  console.log(props);
   let dataToSend = new FormData();
   dataToSend.append("package_name", props.package_name);
   dataToSend.append("package_location", props.package_location);
   dataToSend.append("package_details", props.package_details);
   dataToSend.append("package_price", props.package_price);
-  props.package_services.map((data) =>{
+  props.package_services.map((data) => {
     return dataToSend.append("package_services", data);
-  })
+  });
   dataToSend.append("package_capacity", props.package_capacity);
-  props.package_album.map((data) =>{
-    return dataToSend.append("package_album", data)
-  })
+  props.package_album.map((data) => {
+    return dataToSend.append("package_album", data);
+  });
   try {
-    const res = yield axios.post(
-      `${BASE_URL}/packages`,
-      dataToSend,
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+    const res = yield axios.post(`${BASE_URL}/packages`, dataToSend, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     yield put({
       type: types.CREATE_PACKAGE_SUCCESS,
       payload: res.data,
     });
   } catch (error) {
-    console.log(error.response)
-    console.log(props)
+    console.log(error.response);
+    console.log(props);
     yield put({
       type: types.CREATE_PACKAGE_FAIL,
       payload: error.response,
@@ -101,7 +97,7 @@ function* editPackage(action) {
       payload: res.data,
     });
   } catch (error) {
-    console.log(error.response)
+    console.log(error.response);
     yield put({
       type: types.EDIT_PACKAGE_FAIL,
       payload: error.response,
@@ -109,18 +105,18 @@ function* editPackage(action) {
   }
 }
 
-function* deletePackage(action){
-  const {id} = action
+function* deletePackage(action) {
+  const { id } = action;
   try {
-    const res = yield axios.delete(
-      `${BASE_URL}/packages/${id}`,{ headers: { Authorization: `Bearer ${token}` } }
-    );
+    const res = yield axios.delete(`${BASE_URL}/packages/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     yield put({
       type: types.DELETE_PACKAGE_SUCCESS,
       payload: res.data.message,
     });
   } catch (error) {
-    console.log(error.response)
+    console.log(error.response);
     yield put({
       type: types.DELETE_PACKAGE_FAIL,
       payload: error.response,
