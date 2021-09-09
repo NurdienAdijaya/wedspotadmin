@@ -42,9 +42,6 @@ const NewPackages = () => {
   const [package_name, setPackageName] = useState(
     dataPackage.package_name || ""
   );
-  const [package_location, setPackageLocation] = useState(
-    dataPackage.package_location || ""
-  );
   const [package_price, setPackagePrice] = useState(
     dataPackage.package_price || ""
   );
@@ -61,7 +58,7 @@ const NewPackages = () => {
   const dataToSend = {
     package_album: album,
     package_name,
-    package_location,
+    package_location :service,
     package_price,
     package_capacity,
     package_details,
@@ -88,24 +85,26 @@ const NewPackages = () => {
     if (event.target.checked) {
       setState([...state, event.target.value]);
     }
-    console.log(event);
   };
+  console.log(album)
 
   const handleChange = (event) => {
     setservice(event.target.value);
   };
+
   const handleAlbum = (e) => {
     // function to convert image file into base64
     console.log("files", e.target.files);
     let file = e.target.files[0];
     let reader = new FileReader();
     let allAlbum = e.target.files;
-    // setAlbum(album.push(file))
+    
     if (allAlbum) {
       reader.readAsDataURL(file);
       reader.onload = () => {
         setPackageAlbum([...package_album, reader.result]);
-        setAlbum([...album, file]);
+        let a = [...album, file]
+        setAlbum(a);
       };
     }
     reader.onerror = () => {
@@ -298,7 +297,7 @@ const NewPackages = () => {
                 <div className="textfieldmarginbottom">
                   <TextField
                     className="textfield"
-                    label="Email*"
+                    label="package name*"
                     variant="outlined"
                     value={package_name}
                     onChange={(e) => setPackageName(e.target.value)}
@@ -310,7 +309,7 @@ const NewPackages = () => {
                     className="textfield"
                     select
                     label="Location*"
-                    value={citys.locations}
+                    value={service}
                     onChange={handleChange}
                     helperText="Please select your service location"
                     variant="outlined"
@@ -376,7 +375,7 @@ const NewPackages = () => {
                 <div className="textfieldempty"></div>
               </div>
               <div className="titlefield">
-                {data.vendor_type === "organizer" ? (
+                {data.vendor_type !== "organizer" ? (
                   <>
                     {venue.venueServices.map((data, idx) => (
                       <FormControlLabel

@@ -54,9 +54,13 @@ function* createPackage(action) {
   dataToSend.append("package_location", props.package_location);
   dataToSend.append("package_details", props.package_details);
   dataToSend.append("package_price", props.package_price);
-  dataToSend.append("package_services", props.package_services);
+  props.package_services.map((data) =>{
+    return dataToSend.append("package_services", data);
+  })
   dataToSend.append("package_capacity", props.package_capacity);
-  dataToSend.append("package_album", props.package_album);
+  props.package_album.map((data) =>{
+    return dataToSend.append("package_album", data)
+  })
   try {
     const res = yield axios.post(
       `${BASE_URL}/packages`,
@@ -65,7 +69,7 @@ function* createPackage(action) {
     );
     yield put({
       type: types.CREATE_PACKAGE_SUCCESS,
-      payload: res.data.data,
+      payload: res.data,
     });
   } catch (error) {
     console.log(error.response)
@@ -95,13 +99,13 @@ function* editPackage(action) {
     );
     yield put({
       type: types.EDIT_PACKAGE_SUCCESS,
-      payload: res.data.data,
+      payload: res.data,
     });
   } catch (error) {
     console.log(error.response)
     yield put({
       type: types.EDIT_PACKAGE_FAIL,
-      payload: error.response.data.errors,
+      payload: error.response,
     });
   }
 }

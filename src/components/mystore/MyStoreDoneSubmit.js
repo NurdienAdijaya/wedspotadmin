@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import { Avatar } from "@material-ui/core";
-import Link from "@material-ui/core/Link";
+// import Link from "@material-ui/core/Link";
+import { Link } from "react-router-dom";
 import ButtonSecondary from "../buttons/ButtonSecondary";
+import FirstModal from "../firstModal";
 import "./MyStore.css";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import InstagramIcon from "@material-ui/icons/Instagram";
@@ -28,9 +30,8 @@ const MyStoreDoneSubmit = () => {
           margin: "0.55rem 0",
         }}
       >
-        <Link color="inherit" href="/store" onClick={handleClick}>
-          My Store
-        </Link>
+        {/* <FirstModal show={!data.vendor_has_filled_info}/> */}
+        <Link to="/">My Store</Link>
         <Typography color="textPrimary">detail</Typography>
       </Breadcrumbs>
       <div
@@ -78,7 +79,9 @@ const MyStoreDoneSubmit = () => {
             </div>
           </div>
           <div>
-            <ButtonSecondary content="Edit" width="160px" height="55px" />
+            <Link to="/edit">
+              <ButtonSecondary content="Edit" width="160px" height="55px" />
+            </Link>
           </div>
         </div>
         <div
@@ -110,7 +113,7 @@ const MyStoreDoneSubmit = () => {
             <h3 className="details">{data.vendor_website}</h3>
           </div>
           <div className="divDetails">
-            <h3 className="details"></h3>
+            <h3 className="details"> </h3>
             <div className="logoDetails">
               <div className="icon">
                 <FacebookIcon />

@@ -121,7 +121,7 @@ export default function PackageDetail() {
             </Grid>
           </div>
           <div className={classes.item}>
-            <Grid container spacing={5}>
+            <Grid container spacing={1}>
               <Grid item xs={6}>
                 <div className={classes.text}>
                   <Grid container spacing={2}>
@@ -155,9 +155,9 @@ export default function PackageDetail() {
                   </Grid>
                 </div>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={5}>
                 <div className={classes.text}>
-                  <Grid container spacing={2}>
+                  <Grid container spacing={1}>
                     <Grid item xs={6}>
                       <ul>
                         {dataPackage.package_services?.map((data, idx) => (

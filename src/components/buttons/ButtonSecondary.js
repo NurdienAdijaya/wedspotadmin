@@ -9,7 +9,6 @@ const ButtonSecondary = ({ width, content = "Content", onClick, height }) => {
         height: `${height}`,
         width: `${width}`,
       }}
-      onClick={(event) => onClick(event)}
     >
       {content}
     </button>
