@@ -46,7 +46,6 @@ const vendorData = (state = initialState, action) => {
       return {
         ...state,
         isError: true,
-        isSuccess: false,
         isLoading: false,
         message: payload,
       };
@@ -65,7 +64,7 @@ const vendorData = (state = initialState, action) => {
     case types.GET_VENDOR_FAIL:
       return {
         ...state,
-        isLoading:false,
+        isLoading: false,
         message: payload,
       };
     case types.EDIT_VENDOR_BEGIN:
@@ -84,7 +83,6 @@ const vendorData = (state = initialState, action) => {
       return {
         ...state,
         isError: true,
-        isSuccess: false,
         isLoading: false,
         message: payload,
       };
