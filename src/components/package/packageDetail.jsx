@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Container,
   Grid,
@@ -8,7 +8,9 @@ import {
   Breadcrumbs,
 } from "@material-ui/core";
 import TitleStore1 from "../title/TitleStore1";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getPackageById } from "../../store/action/package";
 
 const useStyles = makeStyles((theme) => ({
   tittle: {
@@ -50,6 +52,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PackageDetail() {
   const classes = useStyles();
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { dataPackage } = useSelector((state) => state.packageById);
+
+  useEffect(() => {
+    dispatch(getPackageById(id));
+  }, [dispatch, id]);
 
   return (
     <div>
@@ -67,7 +76,7 @@ export default function PackageDetail() {
         >
           Package
         </Link>
-        <Typography color="textPrimary">All</Typography>
+        <Typography color="textPrimary">{dataPackage?.package_name}</Typography>
       </Breadcrumbs>
       <div
         style={{
@@ -80,23 +89,25 @@ export default function PackageDetail() {
           <div className={classes.tittle}>
             <TitleStore1 title="Package Details" detail="" />
             <div>
-              <Button
-                type="submit"
-                variant="contained"
-                color="white"
-                style={{
-                  height: "45px",
-                  marginLeft: "1rem",
-                  width: "140px",
-                }}
-              >
-                Edit
-              </Button>
+              <Link to={`/edit/${dataPackage.package_id}`}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="white"
+                  style={{
+                    height: "45px",
+                    marginLeft: "1rem",
+                    width: "140px",
+                  }}
+                >
+                  Edit
+                </Button>
+              </Link>
             </div>
           </div>
           <hr></hr>
           <div className={classes.content}>
-            <Grid container spacing={2}>
+            <Grid container spacing={5}>
               <Grid item xs={6}>
                 <div>
                   <h3>Package Details</h3>
@@ -110,7 +121,7 @@ export default function PackageDetail() {
             </Grid>
           </div>
           <div className={classes.item}>
-            <Grid container spacing={2}>
+            <Grid container spacing={1}>
               <Grid item xs={6}>
                 <div className={classes.text}>
                   <Grid container spacing={2}>
@@ -118,40 +129,41 @@ export default function PackageDetail() {
                       <p>Location</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>(Location)</p>
+                      <p>{dataPackage.package_location}</p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Capacity</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>(Capacity)</p>
+                      <p>
+                        {dataPackage.package_min_capacity} -{" "}
+                        {dataPackage.package_max_capacity}
+                      </p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Price Start From</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>(Price)</p>
+                      <p>Rp.{dataPackage.package_price}</p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Description</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>(Description)</p>
-                      <p>(Description)</p>
-                      <p>(Description)</p>
-                      <p>(Description)</p>
+                      <p>{dataPackage.package_details}</p>
                     </Grid>
                   </Grid>
                 </div>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={5}>
                 <div className={classes.text}>
-                  <Grid container spacing={2}>
+                  <Grid container spacing={1}>
                     <Grid item xs={6}>
-                      <p>(Service)</p>
-                      <p>(Service)</p>
-                      <p>(Service)</p>
-                      <p>(Service)</p>
+                      <ul>
+                        {dataPackage.package_services?.map((data, idx) => (
+                          <li key={idx}>{data}</li>
+                        ))}
+                      </ul>
                     </Grid>
                   </Grid>
                 </div>
@@ -162,30 +174,11 @@ export default function PackageDetail() {
           <div className={classes.send}>
             <h3>Package Album</h3>
             <Grid container spacing={5}>
-              <Grid item xs={3}>
-                <h1>(foto)</h1>
-              </Grid>
-              <Grid item xs={3}>
-                <h1>(foto)</h1>
-              </Grid>
-              <Grid item xs={3}>
-                <h1>(foto)</h1>
-              </Grid>
-              <Grid item xs={3}>
-                <h1>(foto)</h1>
-              </Grid>
-              <Grid item xs={3}>
-                <h1>(foto)</h1>
-              </Grid>
-              <Grid item xs={3}>
-                <h1>(foto)</h1>
-              </Grid>
-              <Grid item xs={3}>
-                <h1>(foto)</h1>
-              </Grid>
-              <Grid item xs={3}>
-                <h1>(foto)</h1>
-              </Grid>
+              {dataPackage.package_album?.map((data, idx) => (
+                <Grid item xs={3} key={idx}>
+                  <img src={data} alt="album" style={{ width: "100%" }} />
+                </Grid>
+              ))}
             </Grid>
           </div>
         </Container>

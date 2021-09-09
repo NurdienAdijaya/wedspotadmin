@@ -1,25 +1,11 @@
-import { Route, Switch } from "react-router-dom";
-import Notifications from "../components/Notifications";
+import { useSelector } from "react-redux";
 import Sidebar from "../components/Sidebar";
 import Home from "../pages/Home";
 
 const Routers = () => {
-  const token = localStorage.getItem("token");
-  return (
-    <>
-      <Switch>
-        <Route exact path="/">
-          {token ? <Sidebar /> : <Home />}
-        </Route>
-        <Route path="/test">
-          <Sidebar />
-        </Route>
-        <Route path="/*">
-          <Notifications />
-        </Route>
-      </Switch>
-    </>
-  );
+  // const token = localStorage.getItem("token");
+  const { isSuccess } = useSelector((state) => state.vendorData);
+  return <>{isSuccess ? <Sidebar /> : <Home />}</>;
 };
 
 export default Routers;

@@ -57,6 +57,42 @@ function* getVendor() {
   }
 }
 
+function* editVendor(action) {
+  const { props } = action;
+  let dataToSend = new FormData();
+  dataToSend.append("vendor_name", props.vendor_name);
+  dataToSend.append("vendor_avatar", props.vendor_avatar);
+  dataToSend.append("vendor_header", props.vendor_header);
+  dataToSend.append("vendor_email_info", props.vendor_email);
+  dataToSend.append("vendor_phone", props.vendor_phone);
+  dataToSend.append("vendor_website", props.vendor_website);
+  dataToSend.append("vendor_facebook", props.vendor_facebook);
+  dataToSend.append("vendor_instagram", props.vendor_instagram);
+  dataToSend.append("vendor_twitter", props.vendor_twitter);
+  dataToSend.append("vendor_location", props.vendor_location);
+  dataToSend.append("vendor_price_range", props.vendor_price_range);
+  dataToSend.append("vendor_type", props.vendor_type);
+  dataToSend.append("vendor_capacity", props.vendor_capacity);
+  dataToSend.append("vendor_rating", props.vendor_rating);
+  try {
+    const res = yield axios.put(
+      `${BASE_URL}/vendors/edit`,
+      dataToSend,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    yield put({
+      type: types.EDIT_VENDOR_SUCCESS,
+      payload: res.data.newData,
+    });
+  } catch (error) {
+    console.log(error.response)
+    yield put({
+      type: types.EDIT_VENDOR_FAIL,
+      payload: error.response.data.errors,
+    });
+  }
+}
+
 export function* watchLogin() {
   yield takeEvery(types.LOGIN_PENDING, vendorLogin);
 }
@@ -67,4 +103,8 @@ export function* watchRegister() {
 
 export function* watchGetVendor() {
   yield takeEvery(types.GET_VENDOR_BEGIN, getVendor);
+}
+
+export function* watcheditVendor() {
+  yield takeEvery(types.EDIT_VENDOR_BEGIN, editVendor);
 }

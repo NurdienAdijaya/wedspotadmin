@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { ThemeProvider } from "@material-ui/core";
 import { createTheme } from "@material-ui/core/styles";
 import { BrowserRouter } from "react-router-dom";
@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import "./App.css";
 import Routers from "./routers/router";
 import { getVendor } from "./store/action/auth";
+import { getLocation, getVenue, getOrganizer } from "./store/action/config";
 
 const theme = createTheme({
   palette: {
@@ -19,10 +20,14 @@ const theme = createTheme({
 });
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getVendor())
-  }, [dispatch])
+    dispatch(getVenue())
+    dispatch(getLocation())
+    dispatch(getOrganizer())
+  }, [dispatch]);
+  
   return (
     <ThemeProvider theme={theme} className="App">
       <BrowserRouter>

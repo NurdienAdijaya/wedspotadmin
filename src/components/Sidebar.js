@@ -14,23 +14,25 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import NotificationsIcon from "@material-ui/icons/Notifications";
+// import NotificationsIcon from "@material-ui/icons/Notifications";
 import StorefrontOutlinedIcon from "@material-ui/icons/StorefrontOutlined";
-import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import LocalMallOutlinedIcon from "@material-ui/icons/LocalMallOutlined";
 import {
   Avatar,
-  Badge,
   FormControlLabel,
   FormGroup,
   Menu,
   MenuItem,
   Switch,
 } from "@material-ui/core";
-import MyStore from "./mystore/MyStore";
-import PackageList from "./package/packageList";
+import { useSelector } from "react-redux";
+import FirstModal from "./firstModal";
+import QuotationsRouters from "./quotations/routes";
+import PackageRoutes from "./package/packageRoutes";
+import { Link } from "react-router-dom";
+import StoreRoutes from "./mystore/storeRoutes";
 
 const useStylesNav = makeStyles((theme) => ({
   root: {
@@ -113,6 +115,10 @@ export default function Sidebar() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openNav = Boolean(anchorEl);
+  const { data } = useSelector((state) => state.vendorData);
+  console.log(data);
+  const [firstModal, setFirstModal] = useState(!data.vendor_has_filled_info);
+  console.log(firstModal);
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -131,7 +137,6 @@ export default function Sidebar() {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState("My Store");
 
-  console.log(page);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -147,6 +152,7 @@ export default function Sidebar() {
 
   return (
     <div className={classes.root}>
+      <FirstModal show={firstModal} close={() => setFirstModal(false)} />
       <FormGroup>
         <FormControlLabel
           control={
@@ -185,7 +191,7 @@ export default function Sidebar() {
           >
             {page}
           </Typography>
-          <div className={classesNav.sectionDesktop}>
+          {/* <div className={classesNav.sectionDesktop}>
             <IconButton
               aria-label="show 17 new notifications"
               // color="#0F120D"
@@ -194,7 +200,7 @@ export default function Sidebar() {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-          </div>
+          </div> */}
           {auth && (
             <div>
               <IconButton
@@ -205,9 +211,9 @@ export default function Sidebar() {
                 // color="#0F120D"
               >
                 <h4 style={{ paddingTop: "1rem", paddingRight: "0.5rem" }}>
-                  Remy sharp
+                  {data.vendor_name}
                 </h4>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                <Avatar alt={data.vendor_name} src={data.vendor_avatar} />
               </IconButton>
               <Menu
                 id="menu-appbar"
@@ -224,12 +230,6 @@ export default function Sidebar() {
                 open={openNav}
                 onClose={handleClose}
               >
-                <MenuItem>
-                  <ListItemIcon>
-                    <PersonIcon />
-                  </ListItemIcon>
-                  <ListItemText>Profile</ListItemText>
-                </MenuItem>
                 <MenuItem onClick={handleLogout}>
                   <ListItemIcon>
                     <ExitToAppIcon />
@@ -313,24 +313,45 @@ export default function Sidebar() {
           </IconButton>
         </div>
         <List style={{ color: "#B5AF8F" }}>
-          <ListItem button onClick={() => setPage("My Store")}>
-            <ListItemIcon style={{ color: "#B5AF8F" }}>
-              <StorefrontOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary="My Store" />
-          </ListItem>
-          <ListItem button onClick={() => setPage("Quotations")}>
-            <ListItemIcon style={{ color: "#B5AF8F" }}>
-              <DescriptionOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Quotations" />
-          </ListItem>
-          <ListItem button onClick={() => setPage("Packages")}>
-            <ListItemIcon style={{ color: "#B5AF8F" }}>
-              <LocalMallOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Packages" />
-          </ListItem>
+          <Link
+            to="/"
+            style={{
+              color: "#B5AF8F",
+            }}
+          >
+            <ListItem button onClick={() => setPage("My Store")}>
+              <ListItemIcon style={{ color: "#B5AF8F" }}>
+                <StorefrontOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary="My Store" />
+            </ListItem>
+          </Link>
+          <Link
+            to="/"
+            style={{
+              color: "#B5AF8F",
+            }}
+          >
+            <ListItem button onClick={() => setPage("Quotations")}>
+              <ListItemIcon style={{ color: "#B5AF8F" }}>
+                <DescriptionOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Quotations" />
+            </ListItem>
+          </Link>
+          <Link
+            to="/"
+            style={{
+              color: "#B5AF8F",
+            }}
+          >
+            <ListItem button onClick={() => setPage("Packages")}>
+              <ListItemIcon style={{ color: "#B5AF8F" }}>
+                <LocalMallOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Packages" />
+            </ListItem>
+          </Link>
         </List>
       </Drawer>
       <main
@@ -341,14 +362,12 @@ export default function Sidebar() {
         <div className={classes.drawerHeader} />
         {page === "My Store" ? (
           <div>
-            <MyStore />
-            {/* <MyStoreDoneSubmit /> */}
+            <StoreRoutes />
           </div>
         ) : page === "Quotations" ? (
-          "Quotations"
+          <QuotationsRouters />
         ) : (
-          // "Packages"
-          <PackageList />
+          <PackageRoutes />
         )}
       </main>
     </div>

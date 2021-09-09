@@ -1,22 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
-import Link from "@material-ui/core/Link";
+import { Avatar } from "@material-ui/core";
+// import Link from "@material-ui/core/Link";
+import { Link } from "react-router-dom";
 import ButtonSecondary from "../buttons/ButtonSecondary";
 import "./MyStore.css";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import TwitterIcon from "@material-ui/icons/Twitter";
+import { useSelector } from "react-redux";
 
-function handleClick(event) {
-  event.preventDefault();
-  console.info("You clicked a breadcrumb.");
-}
 const MyStoreDoneSubmit = () => {
-  const [service, setservice] = useState("package");
-  const handleChange = (event) => {
-    setservice(event.target.value);
-  };
+  const { data } = useSelector((state) => state.vendorData);
+
   return (
     <div>
       <Breadcrumbs
@@ -25,9 +22,8 @@ const MyStoreDoneSubmit = () => {
           margin: "0.55rem 0",
         }}
       >
-        <Link color="inherit" href="/store" onClick={handleClick}>
-          My Store
-        </Link>
+        {/* <FirstModal show={!data.vendor_has_filled_info}/> */}
+        <Link to="/">My Store</Link>
         <Typography color="textPrimary">detail</Typography>
       </Breadcrumbs>
       <div
@@ -52,16 +48,13 @@ const MyStoreDoneSubmit = () => {
               alignItems: "center",
             }}
           >
-            <div
+            <Avatar
+              src={data.vendor_avatar}
               style={{
-                background: "blue",
                 width: "7.86rem",
                 height: "7.86rem",
-                borderRadius: "50%",
               }}
-            >
-              <img />
-            </div>
+            />
             <div
               style={{
                 margin: "1.715rem",
@@ -73,12 +66,14 @@ const MyStoreDoneSubmit = () => {
                   fontWeight: "700",
                 }}
               >
-                Package Title
+                {data.vendor_name}
               </h1>
             </div>
           </div>
           <div>
-            <ButtonSecondary content="Edit" width="160px" height="55px" />
+            <Link to="/edit">
+              <ButtonSecondary content="Edit" width="160px" height="55px" />
+            </Link>
           </div>
         </div>
         <div
@@ -91,27 +86,26 @@ const MyStoreDoneSubmit = () => {
         >
           <div
             style={{
-              background: "green",
+              backgroundImage: `url(${data.vendor_header})`,
               height: "22.375rem",
+              backgroundSize: "cover",
             }}
-          >
-            Header image
-          </div>
+          ></div>
           <h3 style={{ margin: "2.2rem 0 1.714rem 0" }}>Contact Details</h3>
           <div className="divDetails">
             <h3 className="details">Contact Number</h3>
-            <h3 className="details">asdasdasd</h3>
+            <h3 className="details">{data.vendor_phone}</h3>
           </div>
           <div className="divDetails">
             <h3 className="details">Email</h3>
-            <h3 className="details">asdasdasd</h3>
+            <h3 className="details">{data.vendor_email}</h3>
           </div>
           <div className="divDetails">
             <h3 className="details">Website</h3>
-            <h3 className="details">asdasdasd</h3>
+            <h3 className="details">{data.vendor_website}</h3>
           </div>
           <div className="divDetails">
-            <h3 className="details"></h3>
+            <h3 className="details"> </h3>
             <div className="logoDetails">
               <div className="icon">
                 <FacebookIcon />
@@ -129,19 +123,23 @@ const MyStoreDoneSubmit = () => {
           <h3 style={{ margin: "2.2rem 0 1.714rem 0" }}>Contact Details</h3>
           <div className="divDetails">
             <h3 className="details">Service Type</h3>
-            <h3 className="details">asdasdasd</h3>
+            <h3 className="details">{data.vendor_type}</h3>
           </div>
           <div className="divDetails">
             <h3 className="details">Location</h3>
-            <h3 className="details">asdasdasd</h3>
+            <h3 className="details">{data.vendor_location}</h3>
           </div>
           <div className="divDetails">
             <h3 className="details">Capacity</h3>
-            <h3 className="details">asdasdasd</h3>
+            <h3 className="details">
+              {data.vendor_min_capacity} - {data.vendor_max_capacity}
+            </h3>
           </div>
           <div className="divDetails">
             <h3 className="details">Price range</h3>
-            <h3 className="details">asdasdasd</h3>
+            <h3 className="details">
+              {data.vendor_min_price} - {data.vendor_max_price}
+            </h3>
           </div>
         </div>
       </div>

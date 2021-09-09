@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from "react";
 import {
   Breadcrumbs,
   Typography,
@@ -10,8 +11,12 @@ import {
   Button,
   TablePagination,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import { MoreVert, Search } from "@material-ui/icons";
-import PackageDetail from "./packageDetail";
+import { useDispatch, useSelector } from "react-redux";
+import { Sort, Filter } from "../dropdown/dropdown";
+import { getPackage } from "../../store/action/package";
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -44,6 +49,14 @@ export default function PackageList() {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [sort, setSort] = useState("");
+  const [filter, setFilter] = useState("");
+  const dispatch = useDispatch();
+  const { data } = useSelector((state) => state.packageList);
+
+  useEffect(() => {
+    dispatch(getPackage(page + 1, rowsPerPage));
+  }, [dispatch, page, rowsPerPage]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -84,17 +97,19 @@ export default function PackageList() {
               <div>
                 <h3>All Package</h3>
               </div>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                style={{
-                  height: "35px",
-                  marginLeft: "1rem",
-                }}
-              >
-                + New Package
-              </Button>
+              <Link to="/new/package">
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  style={{
+                    height: "35px",
+                    marginLeft: "1rem",
+                  }}
+                >
+                  + New Package
+                </Button>
+              </Link>
             </div>
             <div
               style={{
@@ -102,12 +117,8 @@ export default function PackageList() {
                 alignItems: "center",
               }}
             >
-              <div>
-                <p className={classes.items}>Sort</p>
-              </div>
-              <div>
-                <p className={classes.items}>Filter</p>
-              </div>
+              <Sort change={setSort} />
+              <Filter change={setFilter} />
 
               <div className={classes.search}>
                 <TextField
@@ -144,30 +155,41 @@ export default function PackageList() {
             <hr></hr>
 
             {/* Content */}
-            <Grid container spacing={1}>
-              <Grid item xs={3}>
-                <div>
-                  <p>Thu, 14 Jan 2021</p>
-                </div>
-              </Grid>
-              <Grid item xs={8}>
-                <div className={classes.name}>
-                  <p>Name</p>
-                </div>
-              </Grid>
-              <Grid item xs={1}>
-                <div>
-                  <MoreVert />
-                </div>
-              </Grid>
-              <Grid item xs={12}>
-                <hr></hr>
-              </Grid>
-            </Grid>
+            {data?.data?.map((data, idx) => (
+              <Link
+                to={`/package/${data.package_id}`}
+                style={{
+                  color: "black",
+                }}
+              >
+                <Grid container spacing={1} key={idx}>
+                  <Grid item xs={3}>
+                    <div>
+                      <p>
+                        {moment(data.created_at).format("ddd, DD MMM YYYY")}
+                      </p>
+                    </div>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <div className={classes.name}>
+                      <p>{data.package_name}</p>
+                    </div>
+                  </Grid>
+                  <Grid item xs={1}>
+                    <div>
+                      <MoreVert />
+                    </div>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <hr></hr>
+                  </Grid>
+                </Grid>
+              </Link>
+            ))}
           </Container>
           <TablePagination
             component="div"
-            count={100}
+            count={data.count}
             page={page}
             onPageChange={handleChangePage}
             rowsPerPage={rowsPerPage}
@@ -175,7 +197,6 @@ export default function PackageList() {
           />
         </div>
       </div>
-      <PackageDetail />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Grid,
@@ -10,8 +10,15 @@ import {
 import TitleStore1 from "../title/TitleStore1";
 import QuotationSent from "../buttons/QuotationSent";
 import QuotationNew from "../buttons/QuotationNew";
+import { useDispatch, useSelector } from "react-redux";
 import Vector from "./images/Vector.png";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import {
+  getQuotationById,
+  createQuotations,
+} from "../../store/action/quotation";
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   tittle: {
@@ -19,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: "1rem",
-    marginTop:"1rem"
+    marginTop: "1rem",
   },
   content: {
     marginTop: "2rem",
@@ -54,7 +61,18 @@ const useStyles = makeStyles((theme) => ({
 export default function QuotationDetail() {
   const [file, setFile] = useState("");
   const classes = useStyles();
-  console.log(file);
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const { data } = useSelector((state) => state.quotationsById);
+
+  useEffect(() => {
+    dispatch(getQuotationById(id));
+  }, [dispatch, id]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(createQuotations(id, file));
+  };
 
   return (
     <div>
@@ -64,9 +82,12 @@ export default function QuotationDetail() {
           margin: "0.55rem 0",
         }}
       >
-        <Link to="/" style={{
-          color:"black"
-        }}>
+        <Link
+          to="/"
+          style={{
+            color: "black",
+          }}
+        >
           Quotations
         </Link>
         <Typography color="textPrimary">All</Typography>
@@ -82,7 +103,7 @@ export default function QuotationDetail() {
           <div className={classes.tittle}>
             <TitleStore1 title="Request Details" detail="" />
             <div>
-              <QuotationNew />
+              {data.request_status ? <QuotationSent /> : <QuotationNew />}
             </div>
           </div>
           <hr></hr>
@@ -109,19 +130,19 @@ export default function QuotationDetail() {
                       <p>Bride to be</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>(Bride Name)</p>
+                      <p>{data.request_bride_name}</p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Groom to be</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>(Groom Name)</p>
+                      <p>{data.request_groom_name}</p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>City Live</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>(City)</p>
+                      <p>{data.request_city}</p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Email</p>
@@ -139,88 +160,98 @@ export default function QuotationDetail() {
                       <p>Wedding Location</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>(Location)</p>
+                      <p>{data.request_wedding_location}</p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Wedding Date</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>(Date)</p>
+                      <p>
+                        {moment(data.request_wedding_date).format("DD/MM/YYYY")}
+                      </p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Budget</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>(budget)</p>
+                      <p>Rp. {data.request_budget}</p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Number Of Invitees</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>(pax)</p>
+                      <p>{data.request_invitees} pax</p>
                     </Grid>
                   </Grid>
                 </div>
               </Grid>
             </Grid>
           </div>
-          <hr></hr>
-          <div className={classes.send}>
-            <TitleStore1
-              title="Upload Quotation"
-              detail="Acceptable file type is only PDF. Max file size 10 MB."
-            />
-            {file && (
-              <div className={classes.file}>
-                <img src={Vector} alt="pdf" />
-                <Typography style={{ marginLeft: "10px" }}>
-                  {file?.name || "select an File"}
-                </Typography>
-              </div>
-            )}
-
-            <div className={classes.buttons}>
-              <div>
-                <input
-                  name="userfile"
-                  type="file"
-                  accept="application/pdf"
-                  id="contained-button-file"
-                  onChange={(e) => setFile(e.target.files[0])}
-                  max-size="10000000"
-                  style={{
-                    display: "none",
-                  }}
+          
+          {data.request_status ? (
+            <>
+            </>
+          ) : (
+            <>
+            <hr></hr>
+              <div className={classes.send}>
+                <TitleStore1
+                  title="Upload Quotation"
+                  detail="Acceptable file type is only PDF. Max file size 10 MB."
                 />
-                <label htmlFor="contained-button-file">
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="white"
-                    component="span"
-                    className={classes.btn}
-                    style={{
-                      height: "45px",
-                    }}
-                  >
-                    {file ? "Change File" : "Upload File"}
-                  </Button>
-                </label>
+                {file && (
+                  <div className={classes.file}>
+                    <img src={Vector} alt="pdf" />
+                    <Typography style={{ marginLeft: "10px" }}>
+                      {file?.name || "select an File"}
+                    </Typography>
+                  </div>
+                )}
+                <form onSubmit={handleSubmit}>
+                  <div className={classes.buttons}>
+                    <div>
+                      <input
+                        name="userfile"
+                        type="file"
+                        accept="application/pdf"
+                        id="contained-button-file"
+                        onChange={(e) => setFile(e.target.files[0])}
+                        max-size="10000000"
+                        style={{
+                          display: "none",
+                        }}
+                      />
+                      <label htmlFor="contained-button-file">
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          color="white"
+                          component="span"
+                          className={classes.btn}
+                          style={{
+                            height: "45px",
+                          }}
+                        >
+                          {file ? "Change File" : "Upload File"}
+                        </Button>
+                      </label>
+                    </div>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      disabled={!file}
+                      style={{
+                        height: "45px",
+                      }}
+                    >
+                      Send Quotation
+                    </Button>
+                  </div>
+                </form>
               </div>
-
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                disabled={!file}
-                style={{
-                  height: "45px",
-                }}
-              >
-                Send Quotation
-              </Button>
-            </div>
-          </div>
+            </>
+          )}
         </Container>
       </div>
     </div>
