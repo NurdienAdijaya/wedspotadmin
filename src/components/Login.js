@@ -86,6 +86,7 @@ export default function SignUp() {
       dispatch(vendorLogin(login));
       // window.location.reload();
     }
+    // window.location.reload();
   };
 
   const add = (e) => {
@@ -101,6 +102,7 @@ export default function SignUp() {
       dispatch(vendorRegister(signup));
       // window.location.reload();
     }
+    // window.location.reload();
   };
   return (
     <Container component="main" maxWidth="xs">

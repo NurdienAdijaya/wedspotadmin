@@ -45,9 +45,14 @@ const NewPackages = () => {
   const [package_price, setPackagePrice] = useState(
     dataPackage.package_price || ""
   );
+  const minCap = dataPackage.package_min_capacity
+    ? dataPackage.package_min_capacity
+    : "min";
+  const maxCap = dataPackage.package_max_capacity
+    ? dataPackage.package_max_capacity
+    : "max";
   const [package_capacity, setPackageCapacity] = useState(
-    `${dataPackage.package_min_capacity} - ${dataPackage.package_max_capacity}` ||
-      ""
+    `${minCap} - ${maxCap}` || ""
   );
   const [package_details, setPackageDetails] = useState(
     dataPackage.package_details || ""
@@ -58,7 +63,7 @@ const NewPackages = () => {
   const dataToSend = {
     package_album: album,
     package_name,
-    package_location :service,
+    package_location: service,
     package_price,
     package_capacity,
     package_details,
@@ -66,8 +71,6 @@ const NewPackages = () => {
     package_id: id,
   };
   const dispatch = useDispatch();
-
-
 
   useEffect(() => {
     dispatch(getPackageById(id));
@@ -86,7 +89,7 @@ const NewPackages = () => {
       setState([...state, event.target.value]);
     }
   };
-  console.log(album)
+  console.log(album);
 
   const handleChange = (event) => {
     setservice(event.target.value);
@@ -98,12 +101,12 @@ const NewPackages = () => {
     let file = e.target.files[0];
     let reader = new FileReader();
     let allAlbum = e.target.files;
-    
+
     if (allAlbum) {
       reader.readAsDataURL(file);
       reader.onload = () => {
         setPackageAlbum([...package_album, reader.result]);
-        let a = [...album, file]
+        let a = [...album, file];
         setAlbum(a);
       };
     }
@@ -327,7 +330,7 @@ const NewPackages = () => {
                     className="textfield"
                     label="Capacity*"
                     variant="outlined"
-                    helperText="number per pax"
+                    helperText="number per pax (ex: 10-1000)"
                     // defaultValue="Default Value"
                     value={package_capacity}
                     onChange={(e) => setPackageCapacity(e.target.value)}
@@ -338,7 +341,7 @@ const NewPackages = () => {
                     className="textfield"
                     label="Price Range*"
                     variant="outlined"
-                    helperText="number in Rupiah"
+                    helperText="number in Rupiah (ex: 500000000)"
                     value={package_price}
                     onChange={(e) => setPackagePrice(e.target.value)}
                   />

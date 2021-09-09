@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 import TitleStore1 from "../title/TitleStore1";
 import { MenuItem, TextField } from "@material-ui/core";
 import "./MyStore.css";
@@ -34,6 +34,12 @@ const location = [
 
 const MyStore = () => {
   const { data } = useSelector((state) => state.vendorData);
+
+  const minCap = data.vendor_min_capacity ? data.vendor_min_capacity : "min";
+  const maxCap = data.vendor_max_capacity ? data.vendor_max_capacity : "max";
+  const minPrice = data.vendor_min_capacity ? data.vendor_min_capacity : "min";
+  const maxPrice = data.vendor_max_capacity ? data.vendor_max_capacity : "max";
+
   const [service, setservice] = useState(data.vendor_type || "");
   const [vendor_header, setVendorHeader] = useState(data.vendor_header || "");
   const [previewHeader, setPreviewHeader] = useState("");
@@ -41,16 +47,30 @@ const MyStore = () => {
   const [vendor_name, setVendorName] = useState(data.vendor_name || "");
   const [vendor_email, setVendorEmail] = useState(data.vendor_email || "");
   const [vendor_phone, setVendorPhone] = useState(data.vendor_phone || "");
-  const [vendor_website, setVendorWebsite] = useState(data.vendor_website || "");
-  const [vendor_facebook, setVendorFacebook] = useState(data.vendor_facebook || "");
-  const [vendor_instagram, setVendorInstagram] = useState(data.vendor_instagram || "");
-  const [vendor_twitter, setVendorTwitter] = useState(data.vendor_twitter || "");
-  const [vendor_price_range, setVendorPrice] = useState(`${data.vendor_min_price} - ${data.vendor_max_price}` || "max - min");
-  const [vendor_capacity, setVendorCapacity] = useState(`${data.vendor_min_capacity} - ${data.vendor_max_capacity}` ||"max - min");
-  const [vendor_location, setVendorLocation] = useState(data.vendor_location || "");
+  const [vendor_website, setVendorWebsite] = useState(
+    data.vendor_website || ""
+  );
+  const [vendor_facebook, setVendorFacebook] = useState(
+    data.vendor_facebook || ""
+  );
+  const [vendor_instagram, setVendorInstagram] = useState(
+    data.vendor_instagram || ""
+  );
+  const [vendor_twitter, setVendorTwitter] = useState(
+    data.vendor_twitter || ""
+  );
+  const [vendor_price_range, setVendorPrice] = useState(
+    `${minPrice} - ${maxPrice}` || "max - min"
+  );
+  const [vendor_capacity, setVendorCapacity] = useState(
+    `${minCap} - ${maxCap}` || "max - min"
+  );
+  const [vendor_location, setVendorLocation] = useState(
+    data.vendor_location || ""
+  );
   const vendor_rating = Math.floor(Math.random() * 3) + 3;
   const [previewAvatar, setPreviewAvatar] = useState();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const dataToSend = {
     vendor_header,
     vendor_avatar,
@@ -68,7 +88,7 @@ const MyStore = () => {
     vendor_rating,
   };
 
-  console.log(vendor_avatar)
+  console.log(vendor_avatar);
 
   const handleChange = (event) => {
     setservice(event.target.value);
@@ -76,8 +96,8 @@ const MyStore = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(editVendor(dataToSend))
-  }
+    dispatch(editVendor(dataToSend));
+  };
 
   const handleHeaderImage = (e) => {
     setVendorHeader(e.target.files[0]);
@@ -113,9 +133,7 @@ const MyStore = () => {
           margin: "0.55rem 0",
         }}
       >
-        <Link to="/">
-          My Store
-        </Link>
+        <Link to="/">My Store</Link>
         <Typography color="textPrimary">add</Typography>
       </Breadcrumbs>
       <form onSubmit={handleSubmit}>
@@ -395,7 +413,7 @@ const MyStore = () => {
                 className="textfield"
                 label="Capacity*"
                 variant="outlined"
-                helperText="number per pax"
+                helperText="number per pax (ex: 10-1000)"
                 defaultValue="Default Value"
                 value={vendor_capacity}
                 onChange={(e) => setVendorCapacity(e.target.value)}
@@ -406,7 +424,7 @@ const MyStore = () => {
                 className="textfield"
                 label="Price Range*"
                 variant="outlined"
-                helperText="number in Rupiah"
+                helperText="number in Rupiah (ex: 10000000-500000000)"
                 value={vendor_price_range}
                 onChange={(e) => setVendorPrice(e.target.value)}
               />

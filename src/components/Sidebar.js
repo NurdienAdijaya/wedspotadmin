@@ -196,7 +196,7 @@ export default function Sidebar() {
           >
             {page}
           </Typography>
-          <div className={classesNav.sectionDesktop}>
+          {/* <div className={classesNav.sectionDesktop}>
             <IconButton
               aria-label="show 17 new notifications"
               // color="#0F120D"
@@ -205,7 +205,7 @@ export default function Sidebar() {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-          </div>
+          </div> */}
           {auth && (
             <div>
               <IconButton
@@ -235,12 +235,6 @@ export default function Sidebar() {
                 open={openNav}
                 onClose={handleClose}
               >
-                <MenuItem>
-                  <ListItemIcon>
-                    <PersonIcon />
-                  </ListItemIcon>
-                  <ListItemText>Profile</ListItemText>
-                </MenuItem>
                 <MenuItem onClick={handleLogout}>
                   <ListItemIcon>
                     <ExitToAppIcon />
@@ -373,7 +367,7 @@ export default function Sidebar() {
         <div className={classes.drawerHeader} />
         {page === "My Store" ? (
           <div>
-            <StoreRoutes/>
+            <StoreRoutes />
           </div>
         ) : page === "Quotations" ? (
           <QuotationsRouters />
