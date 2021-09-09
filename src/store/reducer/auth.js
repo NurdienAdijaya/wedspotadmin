@@ -84,7 +84,6 @@ const vendorData = (state = initialState, action) => {
       return {
         ...state,
         isError: true,
-        isSuccess: false,
         isLoading: false,
         message: payload,
       };
