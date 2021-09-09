@@ -122,7 +122,7 @@ export default function Sidebar() {
   const openNav = Boolean(anchorEl);
   const { data } = useSelector((state) => state.vendorData);
   console.log(data);
-  const [firstModal, setFirstModal] = useState(false);
+  const [firstModal, setFirstModal] = useState(!data.vendor_has_filled_info);
   console.log(firstModal);
 
   const handleChange = (event) => {
@@ -157,7 +157,7 @@ export default function Sidebar() {
 
   return (
     <div className={classes.root}>
-      <FirstModal show={firstModal} close={() => setFirstModal(false)} />
+      <FirstModal show={firstModal} close={() => setFirstModal(false)}/>
       <FormGroup>
         <FormControlLabel
           control={
