@@ -72,6 +72,7 @@ export default function QuotationDetail() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createQuotations(id, file));
+    alert("File Sent");
   };
 
   return (
@@ -187,13 +188,12 @@ export default function QuotationDetail() {
               </Grid>
             </Grid>
           </div>
-          
+
           {data.request_status ? (
-            <>
-            </>
+            <></>
           ) : (
             <>
-            <hr></hr>
+              <hr></hr>
               <div className={classes.send}>
                 <TitleStore1
                   title="Upload Quotation"
