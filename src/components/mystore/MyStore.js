@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
-import Link from "@material-ui/core/Link";
+import {Link} from 'react-router-dom'
 import TitleStore1 from "../title/TitleStore1";
 import { MenuItem, TextField } from "@material-ui/core";
 import "./MyStore.css";
@@ -10,11 +10,6 @@ import NoPhoto from "../../assets/NoPhotoAlbum.png";
 import ButtonPhoto from "../buttons/ButtonPhoto";
 import { useDispatch, useSelector } from "react-redux";
 import { editVendor } from "../../store/action/auth";
-
-function handleClick(event) {
-  event.preventDefault();
-  console.info("You clicked a breadcrumb.");
-}
 
 const services = [
   {
@@ -78,8 +73,6 @@ const MyStore = () => {
   const handleChange = (event) => {
     setservice(event.target.value);
   };
-  console.log(dataToSend)
-  console.log(data)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -120,7 +113,7 @@ const MyStore = () => {
           margin: "0.55rem 0",
         }}
       >
-        <Link color="inherit" href="/store" onClick={handleClick}>
+        <Link to="/">
           My Store
         </Link>
         <Typography color="textPrimary">add</Typography>

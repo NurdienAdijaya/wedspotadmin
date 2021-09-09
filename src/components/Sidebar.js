@@ -29,9 +29,6 @@ import {
   MenuItem,
   Switch,
 } from "@material-ui/core";
-import MyStore from "./mystore/MyStore";
-import MyStoreDoneSubmit from "./mystore/MyStoreDoneSubmit";
-import NewPackages from "./package/NewPackages";
 import { useSelector, useDispatch } from "react-redux";
 import Quotations from "./quotations/quotations";
 import Routers from "./quotations/routes";
@@ -40,6 +37,7 @@ import FirstModal from "./firstModal";
 import QuotationsRouters from "./quotations/routes";
 import PackageRoutes from "./package/packageRoutes";
 import { Link } from "react-router-dom";
+import StoreRoutes from "./mystore/storeRoutes";
 
 const useStylesNav = makeStyles((theme) => ({
   root: {
@@ -375,14 +373,11 @@ export default function Sidebar() {
         <div className={classes.drawerHeader} />
         {page === "My Store" ? (
           <div>
-            <MyStore />
-            {/* <MyStoreDoneSubmit /> */}
+            <StoreRoutes/>
           </div>
         ) : page === "Quotations" ? (
           <QuotationsRouters />
         ) : (
-          // "Packages"
-          // <PackageList />
           <PackageRoutes />
         )}
       </main>

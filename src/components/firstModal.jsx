@@ -6,6 +6,7 @@ import {
   makeStyles,
   Container,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   close: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     margin: "1em",
     height: "55px",
-    paddingTop:"10px"
+    paddingTop: "10px",
   },
   flex: {
     display: "flex",
@@ -36,12 +37,12 @@ const useStyles = makeStyles((theme) => ({
   text: {
     color: "#80848D",
     fontSize: "14px",
-    textAlign:"center"
+    textAlign: "center",
   },
-  title:{
+  title: {
     fontFamily: "Cormorant",
-    fontSize:"28px",
-  }
+    fontSize: "28px",
+  },
 }));
 
 export default function FirstModal({ show, close }) {
@@ -64,15 +65,17 @@ export default function FirstModal({ show, close }) {
               doing. And tell us the details
             </p>
           </div>
-          <Button
-            onClick={close}
-            type="submit"
-            variant="contained"
-            color="primary"
-            className={classes.button}
-          >
-            Fill in my details
-          </Button>
+          <Link to="/edit">
+            <Button
+              onClick={close}
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.button}
+            >
+              Fill in my details
+            </Button>
+          </Link>
         </Container>
       </div>
     </Dialog>
