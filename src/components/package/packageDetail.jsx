@@ -8,9 +8,9 @@ import {
   Breadcrumbs,
 } from "@material-ui/core";
 import TitleStore1 from "../title/TitleStore1";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getPackageById } from "../../store/action/package";
+import { deletePackage, getPackageById } from "../../store/action/package";
 
 const useStyles = makeStyles((theme) => ({
   tittle: {
@@ -54,11 +54,20 @@ export default function PackageDetail() {
   const classes = useStyles();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { dataPackage } = useSelector((state) => state.packageById);
+  const { dataPackage, isDelete } = useSelector((state) => state.packageById);
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    dispatch(deletePackage(id));
+  };
 
   useEffect(() => {
     dispatch(getPackageById(id));
   }, [dispatch, id]);
+
+  if(isDelete){
+    return(<Redirect to="/"/>)
+  }
 
   return (
     <div>
@@ -93,7 +102,7 @@ export default function PackageDetail() {
                 <Button
                   type="submit"
                   variant="contained"
-                  color="white"
+                  color="primary"
                   style={{
                     height: "45px",
                     marginLeft: "1rem",
@@ -103,6 +112,19 @@ export default function PackageDetail() {
                   Edit
                 </Button>
               </Link>
+              <Button
+                type="submit"
+                variant="contained"
+                color="secondary"
+                style={{
+                  height: "45px",
+                  marginLeft: "1rem",
+                  width: "140px",
+                }}
+                onClick={handleDelete}
+              >
+                Delete
+              </Button>
             </div>
           </div>
           <hr></hr>

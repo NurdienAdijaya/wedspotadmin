@@ -29,3 +29,10 @@ export const editPackage = (props) => {
   }
 }
 
+export const deletePackage = (id) =>{
+  return {
+    type: types.DELETE_PACKAGE_BEGIN,
+    id
+  }
+}
+

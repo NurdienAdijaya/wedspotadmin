@@ -30,6 +30,7 @@ const initialState = {
           isLoading:false,
           message:payload
         };
+      
       default:
         return state;
     }
