@@ -98,7 +98,7 @@ const MyStore = () => {
     e.preventDefault();
     dispatch(editVendor(dataToSend));
 
-    window.location.replace("/");
+    // window.location.replace("/");
   };
 
   const handleHeaderImage = (e) => {
