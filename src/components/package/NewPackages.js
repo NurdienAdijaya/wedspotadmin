@@ -16,7 +16,9 @@ import {
   getPackageById,
 } from "../../store/action/package";
 import { useDispatch, useSelector } from "react-redux";
-import {Redirect} from 'react-router-dom'
+import { Redirect } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function handleClick(event) {
   event.preventDefault();
@@ -35,7 +37,9 @@ const location = [
 const NewPackages = () => {
   const [service, setservice] = useState("package");
   const { dataPackage } = useSelector((state) => state.packageById);
-  const { isSuccess } = useSelector((state) => state.createPackage);
+  const { isSuccess, isError, message } = useSelector(
+    (state) => state.createPackage
+  );
   const { data } = useSelector((state) => state.vendorData);
   const { citys, venue, organizer } = useSelector((state) => state.config);
   const [package_album, setPackageAlbum] = useState(
@@ -60,7 +64,7 @@ const NewPackages = () => {
   const dataToSend = {
     package_album: album,
     package_name,
-    package_location :service,
+    package_location: service,
     package_price,
     package_capacity,
     package_details,
@@ -68,8 +72,6 @@ const NewPackages = () => {
     package_id: id,
   };
   const dispatch = useDispatch();
-
-
 
   useEffect(() => {
     dispatch(getPackageById(id));
@@ -88,7 +90,7 @@ const NewPackages = () => {
       setState([...state, event.target.value]);
     }
   };
-  console.log(album)
+  console.log(album);
 
   const handleChange = (event) => {
     setservice(event.target.value);
@@ -100,12 +102,12 @@ const NewPackages = () => {
     let file = e.target.files[0];
     let reader = new FileReader();
     let allAlbum = e.target.files;
-    
+
     if (allAlbum) {
       reader.readAsDataURL(file);
       reader.onload = () => {
         setPackageAlbum([...package_album, reader.result]);
-        let a = [...album, file]
+        let a = [...album, file];
         setAlbum(a);
       };
     }
@@ -132,9 +134,18 @@ const NewPackages = () => {
     }
   };
 
-  if(isSuccess){
-    return(<Redirect to="/"/>)
-  }
+  const toastI = () => {
+    toast.success("🦄 Wow so easy!", {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   return (
     <div>
       <Breadcrumbs
@@ -448,6 +459,7 @@ const NewPackages = () => {
                 width="18.714rem"
                 height="3.93rem"
                 type="submit"
+                onClick={toastI}
               />
             </div>
           </div>
