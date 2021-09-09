@@ -108,13 +108,34 @@ const MyStoreDoneSubmit = () => {
             <h3 className="details"> </h3>
             <div className="logoDetails">
               <div className="icon">
-                <FacebookIcon />
+                <a
+                  href={data.vendor_facebook}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ color: "#C97C68" }}
+                >
+                  <FacebookIcon />
+                </a>
               </div>
               <div className="icon">
-                <InstagramIcon />
+                <a
+                  href={data.vendor_instagram}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ color: "#C97C68" }}
+                >
+                  <InstagramIcon />
+                </a>
               </div>
               <div className="icon">
-                <TwitterIcon />
+                <a
+                  href={data.vendor_twitter}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ color: "#C97C68" }}
+                >
+                  <TwitterIcon />
+                </a>
               </div>
             </div>
           </div>
