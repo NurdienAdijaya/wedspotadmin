@@ -16,6 +16,7 @@ import {
   getPackageById,
 } from "../../store/action/package";
 import { useDispatch, useSelector } from "react-redux";
+import {Redirect} from 'react-router-dom'
 
 function handleClick(event) {
   event.preventDefault();
@@ -24,6 +25,7 @@ function handleClick(event) {
 const NewPackages = () => {
   const [service, setservice] = useState("package");
   const { dataPackage } = useSelector((state) => state.packageById);
+  const { isSuccess } = useSelector((state) => state.createPackage);
   const { data } = useSelector((state) => state.vendorData);
   const { citys, venue, organizer } = useSelector((state) => state.config);
   const [package_album, setPackageAlbum] = useState(
@@ -122,6 +124,10 @@ const NewPackages = () => {
       alert("gamber kosong!");
     }
   };
+
+  if(isSuccess){
+    return(<Redirect to="/"/>)
+  }
   return (
     <div>
       <Breadcrumbs

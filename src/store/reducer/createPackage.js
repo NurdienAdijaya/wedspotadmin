@@ -4,26 +4,45 @@ const initialState = {
   isLoading: false,
   isSuccess: false,
   isError: false,
-  data: [],
+  newData: [],
   message: [],
 };
 
-const packageList = (state = initialState, action) => {
+const createPackage = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case types.GET_ALL_PACKAGE_BEGIN:
+    case types.CREATE_PACKAGE_BEGIN:
       return {
         ...state,
         isLoading: true,
       };
-    case types.GET_ALL_PACKAGE_SUCCESS:
+    case types.CREATE_PACKAGE_SUCCESS:
       return {
         ...state,
         isSuccess: true,
         isLoading: false,
-        data: payload,
+        newData: payload,
       };
-    case types.GET_ALL_PACKAGE_FAIL:
+    case types.CREATE_PACKAGE_FAIL:
+      return {
+        ...state,
+        isError: true,
+        isLoading: false,
+        message: payload,
+      };
+    case types.EDIT_PACKAGE_BEGIN:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case types.EDIT_PACKAGE_SUCCESS:
+      return {
+        ...state,
+        isSuccess: true,
+        isLoading: false,
+        newData: payload,
+      };
+    case types.EDIT_PACKAGE_FAIL:
       return {
         ...state,
         isError: true,
@@ -35,4 +54,4 @@ const packageList = (state = initialState, action) => {
   }
 };
 
-export default packageList;
+export default createPackage;

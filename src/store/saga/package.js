@@ -18,8 +18,7 @@ function* packageList(action) {
       payload: res.data,
     });
   } catch (error) {
-    console.log("ini error", error);
-    console.log("ini error data", error.response.data.errors);
+    console.log(token)
     yield put({
       type: types.GET_ALL_PACKAGE_FAIL,
       payload: error.response.data.errors,
@@ -110,6 +109,25 @@ function* editPackage(action) {
   }
 }
 
+function* deletePackage(action){
+  const {id} = action
+  try {
+    const res = yield axios.delete(
+      `${BASE_URL}/packages/${id}`,{ headers: { Authorization: `Bearer ${token}` } }
+    );
+    yield put({
+      type: types.DELETE_PACKAGE_SUCCESS,
+      payload: res.data.message,
+    });
+  } catch (error) {
+    console.log(error.response)
+    yield put({
+      type: types.DELETE_PACKAGE_FAIL,
+      payload: error.response,
+    });
+  }
+}
+
 export function* watchAllPackage() {
   yield takeEvery(types.GET_ALL_PACKAGE_BEGIN, packageList);
 }
@@ -124,4 +142,8 @@ export function* watchCreatePackage() {
 
 export function* watchEditPackage() {
   yield takeEvery(types.EDIT_PACKAGE_BEGIN, editPackage);
+}
+
+export function* watchDeletePackage() {
+  yield takeEvery(types.DELETE_PACKAGE_BEGIN, deletePackage);
 }
