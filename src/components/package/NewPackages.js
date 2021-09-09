@@ -16,7 +16,9 @@ import {
   getPackageById,
 } from "../../store/action/package";
 import { useDispatch, useSelector } from "react-redux";
-import {Redirect} from 'react-router-dom'
+import { Redirect } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function handleClick(event) {
   event.preventDefault();
@@ -25,7 +27,9 @@ function handleClick(event) {
 const NewPackages = () => {
   const [service, setservice] = useState("package");
   const { dataPackage } = useSelector((state) => state.packageById);
-  const { isSuccess } = useSelector((state) => state.createPackage);
+  const { isSuccess, isError, message } = useSelector(
+    (state) => state.createPackage
+  );
   const { data } = useSelector((state) => state.vendorData);
   const { citys, venue, organizer } = useSelector((state) => state.config);
   const [package_album, setPackageAlbum] = useState(
@@ -125,9 +129,18 @@ const NewPackages = () => {
     }
   };
 
-  if(isSuccess){
-    return(<Redirect to="/"/>)
-  }
+  const toastI = () => {
+    toast.success("🦄 Wow so easy!", {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   return (
     <div>
       <Breadcrumbs
@@ -441,6 +454,7 @@ const NewPackages = () => {
                 width="18.714rem"
                 height="3.93rem"
                 type="submit"
+                onClick={toastI}
               />
             </div>
           </div>
