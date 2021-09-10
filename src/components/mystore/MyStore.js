@@ -37,8 +37,8 @@ const MyStore = () => {
 
   const minCap = data.vendor_min_capacity ? data.vendor_min_capacity : "min";
   const maxCap = data.vendor_max_capacity ? data.vendor_max_capacity : "max";
-  const minPrice = data.vendor_min_capacity ? data.vendor_min_capacity : "min";
-  const maxPrice = data.vendor_max_capacity ? data.vendor_max_capacity : "max";
+  const minPrice = data.vendor_min_price ? data.vendor_min_price : "min";
+  const maxPrice = data.vendor_max_price ? data.vendor_max_price : "max";
 
   const [service, setservice] = useState(data.vendor_type || "");
   const [vendor_header, setVendorHeader] = useState(data.vendor_header || "");
