@@ -3,12 +3,12 @@ import * as types from "../const/types";
 import { BASE_URL } from "../const/server";
 import { put, takeEvery } from "redux-saga/effects";
 
-const token = localStorage.getItem('token')
+const token = localStorage.getItem("token");
 
 function* vendorLogin(action) {
   try {
     const res = yield axios.post(`${BASE_URL}/vendors/login`, action.action);
-    yield localStorage.setItem("token",res.data.token);
+    yield localStorage.setItem("token", res.data.token);
     yield put({
       type: types.LOGIN_SUCCESS,
       payload: res.data.currentVendor,
@@ -31,7 +31,7 @@ function* vendorRegister(action) {
       payload: res.data.currentVendor,
     });
   } catch (error) {
-      console.log(error)
+    console.log(error);
     yield put({
       type: types.REGISTER_FAIL,
       payload: error.response.data.errors,
@@ -39,21 +39,21 @@ function* vendorRegister(action) {
   }
 }
 
-
 function* getVendor() {
   try {
-    const res = yield axios.get(`${BASE_URL}/vendors/getMe`,
-    {headers:{Authorization: `Bearer ${token}`}});
+    const res = yield axios.get(`${BASE_URL}/vendors/getMe`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     yield put({
       type: types.GET_VENDOR_SUCCESS,
       payload: res.data.data,
     });
   } catch (error) {
-      console.log(error)
+    console.log(error);
     yield put({
       type: types.GET_VENDOR_FAIL,
-      payload: error.response
-    })
+      payload: error.response,
+    });
   }
 }
 
@@ -75,17 +75,15 @@ function* editVendor(action) {
   dataToSend.append("vendor_capacity", props.vendor_capacity);
   dataToSend.append("vendor_rating", props.vendor_rating);
   try {
-    const res = yield axios.put(
-      `${BASE_URL}/vendors/edit`,
-      dataToSend,
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+    const res = yield axios.put(`${BASE_URL}/vendors/edit`, dataToSend, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     yield put({
       type: types.EDIT_VENDOR_SUCCESS,
       payload: res.data.newData,
     });
   } catch (error) {
-    console.log(error.response)
+    console.log(error.response);
     yield put({
       type: types.EDIT_VENDOR_FAIL,
       payload: error.response.data.errors,

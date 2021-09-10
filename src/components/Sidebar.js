@@ -116,9 +116,9 @@ export default function Sidebar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openNav = Boolean(anchorEl);
   const { data } = useSelector((state) => state.vendorData);
-  console.log(data);
+  // console.log(data);
   const [firstModal, setFirstModal] = useState(!data.vendor_has_filled_info);
-  console.log(firstModal);
+  // console.log(firstModal);
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
