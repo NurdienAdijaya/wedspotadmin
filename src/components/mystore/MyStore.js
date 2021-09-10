@@ -98,6 +98,11 @@ const MyStore = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(editVendor(dataToSend));
+    // window.location.reload();
+
+    setTimeout(function () {
+      alert("Store updated successfully");
+    }, 4500);
   };
 
   const handleHeaderImage = (e) => {

@@ -75,6 +75,9 @@ const NewPackages = () => {
     } else {
       dispatch(createPackage(dataToSend));
     }
+    setTimeout(function () {
+      alert("Package updated successfully");
+    }, 6000);
   };
   const handleChangeCheckbox = (event) => {
     if (event.target.checked) {

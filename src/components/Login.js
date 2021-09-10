@@ -84,9 +84,12 @@ export default function SignUp() {
       return;
     } else {
       dispatch(vendorLogin(login));
-      window.location.reload();
+      // window.location.reload();
     }
     // window.location.reload();
+    setTimeout(function () {
+      window.location.reload();
+    }, 1000);
   };
 
   const add = (e) => {
@@ -102,7 +105,10 @@ export default function SignUp() {
       dispatch(vendorRegister(signup));
       // window.location.reload();
     }
-    window.location.reload();
+    // window.location.reload();
+    setTimeout(function () {
+      window.location.reload();
+    }, 1000);
   };
   return (
     <Container component="main" maxWidth="xs">
