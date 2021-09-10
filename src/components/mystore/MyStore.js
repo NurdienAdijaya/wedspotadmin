@@ -68,6 +68,7 @@ const MyStore = () => {
   const [vendor_location, setVendorLocation] = useState(
     data.vendor_location || ""
   );
+
   const vendor_rating = Math.floor(Math.random() * 3) + 3;
   const [previewAvatar, setPreviewAvatar] = useState();
   const dispatch = useDispatch();
@@ -88,7 +89,7 @@ const MyStore = () => {
     vendor_rating,
   };
 
-  console.log(vendor_avatar);
+  console.log("dataToSend", dataToSend);
 
   const handleChange = (event) => {
     setservice(event.target.value);
@@ -413,7 +414,7 @@ const MyStore = () => {
                 className="textfield"
                 label="Capacity*"
                 variant="outlined"
-                helperText="number per pax (ex: 10-1000)"
+                helperText="number per pax"
                 defaultValue="Default Value"
                 value={vendor_capacity}
                 onChange={(e) => setVendorCapacity(e.target.value)}
@@ -424,7 +425,7 @@ const MyStore = () => {
                 className="textfield"
                 label="Price Range*"
                 variant="outlined"
-                helperText="number in Rupiah (ex: 10000000-500000000)"
+                helperText="number in Rupiah"
                 value={vendor_price_range}
                 onChange={(e) => setVendorPrice(e.target.value)}
               />

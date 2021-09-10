@@ -75,6 +75,10 @@ function* editVendor(action) {
   dataToSend.append("vendor_capacity", props.vendor_capacity);
   dataToSend.append("vendor_rating", props.vendor_rating);
   try {
+    console.log("tokenSaga", token);
+    // const res = yield axios.put(`${BASE_URL}/vendors/edit`, dataToSend, {
+    //   headers: { Authorization: `Bearer ${token}` },
+    // });
     const res = yield axios.put(`${BASE_URL}/vendors/edit`, dataToSend, {
       headers: { Authorization: `Bearer ${token}` },
     });

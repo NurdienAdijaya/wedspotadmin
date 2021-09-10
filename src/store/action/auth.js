@@ -23,6 +23,6 @@ export const getVendor = () => {
 export const editVendor = (props) => {
   return {
     type: types.EDIT_VENDOR_BEGIN,
-    props
+    props,
   };
 };
