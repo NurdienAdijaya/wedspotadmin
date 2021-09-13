@@ -2,6 +2,8 @@ import axios from "axios";
 import * as types from "../const/types";
 import { BASE_URL } from "../const/server";
 import { put, takeEvery } from "redux-saga/effects";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const token = localStorage.getItem("token");
 
@@ -12,13 +14,11 @@ function* packageList(action) {
       `${BASE_URL}/packages/vendor?page=${page}&limit=${limit}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    console.log(res);
     yield put({
       type: types.GET_ALL_PACKAGE_SUCCESS,
       payload: res.data,
     });
   } catch (error) {
-    console.log(token);
     yield put({
       type: types.GET_ALL_PACKAGE_FAIL,
       payload: error.response.data.errors,
@@ -30,7 +30,6 @@ function* packageById(action) {
   const { id } = action;
   try {
     const res = yield axios.get(`${BASE_URL}/packages/${id}`);
-    console.log(res);
     yield put({
       type: types.GET_PACKAGE_ID_SUCCESS,
       payload: res.data.data,
@@ -45,7 +44,6 @@ function* packageById(action) {
 
 function* createPackage(action) {
   const { props } = action;
-  console.log(props);
   let dataToSend = new FormData();
   dataToSend.append("package_name", props.package_name);
   dataToSend.append("package_location", props.package_location);
@@ -66,12 +64,30 @@ function* createPackage(action) {
       type: types.CREATE_PACKAGE_SUCCESS,
       payload: res.data,
     });
+    yield toast.success("Success", {
+      position: "top-left",
+      autoClose: 6000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   } catch (error) {
-    console.log(error.response);
-    console.log(props);
     yield put({
       type: types.CREATE_PACKAGE_FAIL,
       payload: error.response,
+    });
+    yield error.response.data.errors.map((data) => {
+      return toast.error(data, {
+        position: "top-left",
+        autoClose: 6000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     });
   }
 }
@@ -83,9 +99,13 @@ function* editPackage(action) {
   dataToSend.append("package_location", props.package_location);
   dataToSend.append("package_details", props.package_details);
   dataToSend.append("package_price", props.package_price);
-  dataToSend.append("package_services", props.package_services);
+  props.package_services.map((data) => {
+    return dataToSend.append("package_services", data);
+  });
   dataToSend.append("package_capacity", props.package_capacity);
-  dataToSend.append("package_album", props.package_album);
+  props.package_album.map((data) => {
+    return dataToSend.append("package_album", data);
+  });
   try {
     const res = yield axios.put(
       `${BASE_URL}/packages/${props.package_id}`,
@@ -96,12 +116,33 @@ function* editPackage(action) {
       type: types.EDIT_PACKAGE_SUCCESS,
       payload: res.data,
     });
+    yield toast.success("Success", {
+      position: "top-left",
+      autoClose: 6000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   } catch (error) {
-    console.log(error.response);
+    console.log(error.response)
     yield put({
       type: types.EDIT_PACKAGE_FAIL,
       payload: error.response,
     });
+    yield error.response.data.errors.map((data) => {
+      return toast.error(data, {
+        position: "top-left",
+        autoClose: 6000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    });
+    
   }
 }
 
@@ -116,7 +157,6 @@ function* deletePackage(action) {
       payload: res.data.message,
     });
   } catch (error) {
-    console.log(error.response);
     yield put({
       type: types.DELETE_PACKAGE_FAIL,
       payload: error.response,

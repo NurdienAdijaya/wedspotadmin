@@ -6,6 +6,8 @@ const initialState = {
   isError: false,
   newData: [],
   message: [],
+  messageEdit:[],
+  isErrorEdit:false,
 };
 
 const createPackage = (state = initialState, action) => {
@@ -28,7 +30,7 @@ const createPackage = (state = initialState, action) => {
         ...state,
         isError: true,
         isLoading: false,
-        message: payload,
+        message: payload.data.errors,
       };
     case types.EDIT_PACKAGE_BEGIN:
       return {
@@ -45,9 +47,9 @@ const createPackage = (state = initialState, action) => {
     case types.EDIT_PACKAGE_FAIL:
       return {
         ...state,
-        isError: true,
+        isErrorEdit: true,
         isLoading: false,
-        message: payload,
+        messageEdit: payload,
       };
     default:
       return state;

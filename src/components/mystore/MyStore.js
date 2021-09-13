@@ -10,6 +10,8 @@ import NoPhoto from "../../assets/NoPhotoAlbum.png";
 import ButtonPhoto from "../buttons/ButtonPhoto";
 import { useDispatch, useSelector } from "react-redux";
 import { editVendor } from "../../store/action/auth";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const services = [
   {
@@ -21,21 +23,15 @@ const services = [
     label: "organizer",
   },
 ];
-const location = [
-  {
-    value: "bandung",
-    label: "Bandung",
-  },
-  {
-    value: "jakarta",
-    label: "Jakarta",
-  },
-];
 
 const MyStore = () => {
-  const { data } = useSelector((state) => state.vendorData);
+  const { data, message } = useSelector(
+    (state) => state.vendorData
+  );
+  const { citys } = useSelector((state) => state.config);
+  console.log(data.vendor_min_capacity)
 
-  const minCap = data.vendor_min_capacity ? data.vendor_min_capacity : "min";
+  const minCap = data.vendor_min_capacity === 0 || data.vendor_min_capacity  ? data.vendor_min_capacity : "min";
   const maxCap = data.vendor_max_capacity ? data.vendor_max_capacity : "max";
   const minPrice = data.vendor_min_price ? data.vendor_min_price : "min";
   const maxPrice = data.vendor_max_price ? data.vendor_max_price : "max";
@@ -100,9 +96,10 @@ const MyStore = () => {
     dispatch(editVendor(dataToSend));
     // window.location.reload();
 
-    setTimeout(function () {
-      alert("Store updated successfully");
-    }, 4500);
+    // setTimeout(function () {
+    //   alert("Store updated successfully");
+    // }, 4500);
+
   };
 
   const handleHeaderImage = (e) => {
@@ -118,6 +115,8 @@ const MyStore = () => {
       console.log("header error");
     };
   };
+
+  console.log(message);
 
   const handleAvatarImage = (e) => {
     setVendorAvatar(e.target.files[0]);
@@ -139,6 +138,17 @@ const MyStore = () => {
           margin: "0.55rem 0",
         }}
       >
+        <ToastContainer
+          position="top-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <Link to="/">My Store</Link>
         <Typography color="textPrimary">add</Typography>
       </Breadcrumbs>
@@ -401,14 +411,15 @@ const MyStore = () => {
                 id="outlined-select-currency"
                 className="textfield"
                 label="Location*"
+                select
                 value={vendor_location}
                 onChange={(e) => setVendorLocation(e.target.value)}
                 helperText="Please select your service location"
                 variant="outlined"
               >
-                {location.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
+                {citys.locations?.map((option, idx) => (
+                  <MenuItem key={idx} value={option}>
+                    {option}
                   </MenuItem>
                 ))}
               </TextField>

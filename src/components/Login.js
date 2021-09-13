@@ -65,6 +65,7 @@ export default function SignUp() {
   // const { isError, message, isLoading } = useSelector(
   //   (state) => state.vendorData
   // );
+  const [oldPassword, setOldPassword] = useState("");
 
   const [login, setlogin] = useState({
     vendor_email: "",
@@ -87,9 +88,9 @@ export default function SignUp() {
       // window.location.reload();
     }
     // window.location.reload();
-    setTimeout(function () {
-      window.location.reload();
-    }, 1000);
+    // setTimeout(function () {
+    //   window.location.reload();
+    // }, 1000);
   };
 
   const add = (e) => {
@@ -106,9 +107,9 @@ export default function SignUp() {
       // window.location.reload();
     }
     // window.location.reload();
-    setTimeout(function () {
-      window.location.reload();
-    }, 1000);
+    // setTimeout(function () {
+    //   window.location.reload();
+    // }, 1000);
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -215,6 +216,23 @@ export default function SignUp() {
                     onChange={(e) =>
                       setSignup({ ...signup, vendor_password: e.target.value })
                     }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Confirm Password"
+                    type="password"
+                    value={oldPassword}
+                    helperText={
+                      oldPassword !== signup.vendor_password &&
+                      "password doesn't match"
+                    }
+                    error={oldPassword !== signup.vendor_password}
+                    onChange={(e) => setOldPassword(e.target.value)}
                   />
                 </Grid>
               </Grid>

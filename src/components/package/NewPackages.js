@@ -1,7 +1,7 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
-import Link from "@material-ui/core/Link";
 import NoPhoto from "../../assets/NoPhotoAlbum.png";
 import { MenuItem, TextField } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -9,23 +9,22 @@ import Checkbox from "@material-ui/core/Checkbox";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import ButtonPhoto from "../buttons/ButtonPhoto";
 import CancelIcon from "@material-ui/icons/Cancel";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {
   createPackage,
   editPackage,
   getPackageById,
 } from "../../store/action/package";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function handleClick(event) {
-  event.preventDefault();
-  console.info("You clicked a breadcrumb.");
-}
 const NewPackages = () => {
   const [service, setservice] = useState("package");
   const { dataPackage } = useSelector((state) => state.packageById);
+  const { message, isError } = useSelector(
+    (state) => state.createPackage
+  );
   const { data } = useSelector((state) => state.vendorData);
   const { citys, venue, organizer } = useSelector((state) => state.config);
   const [package_album, setPackageAlbum] = useState(
@@ -50,10 +49,19 @@ const NewPackages = () => {
     dataPackage.package_details || ""
   );
   const [state, setState] = useState([]);
-  const [album, setAlbum] = useState(dataPackage.package_album || []);
+  const [album, setAlbum] = useState([]);
+  const [allAlbum, setAllAlbum] = useState(dataPackage.package_album || [])
+
+  useEffect(() => {
+   setAllAlbum([...dataPackage.package_album, ...album])
+  }, [album, dataPackage.package_album])
+  
+
+  console.log(allAlbum)
+
   const { id } = useParams();
   const dataToSend = {
-    package_album: album,
+    package_album: allAlbum,
     package_name,
     package_location: service,
     package_price,
@@ -75,16 +83,14 @@ const NewPackages = () => {
     } else {
       dispatch(createPackage(dataToSend));
     }
-    setTimeout(function () {
-      alert("Package updated successfully");
-    }, 6000);
+    console.log(message);
+    console.log(isError);
   };
   const handleChangeCheckbox = (event) => {
     if (event.target.checked) {
       setState([...state, event.target.value]);
     }
   };
-  console.log(album);
 
   const handleChange = (event) => {
     setservice(event.target.value);
@@ -92,7 +98,6 @@ const NewPackages = () => {
 
   const handleAlbum = (e) => {
     // function to convert image file into base64
-    console.log("files", e.target.files);
     let file = e.target.files[0];
     let reader = new FileReader();
     let allAlbum = e.target.files;
@@ -122,22 +127,10 @@ const NewPackages = () => {
       setPackageAlbum(
         package_album.filter((fil) => fil !== package_album[index])
       );
-      setAlbum(album.filter((fil) => fil !== album[index]));
+      setAllAlbum(allAlbum.filter((fil) => fil !== allAlbum[index]));
     } else {
       alert("gamber kosong!");
     }
-  };
-
-  const toastI = () => {
-    toast.success("🦄 Wow so easy!", {
-      position: "top-left",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
   };
 
   return (
@@ -148,9 +141,18 @@ const NewPackages = () => {
           margin: "0.55rem 0",
         }}
       >
-        <Link color="inherit" href="/store" onClick={handleClick}>
-          Packages
-        </Link>
+        <ToastContainer
+          position="top-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <Link to="/">Packages</Link>
         <Typography color="textPrimary">
           {id ? <>Edit</> : <>Create Package</>}
         </Typography>
@@ -453,7 +455,6 @@ const NewPackages = () => {
                 width="18.714rem"
                 height="3.93rem"
                 type="submit"
-                onClick={toastI}
               />
             </div>
           </div>

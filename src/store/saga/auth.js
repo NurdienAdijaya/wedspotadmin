@@ -2,6 +2,8 @@ import axios from "axios";
 import * as types from "../const/types";
 import { BASE_URL } from "../const/server";
 import { put, takeEvery } from "redux-saga/effects";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const token = localStorage.getItem("token");
 
@@ -11,7 +13,7 @@ function* vendorLogin(action) {
     yield localStorage.setItem("token", res.data.token);
     yield put({
       type: types.LOGIN_SUCCESS,
-      payload: res.data.currentVendor,
+      payload: res.data,
     });
   } catch (error) {
     console.log(error.response.data.errors[0]);
@@ -28,7 +30,7 @@ function* vendorRegister(action) {
     yield localStorage.setItem("token", res.data.token);
     yield put({
       type: types.REGISTER_SUCCESS,
-      payload: res.data.currentVendor,
+      payload: res.data,
     });
   } catch (error) {
     console.log(error);
@@ -46,7 +48,7 @@ function* getVendor() {
     });
     yield put({
       type: types.GET_VENDOR_SUCCESS,
-      payload: res.data.data,
+      payload: res.data,
     });
   } catch (error) {
     console.log(error);
@@ -86,12 +88,33 @@ function* editVendor(action) {
       type: types.EDIT_VENDOR_SUCCESS,
       payload: res.data.newData,
     });
+    yield toast.success("Success", {
+      position: "top-left",
+      autoClose: 6000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   } catch (error) {
     console.log(error.response);
     yield put({
       type: types.EDIT_VENDOR_FAIL,
       payload: error.response.data.errors,
     });
+    yield error.response.data.errors.map((data) => {
+      return toast.error(data, {
+        position: "top-left",
+        autoClose: 6000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    });
+    console.log(error.response);
   }
 }
 
