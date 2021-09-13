@@ -9,6 +9,7 @@ const token = localStorage.getItem("token");
 
 function* packageList(action) {
   const { page, limit } = action;
+  console.log("token", token)
   try {
     const res = yield axios.get(
       `${BASE_URL}/packages/vendor?page=${page}&limit=${limit}`,
@@ -126,7 +127,6 @@ function* editPackage(action) {
       progress: undefined,
     });
   } catch (error) {
-    console.log(error.response)
     yield put({
       type: types.EDIT_PACKAGE_FAIL,
       payload: error.response,

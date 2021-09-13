@@ -20,13 +20,14 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const NewPackages = () => {
-  const [service, setservice] = useState("package");
+  
   const { dataPackage } = useSelector((state) => state.packageById);
-  const { message, isError } = useSelector(
+  const {isLoading } = useSelector(
     (state) => state.createPackage
   );
   const { data } = useSelector((state) => state.vendorData);
   const { citys, venue, organizer } = useSelector((state) => state.config);
+  const [service, setservice] = useState(dataPackage.package_location || '');
   const [package_album, setPackageAlbum] = useState(
     dataPackage.package_album || []
   );
@@ -51,10 +52,12 @@ const NewPackages = () => {
   const [state, setState] = useState([]);
   const [album, setAlbum] = useState([]);
   const [allAlbum, setAllAlbum] = useState(dataPackage.package_album || [])
+  const [oldAlbum] = useState(dataPackage.package_album || [])
+
 
   useEffect(() => {
-   setAllAlbum([...dataPackage.package_album, ...album])
-  }, [album, dataPackage.package_album])
+   setAllAlbum([...oldAlbum, ...album])
+  }, [album, oldAlbum])
   
 
   console.log(allAlbum)
@@ -83,8 +86,9 @@ const NewPackages = () => {
     } else {
       dispatch(createPackage(dataToSend));
     }
-    console.log(message);
-    console.log(isError);
+    if(isLoading){
+
+    }
   };
   const handleChangeCheckbox = (event) => {
     if (event.target.checked) {

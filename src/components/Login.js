@@ -10,6 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useDispatch } from "react-redux";
 import { vendorLogin, vendorRegister } from "../store/action/auth";
+import { ToastContainer, toast } from "react-toastify";
 
 function Copyright() {
   return (
@@ -81,8 +82,15 @@ export default function SignUp() {
   const Login = (e) => {
     e.preventDefault();
     if ((login.vendor_email === "") | (login.vendor_password === "")) {
-      alert("kolom kosong, tolong diisi terlebih dahulu");
-      return;
+      return toast.error("kolom kosong, tolong diisi terlebih dahulu", {
+        position: "top-left",
+        autoClose: 6000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } else {
       dispatch(vendorLogin(login));
       // window.location.reload();
@@ -95,17 +103,21 @@ export default function SignUp() {
 
   const add = (e) => {
     e.preventDefault();
-    if (
-      (signup.vendor_name === "") |
-      (signup.vendor_email === "") |
-      (signup.vendor_password === "")
-    ) {
-      alert("kolom kosong, tolong diisi terlebih dahulu");
-      return;
+    if ((login.vendor_email === "") | (login.vendor_password === "")) {
+      return toast.error("kolom kosong, tolong diisi terlebih dahulu", {
+        position: "top-left",
+        autoClose: 6000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } else {
       dispatch(vendorRegister(signup));
-      // window.location.reload();
     }
+    
+    // window.location.reload();
     // window.location.reload();
     // setTimeout(function () {
     //   window.location.reload();
@@ -113,6 +125,17 @@ export default function SignUp() {
   };
   return (
     <Container component="main" maxWidth="xs">
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <CssBaseline />
 
       <div className={classes.paper}>
