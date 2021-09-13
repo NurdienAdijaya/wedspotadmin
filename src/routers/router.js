@@ -4,10 +4,9 @@ import Home from "../pages/Home";
 
 const Routers = () => {
   // const token = localStorage.getItem("token");
-  const { isLoggedin } = useSelector((state) => state.vendorData);
-  // return <>{token ? <Sidebar /> : <Home />}</>;
-  console.log(isLoggedin)
-  return <>{isLoggedin ? <Sidebar /> : <Home />}</>;
+  const { isSuccess } = useSelector((state) => state.vendorData);
+  console.log(isSuccess)
+  return <>{isSuccess ? <Sidebar /> : <Home />}</>;
 };
 
 export default Routers;

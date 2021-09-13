@@ -17,8 +17,6 @@ function* quotationsList(action) {
       payload: res.data,
     });
   } catch (error) {
-    console.log("ini error", error);
-    console.log("ini error data", error.response.data.errors);
     yield put({
       type: types.GET_ALL_QUOTATIONS_FAIL,
       payload: error.response.data.errors,
@@ -58,7 +56,6 @@ function* postQuotation(action) {
       payload: res.data.data,
     });
   } catch (error) {
-    console.log(error.response)
     yield put({
       type: types.POST_QUOTATIONS_FAIL,
       payload: error.response.data.errors,

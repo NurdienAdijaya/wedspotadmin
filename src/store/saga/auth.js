@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as types from "../const/types";
 import { BASE_URL } from "../const/server";
-import { put, takeEvery } from "redux-saga/effects";
+import { put, takeEvery, select  } from "redux-saga/effects";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -15,11 +15,31 @@ function* vendorLogin(action) {
       type: types.LOGIN_SUCCESS,
       payload: res.data,
     });
+    yield toast.success("Success", {
+      position: "top-left",
+      autoClose: 6000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   } catch (error) {
     console.log(error.response.data.errors[0]);
     yield put({
       type: types.LOGIN_FAIL,
       payload: error.response.data.errors,
+    });
+    yield error.response.data.errors.map((data) => {
+      return toast.error(data, {
+        position: "top-left",
+        autoClose: 6000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     });
   }
 }
@@ -32,11 +52,31 @@ function* vendorRegister(action) {
       type: types.REGISTER_SUCCESS,
       payload: res.data,
     });
+    yield toast.success("Success", {
+      position: "top-left",
+      autoClose: 6000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   } catch (error) {
     console.log(error);
     yield put({
       type: types.REGISTER_FAIL,
       payload: error.response.data.errors,
+    });
+    yield error.response.data.errors.map((data) => {
+      return toast.error(data, {
+        position: "top-left",
+        autoClose: 6000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     });
   }
 }
@@ -61,6 +101,7 @@ function* getVendor() {
 
 function* editVendor(action) {
   const { props } = action;
+  const token = select(state=> state.vendorData)
   let dataToSend = new FormData();
   dataToSend.append("vendor_name", props.vendor_name);
   dataToSend.append("vendor_avatar", props.vendor_avatar);
