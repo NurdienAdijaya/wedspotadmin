@@ -55,8 +55,6 @@ const NewPackages = () => {
     setAllAlbum([...oldAlbum, ...album]);
   }, [album, oldAlbum]);
 
-  console.log(allAlbum);
-
   const { id } = useParams();
   const dataToSend = {
     package_album: allAlbum,
@@ -91,9 +89,13 @@ const NewPackages = () => {
       progress: undefined,
     });
   };
-  const handleChangeCheckbox = (event) => {
-    if (event.target.checked) {
-      setState([...state, event.target.value]);
+  console.log(state);
+  const handleChangeCheckbox = (e) => {
+    e.preventDefault();
+    if (e.target.checked) {
+      setState([...state, e.target.value]);
+    } else {
+      setState(state.filter((fil) => fil !== state[JSON.parse(e.target.name)]));
     }
   };
 
@@ -401,6 +403,7 @@ const NewPackages = () => {
                         key={idx}
                         control={
                           <Checkbox
+                            name={idx}
                             onChange={handleChangeCheckbox}
                             Checkbox
                             color="primary"
