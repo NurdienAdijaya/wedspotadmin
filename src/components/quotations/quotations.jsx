@@ -8,6 +8,7 @@ import {
   Container,
   Grid,
   TablePagination,
+  CircularProgress
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import TitleStore1 from "../title/TitleStore1";
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Quotations() {
   const classes = useStyles();
-  const { data, isError } = useSelector((state) => state.quotationsList);
+  const { data, isError, isLoading } = useSelector((state) => state.quotationsList);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [sort, setSort] = useState("");
@@ -122,6 +123,18 @@ export default function Quotations() {
             </div>
           </div>
         </div>
+        {isLoading ? (
+            <>
+              <div
+                style={{ width: "100%", display:"flex", alignItems: "center", justifyContent:"center", height:"20vw" }}
+              >
+                <CircularProgress 
+                 size={100}
+                color="secondary" />
+              </div>
+            </>
+          ) : (
+            <>
         {isError ? (
           <>
             <div className={classes.noResult}>
@@ -207,6 +220,8 @@ export default function Quotations() {
             />
           </>
         )}
+        </>
+          )}
       </div>
     </div>
   );

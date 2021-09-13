@@ -1,8 +1,11 @@
 import * as types from "../const/types";
 
+const token = localStorage.getItem("token");
+
 const initialState = {
   isLoading: false,
   isSuccess: false,
+  isChange:false,
   isError: false,
   data: [],
   message: [],
@@ -21,7 +24,8 @@ const vendorData = (state = initialState, action) => {
         ...state,
         isSuccess: true,
         isLoading: false,
-        data: payload,
+        data: payload.currentVendor,
+        isLoggedin:payload.token
       };
     case types.LOGIN_FAIL:
       return {
@@ -40,7 +44,8 @@ const vendorData = (state = initialState, action) => {
         ...state,
         isSuccess: true,
         isLoading: false,
-        data: payload,
+        data: payload.data,
+        isLoggedin:payload.token
       };
     case types.REGISTER_FAIL:
       return {
@@ -54,7 +59,8 @@ const vendorData = (state = initialState, action) => {
         ...state,
         isSuccess: true,
         isLoading: false,
-        data: payload,
+        data: payload.data,
+        isLoggedin:token
       };
     case types.GET_VENDOR_BEGIN:
       return {
@@ -71,13 +77,15 @@ const vendorData = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
+        isChange:false
       };
     case types.EDIT_VENDOR_SUCCESS:
       return {
         ...state,
-        isSuccess: true,
+        isChange: true,
         isLoading: false,
         data: payload,
+        message:[]
       };
     case types.EDIT_VENDOR_FAIL:
       return {
@@ -85,6 +93,7 @@ const vendorData = (state = initialState, action) => {
         isError: true,
         isLoading: false,
         message: payload,
+        isChange:false,
       };
 
     default:
