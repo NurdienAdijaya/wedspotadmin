@@ -399,9 +399,9 @@ const NewPackages = () => {
                   <>
                     {venue.venueServices.map((data, idx) => (
                       <FormControlLabel
+                        key={idx}
                         control={
                           <Checkbox
-                            key={idx}
                             name={idx}
                             onChange={handleChangeCheckbox}
                             Checkbox
