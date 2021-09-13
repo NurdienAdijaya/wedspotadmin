@@ -147,7 +147,7 @@ export default function SignUp() {
         position="top-left"
         autoClose={5000}
         hideProgressBar={false}
-        newestOnTop={false}
+        newestOnTop
         closeOnClick
         rtl={false}
         pauseOnFocusLoss

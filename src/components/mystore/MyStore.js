@@ -10,7 +10,7 @@ import NoPhoto from "../../assets/NoPhotoAlbum.png";
 import ButtonPhoto from "../buttons/ButtonPhoto";
 import { useDispatch, useSelector } from "react-redux";
 import { editVendor } from "../../store/action/auth";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const services = [
@@ -29,6 +29,7 @@ const MyStore = () => {
     (state) => state.vendorData
   );
   const { citys } = useSelector((state) => state.config);
+  console.log(citys)
 
   const minCap = data.vendor_min_capacity === 0 || data.vendor_min_capacity  ? data.vendor_min_capacity : "min";
   const maxCap = data.vendor_max_capacity ? data.vendor_max_capacity : "max";
@@ -91,11 +92,15 @@ const MyStore = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(editVendor(dataToSend));
-    // window.location.reload();
-
-    // setTimeout(function () {
-    //   alert("Store updated successfully");
-    // }, 4500);
+    toast.info("Loading", {
+      position: "top-left",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
 
   };
 
@@ -137,7 +142,7 @@ const MyStore = () => {
           position="top-left"
           autoClose={5000}
           hideProgressBar={false}
-          newestOnTop={false}
+          newestOnTop
           closeOnClick
           rtl={false}
           pauseOnFocusLoss
