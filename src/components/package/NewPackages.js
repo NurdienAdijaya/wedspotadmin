@@ -55,8 +55,6 @@ const NewPackages = () => {
     setAllAlbum([...oldAlbum, ...album]);
   }, [album, oldAlbum]);
 
-  console.log(allAlbum);
-
   const { id } = useParams();
   const dataToSend = {
     package_album: allAlbum,
@@ -81,7 +79,7 @@ const NewPackages = () => {
     } else {
       dispatch(createPackage(dataToSend));
     }
-      toast.info("Loading", {
+    toast.info("Loading", {
       position: "top-left",
       autoClose: 3000,
       hideProgressBar: false,
@@ -89,11 +87,15 @@ const NewPackages = () => {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-    })    
+    });
   };
-  const handleChangeCheckbox = (event) => {
-    if (event.target.checked) {
-      setState([...state, event.target.value]);
+  console.log(state);
+  const handleChangeCheckbox = (e) => {
+    e.preventDefault();
+    if (e.target.checked) {
+      setState([...state, e.target.value]);
+    } else {
+      setState(state.filter((fil) => fil !== state[JSON.parse(e.target.name)]));
     }
   };
 
@@ -397,9 +399,10 @@ const NewPackages = () => {
                   <>
                     {venue.venueServices.map((data, idx) => (
                       <FormControlLabel
-                        key={idx}
                         control={
                           <Checkbox
+                            key={idx}
+                            name={idx}
                             onChange={handleChangeCheckbox}
                             Checkbox
                             color="primary"
