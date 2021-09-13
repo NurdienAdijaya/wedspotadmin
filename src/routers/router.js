@@ -5,7 +5,7 @@ import Home from "../pages/Home";
 const Routers = () => {
   // const token = localStorage.getItem("token");
   const { isSuccess } = useSelector((state) => state.vendorData);
-  console.log(isSuccess)
+  // console.log(isSuccess)
   return <>{isSuccess ? <Sidebar /> : <Home />}</>;
 };
 

@@ -89,7 +89,7 @@ const NewPackages = () => {
       progress: undefined,
     });
   };
-  console.log(state);
+  // console.log(state);
   const handleChangeCheckbox = (e) => {
     e.preventDefault();
     if (e.target.checked) {
@@ -118,7 +118,7 @@ const NewPackages = () => {
       };
     }
     reader.onerror = () => {
-      console.log("error");
+      // console.log("error");
     };
   };
   // clear state

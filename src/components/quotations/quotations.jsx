@@ -54,7 +54,7 @@ export default function Quotations() {
   const [sort, setSort] = useState("");
   const [filter, setFilter] = useState("");
   const dispatch = useDispatch();
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
     dispatch(getQuotations(page + 1, rowsPerPage, sort, filter));

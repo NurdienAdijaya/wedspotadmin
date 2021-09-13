@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const token = localStorage.getItem("token");
-const vendor = state => state.vendorData
+const vendor = (state) => state.vendorData;
 
 function* vendorLogin(action) {
   try {
@@ -103,7 +103,7 @@ function* getVendor() {
 function* editVendor(action) {
   const { props } = action;
   const vendorToken = yield select(vendor);
-  console.log(vendorToken)
+  // console.log(vendorToken)
   let dataToSend = new FormData();
   dataToSend.append("vendor_name", props.vendor_name);
   dataToSend.append("vendor_avatar", props.vendor_avatar);
@@ -120,7 +120,7 @@ function* editVendor(action) {
   dataToSend.append("vendor_capacity", props.vendor_capacity);
   dataToSend.append("vendor_rating", props.vendor_rating);
   try {
-    console.log("tokenSaga", token);
+    // console.log("tokenSaga", token);
     // const res = yield axios.put(`${BASE_URL}/vendors/edit`, dataToSend, {
     //   headers: { Authorization: `Bearer ${token}` },
     // });

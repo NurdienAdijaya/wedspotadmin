@@ -109,7 +109,7 @@ const MyStore = () => {
     };
     reader.readAsDataURL(e.target.files[0]);
     reader.onerror = () => {
-      console.log("header error");
+      // console.log("header error");
     };
   };
 
