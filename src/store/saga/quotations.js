@@ -1,16 +1,17 @@
 import axios from "axios";
 import * as types from "../const/types";
 import { BASE_URL } from "../const/server";
-import { put, takeEvery } from "redux-saga/effects";
+import { put, takeEvery, select } from "redux-saga/effects";
 
-const token = localStorage.getItem("token");
+const vendor = state => state.vendorData
 
 function* quotationsList(action) {
   const { page, limit, sort_by, order_by} = action;
+  const token = yield select(vendor);
   try {
     const res = yield axios.get(
       `${BASE_URL}/requests/vendor?page=${page}&limit=${limit}&sort_by=${sort_by}&order_by=${order_by}`,
-      { headers: { Authorization: `Bearer ${token}` } }
+      { headers: { Authorization: `Bearer ${token.isLoggedin}` } }
     );
     yield put({
       type: types.GET_ALL_QUOTATIONS_SUCCESS,
@@ -42,6 +43,7 @@ function* quotationsById(action) {
 
 function* postQuotation(action) {
   const { id, file } = action;
+  const token = yield select(vendor);
   let dataToSend = new FormData();
   dataToSend.append("quotation_request_id", id);
   dataToSend.append("quotation_file", file);
@@ -49,7 +51,7 @@ function* postQuotation(action) {
     const res = yield axios.post(
       `${BASE_URL}/quotations`,
       dataToSend,
-      { headers: { Authorization: `Bearer ${token}` } }
+      { headers: { Authorization: `Bearer ${token.isLoggedin}` } }
     );
     yield put({
       type: types.POST_QUOTATIONS_SUCCESS,
