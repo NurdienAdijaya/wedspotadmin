@@ -9,7 +9,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import ButtonPrimary from "../buttons/ButtonPrimary";
 import ButtonPhoto from "../buttons/ButtonPhoto";
 import CancelIcon from "@material-ui/icons/Cancel";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Redirect } from "react-router-dom";
 import {
   createPackage,
   editPackage,
@@ -21,7 +21,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 const NewPackages = () => {
   const { dataPackage } = useSelector((state) => state.packageById);
-  const { isLoading } = useSelector((state) => state.createPackage);
+  const { isLoading, isSuccess, newData } = useSelector(
+    (state) => state.createPackage
+  );
   const { data } = useSelector((state) => state.vendorData);
   const { citys, venue, organizer } = useSelector((state) => state.config);
   const [service, setservice] = useState(dataPackage.package_location || "");
@@ -50,6 +52,7 @@ const NewPackages = () => {
   const [album, setAlbum] = useState([]);
   const [allAlbum, setAllAlbum] = useState(dataPackage.package_album || []);
   const [oldAlbum] = useState(dataPackage.package_album || []);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     setAllAlbum([...oldAlbum, ...album]);
@@ -72,6 +75,13 @@ const NewPackages = () => {
     dispatch(getPackageById(id));
   }, [dispatch, id]);
 
+  if (success) {
+    return <Redirect to={`/package/${newData.newData.package_id}`} />;
+  }
+
+  console.log(newData);
+  console.log(success);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (id) {
@@ -79,6 +89,11 @@ const NewPackages = () => {
     } else {
       dispatch(createPackage(dataToSend));
     }
+    setTimeout(() => {
+      if (isSuccess) {
+        setSuccess(true);
+      }
+    }, 3000);
     toast.info("Loading", {
       position: "top-left",
       autoClose: 3000,
@@ -152,7 +167,7 @@ const NewPackages = () => {
           position="top-left"
           autoClose={5000}
           hideProgressBar={false}
-          newestOnTop={false}
+          newestOnTop
           closeOnClick
           rtl={false}
           pauseOnFocusLoss
@@ -460,7 +475,7 @@ const NewPackages = () => {
               }}
             >
               <ButtonPrimary
-                content="Create Package"
+                content="Save Changes"
                 width="18.714rem"
                 height="3.93rem"
                 type="submit"
