@@ -9,6 +9,7 @@ const initialState = {
   isError: false,
   data: [],
   message: [],
+  isLoggedin: []
 };
 
 const vendorData = (state = initialState, action) => {

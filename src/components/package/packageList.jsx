@@ -224,7 +224,7 @@ export default function PackageList() {
                             <div>
                               <p>
                                 {moment(data.created_at).format(
-                                  "ddd, DD MMM YYYY"
+                                  "dddd, DD MMM YYYY"
                                 )}
                               </p>
                             </div>

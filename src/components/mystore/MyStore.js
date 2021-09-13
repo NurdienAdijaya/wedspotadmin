@@ -25,11 +25,10 @@ const services = [
 ];
 
 const MyStore = () => {
-  const { data, message } = useSelector(
+  const { data } = useSelector(
     (state) => state.vendorData
   );
   const { citys } = useSelector((state) => state.config);
-  console.log(data.vendor_min_capacity)
 
   const minCap = data.vendor_min_capacity === 0 || data.vendor_min_capacity  ? data.vendor_min_capacity : "min";
   const maxCap = data.vendor_max_capacity ? data.vendor_max_capacity : "max";
@@ -85,8 +84,6 @@ const MyStore = () => {
     vendor_rating,
   };
 
-  console.log("dataToSend", dataToSend);
-
   const handleChange = (event) => {
     setservice(event.target.value);
   };
@@ -115,8 +112,6 @@ const MyStore = () => {
       console.log("header error");
     };
   };
-
-  console.log(message);
 
   const handleAvatarImage = (e) => {
     setVendorAvatar(e.target.files[0]);
