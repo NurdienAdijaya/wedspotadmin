@@ -81,6 +81,15 @@ export default function SignUp() {
 
   const Login = (e) => {
     e.preventDefault();
+    toast.info("Loading", {
+      position: "top-left",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
     if ((login.vendor_email === "") | (login.vendor_password === "")) {
       return toast.error("kolom kosong, tolong diisi terlebih dahulu", {
         position: "top-left",
@@ -95,6 +104,7 @@ export default function SignUp() {
       dispatch(vendorLogin(login));
       // window.location.reload();
     }
+    
     // window.location.reload();
     // setTimeout(function () {
     //   window.location.reload();
@@ -103,6 +113,15 @@ export default function SignUp() {
 
   const add = (e) => {
     e.preventDefault();
+    toast.info("Loading", {
+      position: "top-left",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
     if ((login.vendor_email === "") | (login.vendor_password === "")) {
       return toast.error("kolom kosong, tolong diisi terlebih dahulu", {
         position: "top-left",
@@ -115,8 +134,7 @@ export default function SignUp() {
       });
     } else {
       dispatch(vendorRegister(signup));
-    }
-    
+    }    
     // window.location.reload();
     // window.location.reload();
     // setTimeout(function () {

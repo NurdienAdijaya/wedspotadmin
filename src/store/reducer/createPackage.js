@@ -17,6 +17,7 @@ const createPackage = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
+        isSuccess:false,
       };
     case types.CREATE_PACKAGE_SUCCESS:
       return {
@@ -36,6 +37,7 @@ const createPackage = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
+        isSuccess:false,
       };
     case types.EDIT_PACKAGE_SUCCESS:
       return {

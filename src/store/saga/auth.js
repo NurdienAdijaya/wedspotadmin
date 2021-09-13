@@ -1,11 +1,12 @@
 import axios from "axios";
 import * as types from "../const/types";
 import { BASE_URL } from "../const/server";
-import { put, takeEvery, select  } from "redux-saga/effects";
+import { put, takeEvery, select } from "redux-saga/effects";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const token = localStorage.getItem("token");
+const vendor = state => state.vendorData
 
 function* vendorLogin(action) {
   try {
@@ -101,7 +102,8 @@ function* getVendor() {
 
 function* editVendor(action) {
   const { props } = action;
-  const token = select(state=> state.vendorData)
+  const vendorToken = yield select(vendor);
+  console.log(vendorToken)
   let dataToSend = new FormData();
   dataToSend.append("vendor_name", props.vendor_name);
   dataToSend.append("vendor_avatar", props.vendor_avatar);
@@ -123,7 +125,7 @@ function* editVendor(action) {
     //   headers: { Authorization: `Bearer ${token}` },
     // });
     const res = yield axios.put(`${BASE_URL}/vendors/edit`, dataToSend, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${vendorToken.isLoggedin}` },
     });
     yield put({
       type: types.EDIT_VENDOR_SUCCESS,

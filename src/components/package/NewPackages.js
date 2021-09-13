@@ -16,18 +16,15 @@ import {
   getPackageById,
 } from "../../store/action/package";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const NewPackages = () => {
-  
   const { dataPackage } = useSelector((state) => state.packageById);
-  const {isLoading } = useSelector(
-    (state) => state.createPackage
-  );
+  const { isLoading } = useSelector((state) => state.createPackage);
   const { data } = useSelector((state) => state.vendorData);
   const { citys, venue, organizer } = useSelector((state) => state.config);
-  const [service, setservice] = useState(dataPackage.package_location || '');
+  const [service, setservice] = useState(dataPackage.package_location || "");
   const [package_album, setPackageAlbum] = useState(
     dataPackage.package_album || []
   );
@@ -51,16 +48,14 @@ const NewPackages = () => {
   );
   const [state, setState] = useState([]);
   const [album, setAlbum] = useState([]);
-  const [allAlbum, setAllAlbum] = useState(dataPackage.package_album || [])
-  const [oldAlbum] = useState(dataPackage.package_album || [])
-
+  const [allAlbum, setAllAlbum] = useState(dataPackage.package_album || []);
+  const [oldAlbum] = useState(dataPackage.package_album || []);
 
   useEffect(() => {
-   setAllAlbum([...oldAlbum, ...album])
-  }, [album, oldAlbum])
-  
+    setAllAlbum([...oldAlbum, ...album]);
+  }, [album, oldAlbum]);
 
-  console.log(allAlbum)
+  console.log(allAlbum);
 
   const { id } = useParams();
   const dataToSend = {
@@ -86,9 +81,15 @@ const NewPackages = () => {
     } else {
       dispatch(createPackage(dataToSend));
     }
-    if(isLoading){
-
-    }
+      toast.info("Loading", {
+      position: "top-left",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })    
   };
   const handleChangeCheckbox = (event) => {
     if (event.target.checked) {
