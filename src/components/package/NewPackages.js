@@ -81,7 +81,7 @@ const NewPackages = () => {
     } else {
       dispatch(createPackage(dataToSend));
     }
-      toast.info("Loading", {
+    toast.info("Loading", {
       position: "top-left",
       autoClose: 3000,
       hideProgressBar: false,
@@ -89,7 +89,7 @@ const NewPackages = () => {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-    })    
+    });
   };
   const handleChangeCheckbox = (event) => {
     if (event.target.checked) {
@@ -236,6 +236,7 @@ const NewPackages = () => {
                 padding: "1rem",
                 display: "flex",
                 justifyContent: "center",
+                flexWrap: "wrap",
               }}
             >
               {package_album.length === 0 ? (
