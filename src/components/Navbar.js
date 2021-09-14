@@ -10,7 +10,6 @@ import { Avatar, Badge } from "@material-ui/core";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";

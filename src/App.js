@@ -8,6 +8,7 @@ import Routers from "./routers/router";
 import { getVendor } from "./store/action/auth";
 import { getLocation, getVenue, getOrganizer } from "./store/action/config";
 
+
 const theme = createTheme({
   palette: {
     primary: {
