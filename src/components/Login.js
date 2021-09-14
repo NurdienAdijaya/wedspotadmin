@@ -10,7 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useDispatch } from "react-redux";
 import { vendorLogin, vendorRegister } from "../store/action/auth";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 function Copyright() {
   return (
@@ -143,17 +143,6 @@ export default function SignUp() {
   };
   return (
     <Container component="main" maxWidth="xs">
-      <ToastContainer
-        position="top-left"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <CssBaseline />
 
       <div className={classes.paper}>

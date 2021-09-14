@@ -10,7 +10,7 @@ import NoPhoto from "../../assets/NoPhotoAlbum.png";
 import ButtonPhoto from "../buttons/ButtonPhoto";
 import { useDispatch, useSelector } from "react-redux";
 import { editVendor } from "../../store/action/auth";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const services = [
@@ -138,17 +138,6 @@ const MyStore = () => {
           margin: "0.55rem 0",
         }}
       >
-        <ToastContainer
-          position="top-left"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <Link to="/">My Store</Link>
         <Typography color="textPrimary">add</Typography>
       </Breadcrumbs>

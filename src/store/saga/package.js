@@ -13,7 +13,7 @@ function* packageList(action) {
   try {
     const res = yield axios.get(
       `${BASE_URL}/packages/vendor?page=${page}&limit=${limit}`,
-      { headers: { Authorization: `Bearer ${token.isLoggedin}` } }
+      { headers: { Authorization: `Bearer ${token.token}` } }
     );
     yield put({
       type: types.GET_ALL_PACKAGE_SUCCESS,
@@ -60,7 +60,7 @@ function* createPackage(action) {
   });
   try {
     const res = yield axios.post(`${BASE_URL}/packages`, dataToSend, {
-      headers: { Authorization: `Bearer ${token.isLoggedin}` },
+      headers: { Authorization: `Bearer ${token.token}` },
     });
     yield put({
       type: types.CREATE_PACKAGE_SUCCESS,
@@ -113,7 +113,7 @@ function* editPackage(action) {
     const res = yield axios.put(
       `${BASE_URL}/packages/${props.package_id}`,
       dataToSend,
-      { headers: { Authorization: `Bearer ${token.isLoggedin}` } }
+      { headers: { Authorization: `Bearer ${token.token}` } }
     );
     yield put({
       type: types.EDIT_PACKAGE_SUCCESS,
@@ -153,7 +153,7 @@ function* deletePackage(action) {
   const token = yield select(vendor);
   try {
     const res = yield axios.delete(`${BASE_URL}/packages/${id}`, {
-      headers: { Authorization: `Bearer ${token.isLoggedin}` },
+      headers: { Authorization: `Bearer ${token.token}` },
     });
     yield put({
       type: types.DELETE_PACKAGE_SUCCESS,
