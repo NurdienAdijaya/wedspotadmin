@@ -2,6 +2,8 @@ import axios from "axios";
 import * as types from "../const/types";
 import { BASE_URL } from "../const/server";
 import { put, takeEvery, select } from "redux-saga/effects";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const vendor = state => state.vendorData
 
@@ -57,10 +59,30 @@ function* postQuotation(action) {
       type: types.POST_QUOTATIONS_SUCCESS,
       payload: res.data.data,
     });
+    yield toast.success("Success", {
+      position: "top-left",
+      autoClose: 6000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   } catch (error) {
     yield put({
       type: types.POST_QUOTATIONS_FAIL,
       payload: error.response.data.errors,
+    });
+    yield error.response.data.errors.map((data) => {
+      return toast.error(data, {
+        position: "top-left",
+        autoClose: 6000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     });
   }
 }
