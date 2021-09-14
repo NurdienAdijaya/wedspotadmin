@@ -16,7 +16,7 @@ import {
   getPackageById,
 } from "../../store/action/package";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const NewPackages = () => {
@@ -163,17 +163,6 @@ const NewPackages = () => {
           margin: "0.55rem 0",
         }}
       >
-        <ToastContainer
-          position="top-left"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <Link to="/">Packages</Link>
         <Typography color="textPrimary">
           {id ? <>Edit</> : <>Create Package</>}
@@ -478,6 +467,7 @@ const NewPackages = () => {
                 width="18.714rem"
                 height="3.93rem"
                 type="submit"
+                disable={isLoading}
               />
             </div>
           </div>

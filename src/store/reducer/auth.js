@@ -9,7 +9,7 @@ const initialState = {
   isError: false,
   data: [],
   message: [],
-  isLoggedin: []
+  token: []
 };
 
 const vendorData = (state = initialState, action) => {
@@ -26,7 +26,7 @@ const vendorData = (state = initialState, action) => {
         isSuccess: true,
         isLoading: false,
         data: payload.currentVendor,
-        isLoggedin:payload.token
+        token:payload.token
       };
     case types.LOGIN_FAIL:
       return {
@@ -46,7 +46,7 @@ const vendorData = (state = initialState, action) => {
         isSuccess: true,
         isLoading: false,
         data: payload.data,
-        isLoggedin:payload.token
+        token:payload.token
       };
     case types.REGISTER_FAIL:
       return {
@@ -61,7 +61,7 @@ const vendorData = (state = initialState, action) => {
         isSuccess: true,
         isLoading: false,
         data: payload.data,
-        isLoggedin:token
+        token:token
       };
     case types.GET_VENDOR_BEGIN:
       return {

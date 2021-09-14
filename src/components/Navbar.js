@@ -10,8 +10,6 @@ import { Avatar, Badge } from "@material-ui/core";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
@@ -49,17 +47,6 @@ export default function Navbar() {
   return (
     <div className={classes.root}>
       <AppBar position="static" style={{ background: "#F3F3F3" }}>
-      <ToastContainer
-          position="top-left"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <Toolbar>
           <IconButton
             edge="start"

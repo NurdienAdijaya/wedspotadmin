@@ -11,7 +11,7 @@ function* quotationsList(action) {
   try {
     const res = yield axios.get(
       `${BASE_URL}/requests/vendor?page=${page}&limit=${limit}&sort_by=${sort_by}&order_by=${order_by}`,
-      { headers: { Authorization: `Bearer ${token.isLoggedin}` } }
+      { headers: { Authorization: `Bearer ${token.token}` } }
     );
     yield put({
       type: types.GET_ALL_QUOTATIONS_SUCCESS,
@@ -51,7 +51,7 @@ function* postQuotation(action) {
     const res = yield axios.post(
       `${BASE_URL}/quotations`,
       dataToSend,
-      { headers: { Authorization: `Bearer ${token.isLoggedin}` } }
+      { headers: { Authorization: `Bearer ${token.token}` } }
     );
     yield put({
       type: types.POST_QUOTATIONS_SUCCESS,

@@ -125,7 +125,7 @@ function* editVendor(action) {
     //   headers: { Authorization: `Bearer ${token}` },
     // });
     const res = yield axios.put(`${BASE_URL}/vendors/edit`, dataToSend, {
-      headers: { Authorization: `Bearer ${vendorToken.isLoggedin}` },
+      headers: { Authorization: `Bearer ${vendorToken.token}` },
     });
     yield put({
       type: types.EDIT_VENDOR_SUCCESS,
