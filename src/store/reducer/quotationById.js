@@ -19,7 +19,6 @@ const initialState = {
       case types.GET_QUOTATIONS_ID_SUCCESS:
         return {
           ...state,
-          isSuccess: true,
           isLoading:false,
           data: payload,
         };
@@ -34,13 +33,13 @@ const initialState = {
         return {
           ...state,
           isLoading: true,
+          isSuccess:false
         };
       case types.POST_QUOTATIONS_SUCCESS:
         return {
           ...state,
           isSuccess: true,
           isLoading:false,
-          data: payload,
         };
       case types.POST_QUOTATIONS_FAIL:
         return {

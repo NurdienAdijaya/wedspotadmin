@@ -12,13 +12,15 @@ import QuotationSent from "../buttons/QuotationSent";
 import QuotationNew from "../buttons/QuotationNew";
 import { useDispatch, useSelector } from "react-redux";
 import Vector from "./images/Vector.png";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import {
   getQuotationById,
   createQuotations,
 } from "../../store/action/quotation";
 import moment from "moment";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const useStyles = makeStyles((theme) => ({
   tittle: {
@@ -60,20 +62,39 @@ const useStyles = makeStyles((theme) => ({
 
 export default function QuotationDetail() {
   const [file, setFile] = useState("");
+  const [success, setSuccess] = useState(false);
   const classes = useStyles();
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { data } = useSelector((state) => state.quotationsById);
+  const { data, isSuccess } = useSelector((state) => state.quotationsById);
 
   useEffect(() => {
     dispatch(getQuotationById(id));
   }, [dispatch, id]);
 
+  if (success) {
+    return <Redirect to="/" />;
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createQuotations(id, file));
-    alert("File Sent");
+    setTimeout(() => {
+      if (isSuccess) {
+        setSuccess(true);
+      }
+    }, 3000);
+    toast.info("Loading", {
+      position: "top-left",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   };
+  console.log(success)
 
   return (
     <div>
