@@ -90,7 +90,7 @@ export default function SignUp() {
       draggable: true,
       progress: undefined,
     })
-    if ((login.vendor_email === "") | (login.vendor_password === "")) {
+    if ((login.vendor_email === "") || (login.vendor_password === "")) {
       return toast.error("kolom kosong, tolong diisi terlebih dahulu", {
         position: "top-left",
         autoClose: 6000,
@@ -122,7 +122,7 @@ export default function SignUp() {
       draggable: true,
       progress: undefined,
     })
-    if ((login.vendor_email === "") | (login.vendor_password === "")) {
+    if ((login.vendor_email === "") || (login.vendor_password === "")) {
       return toast.error("kolom kosong, tolong diisi terlebih dahulu", {
         position: "top-left",
         autoClose: 6000,
