@@ -81,19 +81,10 @@ export default function SignUp() {
 
   const Login = (e) => {
     e.preventDefault();
-    toast.info("Loading", {
-      position: "top-left",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
     if ((login.vendor_email === "") | (login.vendor_password === "")) {
       return toast.error("please fill all form", {
         position: "top-left",
-        autoClose: 6000,
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -101,6 +92,15 @@ export default function SignUp() {
         progress: undefined,
       });
     } else {
+      toast.info("Loading", {
+        position: "top-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       dispatch(vendorLogin(login));
       // window.location.reload();
     }
@@ -113,19 +113,14 @@ export default function SignUp() {
 
   const add = (e) => {
     e.preventDefault();
-    toast.info("Loading", {
-      position: "top-left",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    if ((login.vendor_email === "") | (login.vendor_password === "")) {
+    if (
+      (signup.vendor_email === "") |
+      (signup.vendor_password === "") |
+      (signup.vendor_name === "")
+    ) {
       return toast.error("please fill all form", {
         position: "top-left",
-        autoClose: 6000,
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -133,6 +128,15 @@ export default function SignUp() {
         progress: undefined,
       });
     } else {
+      toast.info("Loading", {
+        position: "top-left",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       dispatch(vendorRegister(signup));
     }
     // window.location.reload();
