@@ -10,7 +10,7 @@ import {
   makeStyles,
   Button,
   TablePagination,
-  CircularProgress
+  CircularProgress,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { MoreVert, Search } from "@material-ui/icons";
@@ -146,11 +146,15 @@ export default function PackageList() {
           {isLoading ? (
             <>
               <div
-                style={{ width: "100%", display:"flex", alignItems: "center", justifyContent:"center", height:"20vw" }}
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "20vw",
+                }}
               >
-                <CircularProgress 
-                 size={100}
-                color="secondary" />
+                <CircularProgress size={100} color="secondary" />
               </div>
             </>
           ) : (
@@ -214,7 +218,7 @@ export default function PackageList() {
                     {/* Content */}
                     {data?.data?.map((data, idx) => (
                       <Link
-                        to={`/package/${data.package_id}`}
+                        to={`/package/${data?.package_id}`}
                         style={{
                           color: "black",
                         }}
@@ -223,7 +227,7 @@ export default function PackageList() {
                           <Grid item xs={3}>
                             <div>
                               <p>
-                                {moment(data.created_at).format(
+                                {moment(data?.created_at).format(
                                   "dddd, DD MMM YYYY"
                                 )}
                               </p>
@@ -231,7 +235,7 @@ export default function PackageList() {
                           </Grid>
                           <Grid item xs={8}>
                             <div className={classes.name}>
-                              <p>{data.package_name}</p>
+                              <p>{data?.package_name}</p>
                             </div>
                           </Grid>
                           <Grid item xs={1}>
@@ -248,7 +252,7 @@ export default function PackageList() {
                   </Container>
                   <TablePagination
                     component="div"
-                    count={data.count}
+                    count={data?.count}
                     page={page}
                     onPageChange={handleChangePage}
                     rowsPerPage={rowsPerPage}

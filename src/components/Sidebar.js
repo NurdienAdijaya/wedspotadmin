@@ -117,7 +117,7 @@ export default function Sidebar() {
   const openNav = Boolean(anchorEl);
   const { data } = useSelector((state) => state.vendorData);
   // console.log(data);
-  const [firstModal, setFirstModal] = useState(!data.vendor_has_filled_info);
+  const [firstModal, setFirstModal] = useState(!data?.vendor_has_filled_info);
   // console.log(firstModal);
 
   const handleChange = (event) => {
@@ -211,9 +211,9 @@ export default function Sidebar() {
                 // color="#0F120D"
               >
                 <h4 style={{ paddingTop: "1rem", paddingRight: "0.5rem" }}>
-                  {data.vendor_name}
+                  {data?.vendor_name}
                 </h4>
-                <Avatar alt={data.vendor_name} src={data.vendor_avatar} />
+                <Avatar alt={data?.vendor_name} src={data?.vendor_avatar} />
               </IconButton>
               <Menu
                 id="menu-appbar"

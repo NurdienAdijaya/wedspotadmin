@@ -400,7 +400,7 @@ const NewPackages = () => {
                 <div className="textfieldempty"></div>
               </div>
               <div className="titlefield">
-                {data.vendor_type !== "organizer" ? (
+                {data?.vendor_type !== "organizer" ? (
                   <>
                     {venue.venueServices.map((data, idx) => (
                       <FormControlLabel

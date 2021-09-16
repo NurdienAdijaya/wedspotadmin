@@ -8,7 +8,7 @@ import {
   Container,
   Grid,
   TablePagination,
-  CircularProgress
+  CircularProgress,
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import TitleStore1 from "../title/TitleStore1";
@@ -48,7 +48,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Quotations() {
   const classes = useStyles();
-  const { data, isError, isLoading } = useSelector((state) => state.quotationsList);
+  const { data, isError, isLoading } = useSelector(
+    (state) => state.quotationsList
+  );
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [sort, setSort] = useState("");
@@ -124,104 +126,110 @@ export default function Quotations() {
           </div>
         </div>
         {isLoading ? (
-            <>
-              <div
-                style={{ width: "100%", display:"flex", alignItems: "center", justifyContent:"center", height:"20vw" }}
-              >
-                <CircularProgress 
-                 size={100}
-                color="secondary" />
-              </div>
-            </>
-          ) : (
-            <>
-        {isError ? (
           <>
-            <div className={classes.noResult}>
-              <NoresultPhone
-                title={"No Quotations"}
-                description={
-                  "You will get the latest quotation requests by prospects here"
-                }
-              />
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "20vw",
+              }}
+            >
+              <CircularProgress size={100} color="secondary" />
             </div>
           </>
         ) : (
           <>
-            <Container>
-              <Grid container spacing={1}>
-                <Grid item xs={4}>
-                  <div className={classes.title}>
-                    <p>Created Date</p>
-                  </div>
-                </Grid>
-                <Grid item xs={4}>
-                  <div className={classes.title}>
-                    <p>Name</p>
-                  </div>
-                </Grid>
-                <Grid item xs={4}>
-                  <div className={classes.title}>
-                    <p>Status Request</p>
-                  </div>
-                </Grid>
-                <Grid item xs={12}>
-                  <hr></hr>
-                </Grid>
-              </Grid>
-              {data?.data?.map((data, idx) => (
-                <>
-                  <Link
-                    to={`/quotation/${data.request_id}`}
-                    style={{
-                      color: "black",
-                    }}
-                  >
-                    <Grid container spacing={1}>
-                      <Grid item xs={4}>
-                        <div>
-                          <p>
-                            {moment(data.created_at).format("ddd, DD MMM YYYY")}
-                          </p>
-                        </div>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <div className={classes.name}>
-                          <p>{data.request_groom_name}</p>
-                          <p>{data.request_bride_name}</p>
-                        </div>
-                      </Grid>
-                      <Grid item xs={4}>
-                        {data.request_status ? (
-                          <>
-                            <QuotationSent />
-                          </>
-                        ) : (
-                          <>
-                            <QuotationNew />
-                          </>
-                        )}
-                      </Grid>
-                      <Grid item xs={12}>
-                        <hr></hr>
-                      </Grid>
+            {isError ? (
+              <>
+                <div className={classes.noResult}>
+                  <NoresultPhone
+                    title={"No Quotations"}
+                    description={
+                      "You will get the latest quotation requests by prospects here"
+                    }
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <Container>
+                  <Grid container spacing={1}>
+                    <Grid item xs={4}>
+                      <div className={classes.title}>
+                        <p>Created Date</p>
+                      </div>
                     </Grid>
-                  </Link>
-                </>
-              ))}
-            </Container>
-            <TablePagination
-              component="div"
-              count={data?.count}
-              page={page}
-              onPageChange={handleChangePage}
-              rowsPerPage={rowsPerPage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
+                    <Grid item xs={4}>
+                      <div className={classes.title}>
+                        <p>Name</p>
+                      </div>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <div className={classes.title}>
+                        <p>Status Request</p>
+                      </div>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <hr></hr>
+                    </Grid>
+                  </Grid>
+                  {data?.data?.map((data, idx) => (
+                    <>
+                      <Link
+                        to={`/quotation/${data?.request_id}`}
+                        style={{
+                          color: "black",
+                        }}
+                      >
+                        <Grid container spacing={1}>
+                          <Grid item xs={4}>
+                            <div>
+                              <p>
+                                {moment(data?.created_at).format(
+                                  "ddd, DD MMM YYYY"
+                                )}
+                              </p>
+                            </div>
+                          </Grid>
+                          <Grid item xs={4}>
+                            <div className={classes.name}>
+                              <p>{data?.request_groom_name}</p>
+                              <p>{data?.request_bride_name}</p>
+                            </div>
+                          </Grid>
+                          <Grid item xs={4}>
+                            {data?.request_status ? (
+                              <>
+                                <QuotationSent />
+                              </>
+                            ) : (
+                              <>
+                                <QuotationNew />
+                              </>
+                            )}
+                          </Grid>
+                          <Grid item xs={12}>
+                            <hr></hr>
+                          </Grid>
+                        </Grid>
+                      </Link>
+                    </>
+                  ))}
+                </Container>
+                <TablePagination
+                  component="div"
+                  count={data?.count}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  rowsPerPage={rowsPerPage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </>
+            )}
           </>
         )}
-        </>
-          )}
       </div>
     </div>
   );

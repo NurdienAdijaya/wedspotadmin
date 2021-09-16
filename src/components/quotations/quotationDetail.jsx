@@ -94,7 +94,7 @@ export default function QuotationDetail() {
       progress: undefined,
     });
   };
-  console.log(success)
+  console.log(success);
 
   return (
     <div>
@@ -125,7 +125,7 @@ export default function QuotationDetail() {
           <div className={classes.tittle}>
             <TitleStore1 title="Request Details" detail="" />
             <div>
-              {data.request_status ? <QuotationSent /> : <QuotationNew />}
+              {data?.request_status ? <QuotationSent /> : <QuotationNew />}
             </div>
           </div>
           <hr></hr>
@@ -152,19 +152,19 @@ export default function QuotationDetail() {
                       <p>Bride to be</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>{data.request_bride_name}</p>
+                      <p>{data?.request_bride_name}</p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Groom to be</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>{data.request_groom_name}</p>
+                      <p>{data?.request_groom_name}</p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>City Live</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>{data.request_city}</p>
+                      <p>{data?.request_city}</p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Email</p>
@@ -182,27 +182,29 @@ export default function QuotationDetail() {
                       <p>Wedding Location</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>{data.request_wedding_location}</p>
+                      <p>{data?.request_wedding_location}</p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Wedding Date</p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>
-                        {moment(data.request_wedding_date).format("DD/MM/YYYY")}
+                        {moment(data?.request_wedding_date).format(
+                          "DD/MM/YYYY"
+                        )}
                       </p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Budget</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>Rp. {data.request_budget}</p>
+                      <p>Rp. {data?.request_budget}</p>
                     </Grid>
                     <Grid item xs={6}>
                       <p>Number Of Invitees</p>
                     </Grid>
                     <Grid item xs={6}>
-                      <p>{data.request_invitees} pax</p>
+                      <p>{data?.request_invitees} pax</p>
                     </Grid>
                   </Grid>
                 </div>
@@ -210,7 +212,7 @@ export default function QuotationDetail() {
             </Grid>
           </div>
 
-          {data.request_status ? (
+          {data?.request_status ? (
             <></>
           ) : (
             <>

@@ -22,7 +22,7 @@ const MyStoreDoneSubmit = () => {
           margin: "0.55rem 0",
         }}
       >
-        {/* <FirstModal show={!data.vendor_has_filled_info}/> */}
+        {/* <FirstModal show={!data?.vendor_has_filled_info}/> */}
         <Link to="/">My Store</Link>
         <Typography color="textPrimary">detail</Typography>
       </Breadcrumbs>
@@ -49,7 +49,7 @@ const MyStoreDoneSubmit = () => {
             }}
           >
             <Avatar
-              src={data.vendor_avatar}
+              src={data?.vendor_avatar}
               style={{
                 width: "7.86rem",
                 height: "7.86rem",
@@ -66,7 +66,7 @@ const MyStoreDoneSubmit = () => {
                   fontWeight: "700",
                 }}
               >
-                {data.vendor_name}
+                {data?.vendor_name}
               </h1>
             </div>
           </div>
@@ -86,7 +86,7 @@ const MyStoreDoneSubmit = () => {
         >
           <div
             style={{
-              backgroundImage: `url(${data.vendor_header})`,
+              backgroundImage: `url(${data?.vendor_header})`,
               height: "22.375rem",
               backgroundSize: "cover",
             }}
@@ -94,22 +94,22 @@ const MyStoreDoneSubmit = () => {
           <h3 style={{ margin: "2.2rem 0 1.714rem 0" }}>Contact Details</h3>
           <div className="divDetails">
             <h3 className="details">Contact Number</h3>
-            <h3 className="details">{data.vendor_phone}</h3>
+            <h3 className="details">{data?.vendor_phone}</h3>
           </div>
           <div className="divDetails">
             <h3 className="details">Email</h3>
-            <h3 className="details">{data.vendor_email}</h3>
+            <h3 className="details">{data?.vendor_email}</h3>
           </div>
           <div className="divDetails">
             <h3 className="details">Website</h3>
-            <h3 className="details">{data.vendor_website}</h3>
+            <h3 className="details">{data?.vendor_website}</h3>
           </div>
           <div className="divDetails">
             <h3 className="details"> </h3>
             <div className="logoDetails">
               <div className="icon">
                 <a
-                  href={data.vendor_facebook}
+                  href={data?.vendor_facebook}
                   target="_blank"
                   rel="noreferrer"
                   style={{ color: "#C97C68" }}
@@ -119,7 +119,7 @@ const MyStoreDoneSubmit = () => {
               </div>
               <div className="icon">
                 <a
-                  href={data.vendor_instagram}
+                  href={data?.vendor_instagram}
                   target="_blank"
                   rel="noreferrer"
                   style={{ color: "#C97C68" }}
@@ -129,7 +129,7 @@ const MyStoreDoneSubmit = () => {
               </div>
               <div className="icon">
                 <a
-                  href={data.vendor_twitter}
+                  href={data?.vendor_twitter}
                   target="_blank"
                   rel="noreferrer"
                   style={{ color: "#C97C68" }}
@@ -144,22 +144,22 @@ const MyStoreDoneSubmit = () => {
           <h3 style={{ margin: "2.2rem 0 1.714rem 0" }}>Contact Details</h3>
           <div className="divDetails">
             <h3 className="details">Service Type</h3>
-            <h3 className="details">{data.vendor_type}</h3>
+            <h3 className="details">{data?.vendor_type}</h3>
           </div>
           <div className="divDetails">
             <h3 className="details">Location</h3>
-            <h3 className="details">{data.vendor_location}</h3>
+            <h3 className="details">{data?.vendor_location}</h3>
           </div>
           <div className="divDetails">
             <h3 className="details">Capacity</h3>
             <h3 className="details">
-              {data.vendor_min_capacity} - {data.vendor_max_capacity}
+              {data?.vendor_min_capacity} - {data?.vendor_max_capacity}
             </h3>
           </div>
           <div className="divDetails">
             <h3 className="details">Price range</h3>
             <h3 className="details">
-              {data.vendor_min_price} - {data.vendor_max_price}
+              {data?.vendor_min_price} - {data?.vendor_max_price}
             </h3>
           </div>
         </div>

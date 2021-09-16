@@ -53,6 +53,7 @@ function* vendorRegister(action) {
       type: types.REGISTER_SUCCESS,
       payload: res.data,
     });
+    // yield window.location.reload();
     yield toast.success("Success", {
       position: "top-left",
       autoClose: 6000,

@@ -25,35 +25,36 @@ const services = [
 ];
 
 const MyStore = () => {
-  const { data } = useSelector(
-    (state) => state.vendorData
-  );
+  const { data } = useSelector((state) => state.vendorData);
   const { citys } = useSelector((state) => state.config);
-  console.log(citys)
+  console.log(citys);
 
-  const minCap = data.vendor_min_capacity === 0 || data.vendor_min_capacity  ? data.vendor_min_capacity : "min";
-  const maxCap = data.vendor_max_capacity ? data.vendor_max_capacity : "max";
-  const minPrice = data.vendor_min_price ? data.vendor_min_price : "min";
-  const maxPrice = data.vendor_max_price ? data.vendor_max_price : "max";
+  const minCap =
+    data?.vendor_min_capacity === 0 || data?.vendor_min_capacity
+      ? data?.vendor_min_capacity
+      : "min";
+  const maxCap = data?.vendor_max_capacity ? data?.vendor_max_capacity : "max";
+  const minPrice = data?.vendor_min_price ? data?.vendor_min_price : "min";
+  const maxPrice = data?.vendor_max_price ? data?.vendor_max_price : "max";
 
-  const [service, setservice] = useState(data.vendor_type || "");
-  const [vendor_header, setVendorHeader] = useState(data.vendor_header || "");
+  const [service, setservice] = useState(data?.vendor_type || "");
+  const [vendor_header, setVendorHeader] = useState(data?.vendor_header || "");
   const [previewHeader, setPreviewHeader] = useState("");
-  const [vendor_avatar, setVendorAvatar] = useState(data.vendor_avatar || "");
-  const [vendor_name, setVendorName] = useState(data.vendor_name || "");
-  const [vendor_email, setVendorEmail] = useState(data.vendor_email || "");
-  const [vendor_phone, setVendorPhone] = useState(data.vendor_phone || "");
+  const [vendor_avatar, setVendorAvatar] = useState(data?.vendor_avatar || "");
+  const [vendor_name, setVendorName] = useState(data?.vendor_name || "");
+  const [vendor_email, setVendorEmail] = useState(data?.vendor_email || "");
+  const [vendor_phone, setVendorPhone] = useState(data?.vendor_phone || "");
   const [vendor_website, setVendorWebsite] = useState(
-    data.vendor_website || ""
+    data?.vendor_website || ""
   );
   const [vendor_facebook, setVendorFacebook] = useState(
-    data.vendor_facebook || ""
+    data?.vendor_facebook || ""
   );
   const [vendor_instagram, setVendorInstagram] = useState(
-    data.vendor_instagram || ""
+    data?.vendor_instagram || ""
   );
   const [vendor_twitter, setVendorTwitter] = useState(
-    data.vendor_twitter || ""
+    data?.vendor_twitter || ""
   );
   const [vendor_price_range, setVendorPrice] = useState(
     `${minPrice} - ${maxPrice}` || "max - min"
@@ -62,7 +63,7 @@ const MyStore = () => {
     `${minCap} - ${maxCap}` || "max - min"
   );
   const [vendor_location, setVendorLocation] = useState(
-    data.vendor_location || ""
+    data?.vendor_location || ""
   );
 
   const vendor_rating = Math.floor(Math.random() * 3) + 3;
@@ -101,7 +102,6 @@ const MyStore = () => {
       draggable: true,
       progress: undefined,
     });
-
   };
 
   const handleHeaderImage = (e) => {
