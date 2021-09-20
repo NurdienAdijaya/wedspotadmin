@@ -25,6 +25,7 @@ function* vendorLogin(action) {
       draggable: true,
       progress: undefined,
     });
+    yield window.location.reload();
   } catch (error) {
     console.log(error.response.data.errors[0]);
     yield put({
@@ -53,7 +54,6 @@ function* vendorRegister(action) {
       type: types.REGISTER_SUCCESS,
       payload: res.data,
     });
-    // yield window.location.reload();
     yield toast.success("Success", {
       position: "top-left",
       autoClose: 6000,
@@ -63,6 +63,7 @@ function* vendorRegister(action) {
       draggable: true,
       progress: undefined,
     });
+    yield window.location.reload();
   } catch (error) {
     console.log(error);
     yield put({

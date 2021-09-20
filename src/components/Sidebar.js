@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -27,12 +27,14 @@ import {
   MenuItem,
   Switch,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import FirstModal from "./firstModal";
 import QuotationsRouters from "./quotations/routes";
 import PackageRoutes from "./package/packageRoutes";
 import { Link } from "react-router-dom";
 import StoreRoutes from "./mystore/storeRoutes";
+import { getVendor } from "../store/action/auth";
+import { getLocation, getOrganizer, getVenue } from "../store/action/config";
 
 const useStylesNav = makeStyles((theme) => ({
   root: {
@@ -111,6 +113,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Sidebar() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getVendor());
+    dispatch(getVenue());
+    dispatch(getLocation());
+    dispatch(getOrganizer());
+  }, [dispatch]);
   const classesNav = useStylesNav();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);

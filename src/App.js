@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
 import { ThemeProvider } from "@material-ui/core";
 import { createTheme } from "@material-ui/core/styles";
@@ -7,7 +8,6 @@ import "./App.css";
 import Routers from "./routers/router";
 import { getVendor } from "./store/action/auth";
 import { getLocation, getVenue, getOrganizer } from "./store/action/config";
-
 
 const theme = createTheme({
   palette: {
@@ -21,14 +21,14 @@ const theme = createTheme({
 });
 
 function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getVendor())
-    dispatch(getVenue())
-    dispatch(getLocation())
-    dispatch(getOrganizer())
-  }, [dispatch]);
-  
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(getVendor())
+  //   dispatch(getVenue())
+  //   dispatch(getLocation())
+  //   dispatch(getOrganizer())
+  // }, [dispatch]);
+
   return (
     <ThemeProvider theme={theme} className="App">
       <BrowserRouter>
